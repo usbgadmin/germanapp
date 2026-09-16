@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Coursebook &bull; Kapitel 4: Arbeitswelt | GermanApp B1.1</title>
+
+    <!-- Google Fonts Plus Jakarta Sans & Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,1,0">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            yellow: '#FED74C',
+                            yellowLight: '#FFF6D1',
+                            lavender: '#DACDFF',
+                            lavenderLight: '#F3EFFF',
+                            coral: '#FA7143',
+                            coralLight: '#FFE9E2',
+                            dark: '#161618',
+                            darkMuted: '#242428',
+                            cream: '#FAF8F5',
+                            mint: '#A7F3D0',
+                            mintDark: '#065F46',
+                            sky: '#BAE6FD',
+                            skyDark: '#0369A1'
+                        }
+                    },
+                    borderRadius: {
+                        '3xl': '1.5rem',
+                        '4xl': '2rem',
+                        '5xl': '2.5rem',
+                    },
+                    boxShadow: {
+                        'chunky': '0 6px 0px 0px #161618',
+                        'chunky-lg': '0 8px 0px 0px #161618',
+                        'chunky-sm': '0 3.5px 0px 0px #161618',
+                        'chunky-press': '0 1px 0px 0px #161618',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- React 18 & Babel CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        .animate-mascot {
+            animation: floatSlow 3.2s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-[#121214] text-brand-dark antialiased font-sans min-h-screen flex justify-center selection:bg-brand-yellow">
+    <div id="root" class="w-full"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo, useRef } = React;
+
+        window.addEventListener('unhandledrejection', (event) => {
+            if (
+                event.reason && 
+                (event.reason.name === 'AbortError' || 
+                 String(event.reason.message || '').includes('interrupted by a call to pause'))
+            ) {
+                event.preventDefault();
+            }
+        });
+
+        const GermanFlagIcon = ({ className = "w-8 h-8" }) => (
+            <div className={`${className} bg-brand-yellowLight rounded-xl border border-brand-dark flex items-center justify-center overflow-hidden shrink-0 shadow-chunky-sm`}>
+                <svg viewBox="0 0 64 64" className="w-full h-full p-0.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <clipPath id="flagCoursebookRoundedClipCp4">
+                        <rect x="4" y="10" width="56" height="44" rx="12" />
+                    </clipPath>
+                    <g clipPath="url(#flagCoursebookRoundedClipCp4)">
+                        <rect x="4" y="10" width="56" height="14.66" fill="#161618" />
+                        <rect x="4" y="24.66" width="56" height="14.68" fill="#E11D48" />
+                        <rect x="4" y="39.34" width="56" height="14.66" fill="#FED74C" />
+                        <path d="M4 10 L60 10 L4 44 Z" fill="#FFFFFF" opacity="0.15" />
+                    </g>
+                    <rect x="4" y="10" width="56" height="44" rx="12" stroke="#161618" strokeWidth="3" fill="none" />
+                </svg>
+            </div>
+        );
+
+        const FritzLederhosen = ({ className = "w-24 h-24" }) => (
+            <svg viewBox="0 0 160 170" className={`${className} animate-mascot drop-shadow-md`} fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M110 88 C124 74 136 60 144 46" stroke="#161618" strokeWidth="4" strokeLinecap="round" />
+                <path d="M106 90 C120 78 132 64 140 52" stroke="#FFFFFF" strokeWidth="9" strokeLinecap="round" />
+                <ellipse cx="145" cy="45" rx="7" ry="8" fill="#FFDFC4" stroke="#161618" strokeWidth="3" transform="rotate(20 145 45)" />
+                <circle cx="151" cy="42" r="2.5" fill="#FFDFC4" stroke="#161618" strokeWidth="2.5" />
+                <path d="M50 88 C38 98 32 110 40 120" stroke="#FFFFFF" strokeWidth="9" strokeLinecap="round" />
+                <path d="M50 88 C38 98 32 110 40 120" stroke="#161618" strokeWidth="4" strokeLinecap="round" fill="none" />
+                <circle cx="42" cy="120" r="6" fill="#FFDFC4" stroke="#161618" strokeWidth="3" />
+                <ellipse cx="64" cy="158" rx="11" ry="6" fill="#3D2314" stroke="#161618" strokeWidth="3" />
+                <ellipse cx="96" cy="158" rx="11" ry="6" fill="#3D2314" stroke="#161618" strokeWidth="3" />
+                <rect x="58" y="136" width="12" height="18" rx="4" fill="#FFFFFF" stroke="#161618" strokeWidth="3" />
+                <rect x="90" y="136" width="12" height="18" rx="4" fill="#FFFFFF" stroke="#161618" strokeWidth="3" />
+                <path d="M58 142H70M90 142H102" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" />
+                <path d="M54 112 L50 138 L74 138 L80 125 L86 138 L110 138 L106 112 Z" fill="#5C381E" stroke="#161618" strokeWidth="4" strokeLinejoin="round" />
+                <path d="M68 116 H92 V126 H68 Z" fill="#4A2D17" stroke="#FED74C" strokeWidth="2" strokeLinejoin="round" />
+                <circle cx="72" cy="121" r="1.5" fill="#FED74C" />
+                <circle cx="88" cy="121" r="1.5" fill="#FED74C" />
+                <path d="M52 74 C52 74 62 66 80 66 C98 66 108 74 108 74 L106 114 H54 Z" fill="#FFFFFF" stroke="#161618" strokeWidth="4" strokeLinejoin="round" />
+                <path d="M63 72 L64 114" stroke="#4A2D17" strokeWidth="6" strokeLinecap="round" />
+                <path d="M97 72 L96 114" stroke="#4A2D17" strokeWidth="6" strokeLinecap="round" />
+                <rect x="62" y="86" width="36" height="11" rx="3" fill="#4A2D17" stroke="#161618" strokeWidth="2.5" />
+                <circle cx="80" cy="91.5" r="2.5" fill="#FFFFFF" />
+                <circle cx="80" cy="91.5" r="1" fill="#FED74C" />
+                <ellipse cx="80" cy="50" rx="22" ry="20" fill="#FFDFC4" stroke="#161618" strokeWidth="4" />
+                <circle cx="58" cy="50" r="4.5" fill="#FFDFC4" stroke="#161618" strokeWidth="3" />
+                <circle cx="102" cy="50" r="4.5" fill="#FFDFC4" stroke="#161618" strokeWidth="3" />
+                <circle cx="68" cy="53" r="3.5" fill="#FFA58C" />
+                <circle cx="92" cy="53" r="3.5" fill="#FFA58C" />
+                <circle cx="72" cy="46" r="3.5" fill="#161618" />
+                <circle cx="88" cy="46" r="3.5" fill="#161618" />
+                <circle cx="71" cy="44.5" r="1.2" fill="#FFFFFF" />
+                <circle cx="87" cy="44.5" r="1.2" fill="#FFFFFF" />
+                <path d="M80 50 C76 46 66 48 66 52 C71 55 77 53 80 51 C83 53 89 55 94 52 C94 48 84 46 80 50 Z" fill="#E6A14B" stroke="#161618" strokeWidth="2" />
+                <path d="M75 54 Q80 59 85 54" stroke="#161618" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+                <path d="M60 36 C64 16 96 16 100 36 Z" fill="#2E5A36" stroke="#161618" strokeWidth="4" strokeLinejoin="round" />
+                <ellipse cx="80" cy="36" rx="28" ry="6" fill="#234629" stroke="#161618" strokeWidth="3.5" />
+                <path d="M58 35 Q80 33 102 35" stroke="#FED74C" strokeWidth="3" fill="none" />
+                <path d="M96 28 Q108 14 112 8 Q104 18 98 24" fill="#FA7143" stroke="#161618" strokeWidth="2" strokeLinejoin="round" />
+            </svg>
+        );
+
+        const AudioPlayerCard = ({ title, src, onPlay }) => {
+            const [isPlaying, setIsPlaying] = useState(false);
+            const audioRef = useRef(null);
+
+            useEffect(() => {
+                const audio = audioRef.current;
+                return () => {
+                    if (audio) {
+                        try {
+                            audio.pause();
+                        } catch (e) {}
+                    }
+                };
+            }, [src]);
+
+            const toggleAudio = () => {
+                const audio = audioRef.current;
+                if (!audio) return;
+
+                if (!audio.paused) {
+                    audio.pause();
+                    setIsPlaying(false);
+                } else {
+                    const playPromise = audio.play();
+                    if (playPromise !== undefined) {
+                        playPromise
+                            .then(() => {
+                                setIsPlaying(true);
+                                if (onPlay) onPlay(title);
+                            })
+                            .catch((err) => {
+                                if (err.name !== 'AbortError') {
+                                    console.warn('Audio playback error:', err);
+                                }
+                                setIsPlaying(false);
+                            });
+                    }
+                }
+            };
+
+            return (
+                <div className="bg-white border-2 border-brand-dark rounded-2xl p-2.5 sm:p-3 flex items-center justify-between gap-3 shadow-chunky-sm">
+                    <div className="flex items-center gap-2.5 truncate">
+                        <button
+                            type="button"
+                            onClick={toggleAudio}
+                            className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 border-2 border-brand-dark shadow-chunky-sm transition active:translate-y-0.5 ${
+                                isPlaying ? 'bg-brand-coral text-white' : 'bg-brand-yellow text-brand-dark hover:bg-yellow-400'
+                            }`}
+                            aria-label={isPlaying ? 'Pause Audio' : 'Play Audio'}
+                        >
+                            <span className="material-symbols-rounded text-lg">
+                                {isPlaying ? 'pause' : 'play_arrow'}
+                            </span>
+                        </button>
+                        <div className="truncate">
+                            <span className="text-[10px] font-black uppercase tracking-wider text-brand-coral block leading-none">Hörtext Audio</span>
+                            <span className="text-xs font-black text-brand-dark truncate block mt-0.5">{title}</span>
+                        </div>
+                    </div>
+                    <audio 
+                        ref={audioRef} 
+                        src={src} 
+                        onPlay={() => setIsPlaying(true)}
+                        onPause={() => setIsPlaying(false)}
+                        onEnded={() => setIsPlaying(false)}
+                        preload="none"
+                    />
+                    <a
+                        href={src}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-zinc-400 hover:text-brand-dark p-1 rounded-lg"
+                        title="Open direct audio file"
+                    >
+                        <span className="material-symbols-rounded text-base">open_in_new</span>
+                    </a>
+                </div>
+            );
+        };
+
+        const VideoPlayerModal = ({ src, onClose, title = "Video Player &bull; Unit 4" }) => {
+            const videoRef = useRef(null);
+
+            useEffect(() => {
+                const video = videoRef.current;
+                if (video) {
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch((err) => {
+                            if (err.name !== 'AbortError') {
+                                console.warn('Video play error:', err);
+                            }
+                        });
+                    }
+                }
+                return () => {
+                    if (video) {
+                        try {
+                            video.pause();
+                        } catch (e) {}
+                    }
+                };
+            }, [src]);
+
+            return (
+                <div 
+                    className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
+                    onClick={onClose}
+                >
+                    <div className="bg-brand-dark text-white rounded-3xl p-4 max-w-lg w-full border-2 border-brand-yellow shadow-2xl relative" onClick={e => e.stopPropagation()}>
+                        <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-700">
+                            <span className="text-xs font-black text-brand-yellow" dangerouslySetInnerHTML={{ __html: title }}></span>
+                            <button
+                                type="button"
+                                onClick={onClose}
+                                className="w-7 h-7 rounded-full bg-zinc-800 text-white flex items-center justify-center font-black hover:bg-zinc-700"
+                            >
+                                &times;
+                            </button>
+                        </div>
+                        <video ref={videoRef} src={src} controls className="w-full rounded-2xl shadow" />
+                    </div>
+                </div>
+            );
+        };
+
+        const TranslationReveal = ({ englishText, isOpen, onToggle }) => (
+            <div className="mt-1">
+                <button
+                    type="button"
+                    onClick={onToggle}
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-zinc-500 hover:text-brand-dark bg-zinc-100 hover:bg-zinc-200 px-2 py-0.5 rounded-full transition"
+                >
+                    <span className="material-symbols-rounded text-xs text-brand-coral">translate</span>
+                    <span>{isOpen ? 'Hide Translation' : 'Translate instruction'}</span>
+                </button>
+                {isOpen && (
+                    <div className="mt-1.5 p-2 bg-brand-lavenderLight rounded-xl border border-brand-lavender text-xs text-brand-dark font-medium leading-relaxed italic animate-in fade-in duration-200">
+                        {englishText}
+                    </div>
+                )}
+            </div>
+        );
+
+        const RenderedProfessionsShowcase = ({ onZoomScan }) => {
+            const professions = [
+                { id: 'A', name: 'Briefträgerin', icon: 'mail', tasks: 'Briefe & Pakete zustellen, Post austragen, bei jedem Wetter im Freien sein, früh anfangen', bg: 'bg-amber-50 border-amber-300 text-amber-950' },
+                { id: 'B', name: 'Chemikerin', icon: 'science', tasks: 'Im Labor arbeiten, am Computer arbeiten, exakte Analysen machen, gut verdienen, studieren', bg: 'bg-sky-50 border-sky-300 text-sky-950' },
+                { id: 'C', name: 'Mechatronikerin', icon: 'build', tasks: 'Technik & Elektronik verstehen, Metall bearbeiten, geregelte Arbeitszeiten, Ausbildung machen', bg: 'bg-purple-50 border-purple-300 text-purple-950' },
+                { id: 'D', name: 'Taxifahrerin', icon: 'local_taxi', tasks: 'Viele Stunden im Auto sitzen, Personen von A nach B bringen, Kontakt mit Menschen, Trinkgeld, in der Nacht arbeiten', bg: 'bg-emerald-50 border-emerald-300 text-emerald-950' }
+            ];
+
+            return (
+                <div className="space-y-2.5">
+                    <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 flex items-center gap-1">
+                            <span className="material-symbols-rounded text-sm text-brand-coral">badge</span>
+                            <span>Berufsbilder A–D &bull; Typische Tätigkeiten</span>
+                        </span>
+                        <button
+                            type="button"
+                            onClick={onZoomScan}
+                            className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                        >
+                            <span className="material-symbols-rounded text-xs">zoom_in</span>
+                            <span>Scan ansehen</span>
+                        </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {professions.map(p => (
+                            <div key={p.id} className={`p-3 rounded-2xl border-2 border-brand-dark shadow-chunky-sm ${p.bg} flex flex-col justify-between`}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-xs font-black bg-brand-dark text-white px-2 py-0.5 rounded-full flex items-center gap-1">
+                                        <span className="material-symbols-rounded text-xs">{p.icon}</span>
+                                        <span>{p.id}: {p.name}</span>
+                                    </span>
+                                </div>
+                                <p className="text-[11px] font-semibold text-zinc-800 leading-snug mt-1">
+                                    {p.tasks}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const RenderedMersaInterview = () => (
+            <div className="p-3.5 bg-brand-yellowLight border-2 border-brand-dark rounded-2xl shadow-chunky-sm space-y-2 text-brand-dark text-xs">
+                <div className="flex items-center justify-between">
+                    <span className="font-black text-brand-coral flex items-center gap-1">
+                        <span className="material-symbols-rounded text-sm">record_voice_over</span>
+                        <span>Interview mit Frau Mersa</span>
+                    </span>
+                    <span className="text-[10px] font-black bg-brand-dark text-white px-2 py-0.5 rounded-full">Werdegang</span>
+                </div>
+                <div className="space-y-1.5 font-medium leading-relaxed bg-white/80 p-2.5 rounded-xl border border-black/10 text-[11px]">
+                    <p><strong>Zufriedenheit:</strong> „Ich habe ‚meinen‘ Beruf gefunden. Ich arbeite sehr selbstständig mit immer neuen Herausforderungen.“</p>
+                    <p><strong>Warum mehrere Berufe?</strong> „Ursprünglich habe ich Chemie studiert, aber dann habe ich meine Liebe zur Technik ernst genommen und Mechatronikerin gelernt.“</p>
+                    <p><strong>Reihenfolge der Berufe:</strong> 1. Briefträgerin &rarr; 2. Taxifahrerin &rarr; 3. Chemikerin &rarr; 4. Mechatronikerin.</p>
+                </div>
+            </div>
+        );
+
+        const RenderedBorisWorkday = ({ onZoomScan }) => {
+            const situations = [
+                { id: '1', title: 'Situation 1: Pause & Kaffeeküche', thought: '„Wenn ich mehr Zeit hätte, würde ich noch einen Kaffee trinken.“', photo: 'Foto B (Kaffee)', bg: 'bg-amber-50 border-amber-300' },
+                { id: '2', title: 'Situation 2: Datei-Suche & Besprechung', thought: '„Ich könnte die Besprechung vorbereiten, wenn ich die Datei finden würde.“', photo: 'Foto C (Computer)', bg: 'bg-sky-50 border-sky-300' },
+                { id: '3', title: 'Situation 3: Rat unter Kollegen', thought: '„Wenn ich an deiner Stelle wäre, würde ich um Hilfe bitten.“', photo: 'Foto A (Gespräch)', bg: 'bg-emerald-50 border-emerald-300' }
+            ];
+
+            return (
+                <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 flex items-center gap-1">
+                            <span className="material-symbols-rounded text-sm text-brand-coral">work_history</span>
+                            <span>Boris' Arbeitstag &bull; Konjunktiv II</span>
+                        </span>
+                        <button
+                            type="button"
+                            onClick={onZoomScan}
+                            className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                        >
+                            <span className="material-symbols-rounded text-xs">zoom_in</span>
+                            <span>Fotos ansehen</span>
+                        </button>
+                    </div>
+
+                    <div className="space-y-2">
+                        {situations.map(s => (
+                            <div key={s.id} className={`p-3 rounded-2xl border-2 border-brand-dark shadow-chunky-sm ${s.bg}`}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-xs font-black bg-brand-dark text-white px-2 py-0.5 rounded-full">
+                                        {s.title}
+                                    </span>
+                                    <span className="text-[10px] font-black text-zinc-600 bg-white px-2 py-0.5 rounded-full border border-black/10">
+                                        {s.photo}
+                                    </span>
+                                </div>
+                                <p className="text-[11px] font-bold text-brand-dark italic mt-1">{s.thought}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const RenderedWorkplaceMishaps = () => (
+            <div className="p-3.5 bg-brand-coralLight border-2 border-brand-dark rounded-2xl shadow-chunky-sm space-y-2 text-brand-dark">
+                <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-black text-brand-dark flex items-center gap-1">
+                        <span className="material-symbols-rounded text-base text-brand-coral">report_problem</span>
+                        <span>Pannen am Arbeitsplatz &bull; Redemittel</span>
+                    </h4>
+                    <span className="text-[10px] font-black bg-brand-coral text-white px-2 py-0.5 rounded-full">Audio 1.30–1.31</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="bg-white/90 p-2.5 rounded-xl border border-black/10">
+                        <span className="text-[10px] font-black text-brand-coral uppercase block">Sich entschuldigen</span>
+                        <p className="font-semibold text-zinc-800 mt-1 text-[11px] leading-snug">
+                            &bdquo;Entschuldigung! Das war keine Absicht. Es tut mir wirklich leid.&ldquo;
+                        </p>
+                    </div>
+                    <div className="bg-white/90 p-2.5 rounded-xl border border-black/10">
+                        <span className="text-[10px] font-black text-emerald-700 uppercase block">Reagieren</span>
+                        <p className="font-semibold text-zinc-800 mt-1 text-[11px] leading-snug">
+                            &bdquo;Schon gut! Das ist doch nicht so schlimm. Das kann jedem mal passieren.&ldquo;
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const RenderedJobAdvertisements = ({ onZoomScan }) => {
+            const ads = [
+                { id: 'A', role: 'Bürohilfe / Empfang', company: 'Logistik Nord GmbH', details: 'Vollzeit (40 Std.), Telefonzentrale & Kundenempfang, 17,00 €/Std.', bg: 'bg-amber-50 border-amber-300' },
+                { id: 'B', role: 'Werkstudent/in IT-Support', company: 'TechSolutions Berlin', details: 'Teilzeit (15 Std./Woche), Kunden per Telefon betreuen, 14,50 €/Std.', match: true, bg: 'bg-emerald-50 border-emerald-300' },
+                { id: 'C', role: 'Fahrradkurier/in', company: 'CitySprint Express', details: 'Minijob (10 Std./Woche), flexible Zeiten, 13,00 €/Std. + Trinkgeld', bg: 'bg-sky-50 border-sky-300' }
+            ];
+
+            return (
+                <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 flex items-center gap-1">
+                            <span className="material-symbols-rounded text-sm text-brand-coral">work</span>
+                            <span>Stelleninserate A, B, C &bull; Marco sucht</span>
+                        </span>
+                        <button
+                            type="button"
+                            onClick={onZoomScan}
+                            className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                        >
+                            <span className="material-symbols-rounded text-xs">zoom_in</span>
+                            <span>Inserate ansehen</span>
+                        </button>
+                    </div>
+
+                    <div className="space-y-2">
+                        {ads.map(ad => (
+                            <div key={ad.id} className={`p-3 rounded-2xl border-2 border-brand-dark shadow-chunky-sm ${ad.bg}`}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-xs font-black bg-brand-dark text-white px-2 py-0.5 rounded-full">
+                                        Inserat {ad.id}: {ad.role}
+                                    </span>
+                                    {ad.match && (
+                                        <span className="text-[10px] font-black bg-emerald-600 text-white px-2 py-0.5 rounded-full">
+                                            Audio-Match
+                                        </span>
+                                    )}
+                                </div>
+                                <span className="text-[10px] font-bold text-zinc-500 block">{ad.company}</span>
+                                <p className="text-[11px] font-semibold text-zinc-800 mt-0.5 leading-snug">{ad.details}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const RenderedInterviewMistakes = ({ onZoomScan }) => (
+            <div className="p-3.5 bg-brand-lavenderLight border-2 border-brand-dark rounded-2xl shadow-chunky-sm space-y-2 text-brand-dark">
+                <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-brand-dark flex items-center gap-1">
+                        <span className="material-symbols-rounded text-base text-brand-coral">psychology_alt</span>
+                        <span>Fehler im Vorstellungsgespräch</span>
+                    </span>
+                    <button
+                        type="button"
+                        onClick={onZoomScan}
+                        className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                    >
+                        <span className="material-symbols-rounded text-xs">zoom_in</span>
+                        <span>Scan ansehen</span>
+                    </button>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="bg-white p-2.5 rounded-xl border border-black/10">
+                        <span className="text-[10px] font-black text-red-600 uppercase block">Bild A &bull; Abschnitt 5</span>
+                        <p className="font-semibold text-zinc-800 mt-0.5 text-[11px] leading-snug">
+                            Bewerber reagiert aggressiv auf eine ihm unangenehme Frage.
+                        </p>
+                    </div>
+                    <div className="bg-white p-2.5 rounded-xl border border-black/10">
+                        <span className="text-[10px] font-black text-amber-600 uppercase block">Bild B &bull; Abschnitt 4</span>
+                        <p className="font-semibold text-zinc-800 mt-0.5 text-[11px] leading-snug">
+                            Körperhaltung ist zu entspannt, fast liegend im Stuhl.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const RenderedDigitalNomadSpotlight = () => (
+            <div className="p-4 bg-brand-mint text-brand-mintDark border-2 border-brand-dark rounded-3xl shadow-chunky-sm space-y-2">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                        <span className="material-symbols-rounded text-xl">laptop_chromebook</span>
+                        <h4 className="text-xs font-black text-brand-dark">Digitale Nomaden in Porto &bull; Markus</h4>
+                    </div>
+                    <span className="text-[10px] font-black bg-brand-mintDark text-white px-2 py-0.5 rounded-full">Film 9–11</span>
+                </div>
+                <p className="text-xs font-semibold leading-relaxed text-zinc-800">
+                    Markus arbeitet ortsunabhängig mit Laptop und Internet aus Cafés und Coworking Spaces in Portugal. Er genießt die Freiheit, Arbeitszeiten flexibel einzuteilen und neue Freunde weltweit kennenzulernen.
+                </p>
+                <div className="bg-white/80 p-2.5 rounded-xl border border-black/10 text-[11px] font-bold text-zinc-800 flex items-center gap-2">
+                    <span className="material-symbols-rounded text-brand-coral text-base">verified</span>
+                    <span>Vorteile: Flexibilität, internationale Netzwerke &amp; interkulturelle Inspiration!</span>
+                </div>
+            </div>
+        );
+
+        function App() {
+            const [activeSection, setActiveSection] = useState('guide');
+
+            const [lightboxImg, setLightboxImg] = useState(null);
+            const [videoModal, setVideoModal] = useState(null);
+
+            const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+            const [showLogoutModal, setShowLogoutModal] = useState(false);
+            const [toastMessage, setToastMessage] = useState('');
+
+            const [openTranslations, setOpenTranslations] = useState({});
+
+            const toggleTranslation = (id) => {
+                setOpenTranslations(prev => ({ ...prev, [id]: !prev[id] }));
+            };
+
+            const showToast = (msg) => {
+                setToastMessage(msg);
+                setTimeout(() => setToastMessage(''), 3000);
+            };
+
+            // Exercise 2a Career Sequence Frau Mersa:
+            // 1: Briefträgerin, 2: Taxifahrerin, 3: Chemikerin, 4: Mechatronikerin
+            const [ex2aAnswers, setEx2aAnswers] = useState({ 1: '', 2: '', 3: '', 4: '' });
+            const [ex2aChecked, setEx2aChecked] = useState(false);
+            const ex2aSolutions = { 1: 'Briefträgerin', 2: 'Taxifahrerin', 3: 'Chemikerin', 4: 'Mechatronikerin' };
+
+            // Exercise 4a Boris Workday photo matching:
+            // Foto A -> 3, Foto B -> 1, Foto C -> 2
+            const [ex4aAnswers, setEx4aAnswers] = useState({ A: '', B: '', C: '' });
+            const [ex4aChecked, setEx4aChecked] = useState(false);
+            const ex4aSolutions = { A: '3', B: '1', C: '2' };
+
+            // Exercise 4c Konjunktiv II thoughts:
+            // 1: Situation 1, 2: Situation 2, 3: Situation 3
+            const [ex4cAnswers, setEx4cAnswers] = useState({ 1: '', 2: '', 3: '' });
+            const [ex4cChecked, setEx4cChecked] = useState(false);
+            const ex4cSolutions = { 1: 'Situation 1', 2: 'Situation 2', 3: 'Situation 3' };
+
+            // Exercise 4d Grammar Rules:
+            const [ex4dAnswers, setEx4dAnswers] = useState({ 1: '', 2: '' });
+            const [ex4dChecked, setEx4dChecked] = useState(false);
+            const ex4dSolutions = {
+                1: 'Das konjugierte Verb steht ganz am Ende des Nebensatzes.',
+                2: 'würde + Infinitiv am Satzende (Ausnahmen: hätte, wäre, könnte, müsste).'
+            };
+
+            // Exercise 9a Prepositions:
+            // 1: auf, 2: zu, 3: um, 4: auf
+            const [ex9aAnswers, setEx9aAnswers] = useState({ 1: '', 2: '', 3: '', 4: '' });
+            const [ex9aChecked, setEx9aChecked] = useState(false);
+            const ex9aSolutions = { 1: 'auf', 2: 'zu', 3: 'um', 4: 'auf' };
+
+            // Exercise 9b Pronominal Rules:
+            const [ex9bAnswers, setEx9bAnswers] = useState({ 1: '', 2: '' });
+            const [ex9bChecked, setEx9bChecked] = useState(false);
+            const ex9bSolutions = {
+                1: 'Präposition + Personalpronomen (z.B. mit ihm, für sie)',
+                2: 'da(r) + Präposition (z.B. daran, dafür, darüber)'
+            };
+
+            // Exercise 12a Job Ad:
+            // ad: B, hours: 15 Stunden, wage: 14,50 Euro
+            const [ex12aAnswers, setEx12aAnswers] = useState({ ad: '', hours: '', wage: '' });
+            const [ex12aChecked, setEx12aChecked] = useState(false);
+            const ex12aSolutions = { ad: 'B', hours: '15 Stunden', wage: '14,50 Euro' };
+
+            // Exercise 16c Checkboxes Digital Nomad (Porto):
+            // Correct: 1, 3, 5
+            const [ex16cCheckedState, setEx16cCheckedState] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false });
+            const [ex16cGraded, setEx16cGraded] = useState(false);
+            const ex16cSolutions = { 1: true, 2: false, 3: true, 4: false, 5: true };
+
+            const SECTIONS = [
+                { id: 'guide', label: 'Overview', icon: 'school', title: 'Chapter Overview & Teacher Guide' },
+                { id: 'p44', label: 'S. 44', icon: 'badge', title: 'Berufe & Tätigkeiten' },
+                { id: 'p45', label: 'S. 45', icon: 'history', title: 'Frau Mersas Werdegang' },
+                { id: 'p46', label: 'S. 46', icon: 'psychology', title: 'Gespräche & Konjunktiv II' },
+                { id: 'p47', label: 'S. 47', icon: 'report_problem', title: 'Pannen am Arbeitsplatz' },
+                { id: 'p48', label: 'S. 48', icon: 'contact_page', title: 'Die richtige Bewerbung' },
+                { id: 'p50', label: 'S. 50', icon: 'search', title: 'Jobsuche & Telefongespräch' },
+                { id: 'p51', label: 'S. 51', icon: 'sentiment_neutral', title: 'Vorstellungsgespräch' },
+                { id: 'p52', label: 'S. 52', icon: 'flight_takeoff', title: 'Digitale Nomaden' },
+            ];
+
+            const currentSectionIndex = SECTIONS.findIndex(s => s.id === activeSection);
+
+            return (
+                <div className="w-full max-w-md md:max-w-xl mx-auto min-h-screen bg-brand-cream pb-32 relative shadow-2xl overflow-x-hidden">
+                    
+                    {/* STICKY TOP APP BAR */}
+                    <header className="sticky top-0 z-30 bg-brand-cream/95 backdrop-blur-md px-5 pt-4 pb-3 border-b-2 border-brand-dark/10 flex items-center justify-between">
+                        <div>
+                            <div className="inline-flex items-center gap-1.5 bg-brand-dark text-white px-3 py-1 rounded-full text-xs font-black tracking-wide">
+                                <span>GermanApp</span>
+                                <span className="text-brand-yellow">✦</span>
+                                <span className="text-[10px] text-zinc-300 font-bold uppercase tracking-wider">Level B1.1</span>
+                            </div>
+                            <h1 className="text-xl sm:text-2xl font-black tracking-tight text-brand-dark mt-1 flex items-center gap-1.5">
+                                <span>Kapitel 4: Arbeitswelt</span>
+                            </h1>
+                        </div>
+
+                        {/* German Flag Badge Dropdown Trigger */}
+                        <div className="relative">
+                            <button
+                                type="button"
+                                onClick={() => setShowProfileDropdown(prev => !prev)}
+                                className="flex items-center gap-1.5 bg-white hover:bg-zinc-100 text-brand-dark p-1 sm:px-2.5 sm:py-1 rounded-full border-2 border-brand-dark shadow-chunky-sm active:translate-y-0.5 transition"
+                                aria-label="Toggle User Navigation"
+                            >
+                                <GermanFlagIcon className="w-8 h-8" />
+                                <span className="material-symbols-rounded text-base text-brand-dark hidden sm:inline">
+                                    {showProfileDropdown ? 'expand_less' : 'expand_more'}
+                                </span>
+                            </button>
+
+                            {/* Dropdown Menu */}
+                            {showProfileDropdown && (
+                                <>
+                                    <div 
+                                        className="fixed inset-0 z-40" 
+                                        onClick={() => setShowProfileDropdown(false)}
+                                    ></div>
+                                    <div className="absolute right-0 top-full mt-2 w-52 bg-white border-2 border-brand-dark rounded-2xl shadow-chunky p-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
+                                        <div className="px-3 py-2 border-b border-zinc-100 mb-1 flex items-center gap-2">
+                                            <GermanFlagIcon className="w-7 h-7 rounded-lg" />
+                                            <div>
+                                                <span className="text-[10px] font-black uppercase text-zinc-400 block leading-tight">Student View</span>
+                                                <span className="text-xs font-black text-brand-dark">German Learner</span>
+                                            </div>
+                                        </div>
+
+                                        <a
+                                            href="../../student-portal.html"
+                                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-black text-brand-dark hover:bg-brand-yellowLight transition"
+                                        >
+                                            <span className="material-symbols-rounded text-base text-brand-coral">dashboard</span>
+                                            <span>Student Portal</span>
+                                        </a>
+
+                                        <a
+                                            href="../../course-map-b1.html"
+                                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-black text-brand-dark hover:bg-brand-yellowLight transition"
+                                        >
+                                            <span className="material-symbols-rounded text-base text-brand-coral">map</span>
+                                            <span>B1 Course Map</span>
+                                        </a>
+
+                                        <hr className="my-1 border-zinc-100" />
+
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setShowProfileDropdown(false);
+                                                setShowLogoutModal(true);
+                                            }}
+                                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-black text-red-600 hover:bg-red-50 transition text-left"
+                                        >
+                                            <span className="material-symbols-rounded text-base">logout</span>
+                                            <span>Sign Out</span>
+                                        </button>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </header>
+
+                    {/* HERO BANNER */}
+                    <section className="px-4 pt-3">
+                        <div className="bg-brand-yellow rounded-4xl p-5 sm:p-6 border-3 border-brand-dark shadow-chunky relative overflow-hidden">
+                            <span className="absolute top-3 right-5 text-xl opacity-60">✦</span>
+                            <span className="absolute bottom-3 left-5 text-xl opacity-60">♥</span>
+
+                            <div className="flex items-center justify-between relative z-10">
+                                <div className="max-w-[65%]">
+                                    <div className="inline-flex items-center gap-1.5 bg-brand-dark text-white px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider mb-2">
+                                        <span>Coursebook &bull; Einheit 4</span>
+                                    </div>
+                                    <h2 className="text-2xl sm:text-3xl font-black text-brand-dark leading-tight tracking-tight">
+                                        Arbeitswelt
+                                    </h2>
+                                    <p className="text-xs font-semibold text-brand-dark/85 mt-1.5 leading-relaxed">
+                                        Career paths, workplace dialogues in <em>Konjunktiv II</em>, job applications, telephone inquiries, and digital nomads.
+                                    </p>
+                                </div>
+
+                                <div className="w-24 flex justify-center items-center">
+                                    <FritzLederhosen className="w-24 h-24" />
+                                </div>
+                            </div>
+
+                            {/* Jump to Workbook Shortcut */}
+                            <div className="mt-4 pt-3 border-t border-brand-dark/15 flex items-center justify-between gap-2">
+                                <a
+                                    href="../../course-map-b1.html"
+                                    className="flex-1 bg-white hover:bg-zinc-100 text-brand-dark py-2 px-3 rounded-full font-black text-xs border border-brand-dark shadow-chunky-sm text-center active:translate-y-0.5 transition"
+                                >
+                                    &larr; Back to Map
+                                </a>
+                                <a
+                                    href="../b1_workbook/cp4-b1workbook.html"
+                                    className="flex-1 bg-brand-coral hover:bg-orange-600 text-white py-2 px-3 rounded-full font-black text-xs border border-brand-dark shadow-chunky-sm flex items-center justify-center gap-1 active:translate-y-0.5 transition"
+                                >
+                                    <span>Open Workbook 4</span>
+                                    <span>&rarr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* OVERVIEW / TEACHER'S GUIDE */}
+                    {activeSection === 'guide' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="bg-brand-lavenderLight rounded-3xl p-5 border-2 border-brand-dark shadow-chunky-sm">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className="w-8 h-8 rounded-xl bg-brand-lavender border border-brand-dark flex items-center justify-center text-brand-dark shrink-0">
+                                        <span className="material-symbols-rounded text-base">school</span>
+                                    </span>
+                                    <h3 className="text-base font-black text-brand-dark leading-tight">
+                                        Teacher's Guide &amp; Unit Objectives
+                                    </h3>
+                                </div>
+                                <p className="text-xs text-brand-dark/90 font-semibold leading-relaxed">
+                                    Welcome to Chapter 4! In this unit, you will master German professional communications: discussing professions, workplace hypotheticals with <strong>Konjunktiv II</strong>, apologizing gracefully, analyzing job advertisements, and mastering verbs with prepositions.
+                                </p>
+
+                                <div className="mt-3 pt-3 border-t border-brand-dark/10 space-y-1.5">
+                                    <span className="text-[10px] font-black uppercase tracking-wider text-brand-dark/70 block">Key Competencies:</span>
+                                    <ul className="text-xs text-zinc-700 font-semibold space-y-1 pl-1">
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Describe professions and typical daily work duties.</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Express hypotheticals and polite suggestions using <strong>Konjunktiv II</strong> (<em>hätte, wäre, würde + Infinitiv</em>).</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Apologize and react professionally to mishaps at work.</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Use verbs with prepositions and pronominal adverbs (<em>darauf, darüber vs. mit ihm, für sie</em>).</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Evaluate job postings, telephone inquiries, and modern nomad models.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {/* Grammar Spotlight */}
+                            <div className="bg-brand-cream rounded-3xl p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-8 h-8 rounded-xl bg-brand-yellow border border-brand-dark flex items-center justify-center text-brand-dark shrink-0">
+                                        <span className="material-symbols-rounded text-base">psychology</span>
+                                    </span>
+                                    <h3 className="text-base font-black text-brand-dark leading-tight">
+                                        Grammar Spotlight: Konjunktiv II &amp; Pronominaladverbien
+                                    </h3>
+                                </div>
+
+                                <div className="bg-white p-3.5 rounded-2xl border border-black/10 text-xs text-zinc-700 font-medium space-y-2">
+                                    <div>
+                                        <strong className="text-brand-dark">1. Konjunktiv II (Irreale Bedingungen):</strong>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; Wenn-Satz: Verb am Ende &rarr; <em>Wenn ich mehr Zeit <strong>hätte</strong>...</em></p>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; Hauptsatz: <em>... <strong>würde</strong> ich noch einen Kaffee <strong>trinken</strong>.</em></p>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; Feste Formen: <em>wäre, hätte, könnte, müsste</em></p>
+                                    </div>
+                                    <div className="pt-1 border-t border-zinc-100">
+                                        <strong className="text-brand-dark">2. Verben mit Präpositionen &amp; Pronominaladverbien:</strong>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; <strong>Personen:</strong> Präposition + Personalpronomen &rarr; <em>Ich spreche <strong>mit ihm</strong>.</em></p>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; <strong>Dinge / Sachverhalte:</strong> <em>da(r)-</em> + Präposition &rarr; <em>Ich freue mich <strong>darüber</strong>.</em></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={() => setActiveSection('p44')}
+                                className="w-full bg-brand-coral hover:bg-orange-600 text-white font-black text-xs py-3 px-4 rounded-full border-2 border-brand-dark shadow-chunky active:translate-y-0.5 transition flex items-center justify-center gap-2"
+                            >
+                                <span>Start Page 44: Berufe &amp; Tätigkeiten</span>
+                                <span>&rarr;</span>
+                            </button>
+                        </main>
+                    )}
+
+                    {/* PAGE 44 */}
+                    {activeSection === 'p44' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-yellow px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 44
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Berufe &amp; Tätigkeiten</span>
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-3 sm:p-4 border-2 border-brand-dark shadow-chunky-sm">
+                                <RenderedProfessionsShowcase
+                                    onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_course_img/cp4-img2.png')}
+                                />
+                            </div>
+
+                            {/* Reading: Frau Mersa Interview */}
+                            <div className="bg-white rounded-3xl p-4 border-2 border-brand-dark shadow-chunky-sm space-y-2">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">1c</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Frau Mersas Berufswahl</h4>
+                                </div>
+                                <TranslationReveal
+                                    englishText="Read the interview with Ms. Mersa. In which profession does she work now? Justify your guess."
+                                    isOpen={!!openTranslations['1c']}
+                                    onToggle={() => toggleTranslation('1c')}
+                                />
+                                <RenderedMersaInterview />
+                            </div>
+                        </main>
+                    )}
+
+                    {/* PAGE 45 */}
+                    {activeSection === 'p45' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-lavender px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 45
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Frau Mersas Werdegang &bull; Audio 1.26</span>
+                            </div>
+
+                            <AudioPlayerCard
+                                title="Audio 1.26: Interview mit Frau Mersa"
+                                src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-026.mp3"
+                            />
+
+                            {/* Exercise 2a Career Sequence */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">2a</span>
+                                    <div>
+                                        <h4 className="text-xs font-black text-brand-dark leading-tight">In welcher Reihenfolge hat sie gearbeitet?</h4>
+                                        <p className="text-[11px] text-zinc-500 font-medium">Ordnen Sie die Berufe in die richtige Reihenfolge (1–4).</p>
+                                    </div>
+                                </div>
+                                <TranslationReveal
+                                    englishText="Listen to the interview. In what chronological order did she work in these professions? Match each stage."
+                                    isOpen={!!openTranslations['2a']}
+                                    onToggle={() => toggleTranslation('2a')}
+                                />
+
+                                <div className="space-y-2.5 pt-1">
+                                    {[
+                                        { id: 1, label: '1. Beruf (Anfang)' },
+                                        { id: 2, label: '2. Beruf' },
+                                        { id: 3, label: '3. Beruf' },
+                                        { id: 4, label: '4. Beruf (jetzt)' }
+                                    ].map(item => {
+                                        const userAns = ex2aAnswers[item.id];
+                                        const isCorrect = userAns === ex2aSolutions[item.id];
+                                        return (
+                                            <div key={item.id} className="flex items-center justify-between p-2.5 bg-brand-cream rounded-xl border border-black/10">
+                                                <span className="text-xs font-black text-brand-dark">{item.label}:</span>
+                                                <select
+                                                    value={userAns}
+                                                    onChange={e => setEx2aAnswers({ ...ex2aAnswers, [item.id]: e.target.value })}
+                                                    className={`bg-white border-2 rounded-xl px-3 py-1 text-xs font-black focus:outline-none transition ${
+                                                        ex2aChecked
+                                                            ? isCorrect ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                            : 'border-brand-dark'
+                                                    }`}
+                                                >
+                                                    <option value="">-- Beruf wählen --</option>
+                                                    <option value="Briefträgerin">Briefträgerin</option>
+                                                    <option value="Taxifahrerin">Taxifahrerin</option>
+                                                    <option value="Chemikerin">Chemikerin</option>
+                                                    <option value="Mechatronikerin">Mechatronikerin</option>
+                                                </select>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx2aChecked(true);
+                                        const ok = Object.keys(ex2aSolutions).every(k => ex2aAnswers[k] === ex2aSolutions[k]);
+                                        showToast(ok ? '🎉 Perfekt! Die Reihenfolge von Frau Mersa stimmt genau!' : '⚠️ Hören Sie Audio 1.26 noch einmal an!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 2a Reihenfolge
+                                </button>
+                            </div>
+
+                            {/* Video 9-11 Trigger */}
+                            <div className="bg-brand-coralLight rounded-3xl p-4 border-2 border-brand-dark shadow-chunky-sm flex items-center justify-between gap-3">
+                                <div>
+                                    <span className="text-[10px] font-black uppercase text-brand-coral block">Video Clip</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Video 9–11: Was ist in Ihrem Wunschberuf wichtig?</h4>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setVideoModal('https://storage.googleapis.com/germanapp-media-2026/b1_coursevideo/NWn_B1_Film_009-011_K4_UT.mp4')}
+                                    className="bg-brand-coral hover:bg-orange-600 text-white font-black text-xs px-3.5 py-2 rounded-full border border-brand-dark shadow-chunky-sm shrink-0 flex items-center gap-1 active:translate-y-0.5 transition"
+                                >
+                                    <span className="material-symbols-rounded text-sm">play_circle</span>
+                                    <span>Play Video</span>
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {/* PAGE 46 */}
+                    {activeSection === 'p46' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-coral text-white px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 46
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Gespräche bei der Arbeit &bull; Konjunktiv II</span>
+                            </div>
+
+                            {/* Audio 1.27, 1.28, 1.29 */}
+                            <div className="space-y-2">
+                                <AudioPlayerCard
+                                    title="Audio 1.27: Boris Gespräch 1"
+                                    src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-027.mp3"
+                                />
+                                <AudioPlayerCard
+                                    title="Audio 1.28: Boris Gespräch 2"
+                                    src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-028.mp3"
+                                />
+                                <AudioPlayerCard
+                                    title="Audio 1.29: Boris Gespräch 3"
+                                    src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-029.mp3"
+                                />
+                            </div>
+
+                            {/* Rendered Boris Workday */}
+                            <div className="bg-white rounded-3xl p-3 sm:p-4 border-2 border-brand-dark shadow-chunky-sm">
+                                <RenderedBorisWorkday
+                                    onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_course_img/cp4-img3.png')}
+                                />
+                            </div>
+
+                            {/* Exercise 4a Photo Match */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">4a</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Gespräche den Fotos zuordnen:</h4>
+                                </div>
+
+                                <div className="space-y-2 pt-1">
+                                    {[
+                                        { key: 'A', name: 'Foto A (Gespräch Rat)' },
+                                        { key: 'B', name: 'Foto B (Kaffeeküche)' },
+                                        { key: 'C', name: 'Foto C (Datei am PC)' }
+                                    ].map(item => {
+                                        const userAns = ex4aAnswers[item.key];
+                                        const isCorrect = userAns === ex4aSolutions[item.key];
+                                        return (
+                                            <div key={item.key} className="flex items-center justify-between p-2.5 bg-brand-cream rounded-xl border border-black/10">
+                                                <span className="text-xs font-black text-brand-dark">{item.name}:</span>
+                                                <select
+                                                    value={userAns}
+                                                    onChange={e => setEx4aAnswers({ ...ex4aAnswers, [item.key]: e.target.value })}
+                                                    className={`bg-white border-2 rounded-xl px-3 py-1 text-xs font-black focus:outline-none transition ${
+                                                        ex4aChecked
+                                                            ? isCorrect ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                            : 'border-brand-dark'
+                                                    }`}
+                                                >
+                                                    <option value="">-- Gespräch --</option>
+                                                    <option value="1">Gespräch 1</option>
+                                                    <option value="2">Gespräch 2</option>
+                                                    <option value="3">Gespräch 3</option>
+                                                </select>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx4aChecked(true);
+                                        const ok = Object.keys(ex4aSolutions).every(k => ex4aAnswers[k] === ex4aSolutions[k]);
+                                        showToast(ok ? '🎉 Alle Fotos perfekt zugeordnet!' : '⚠️ Hören Sie die Audios noch einmal!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 4a Gespräche
+                                </button>
+                            </div>
+
+                            {/* Exercise 4c Konjunktiv II Gedanken */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-coral text-white border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">4c</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Welcher Gedanke passt zu welcher Situation?</h4>
+                                </div>
+
+                                <div className="space-y-3 pt-1">
+                                    {[
+                                        { id: 1, text: '„Wenn ich mehr Zeit hätte, würde ich noch einen Kaffee trinken.“' },
+                                        { id: 2, text: '„Ich könnte die Besprechung vorbereiten, wenn ich die Datei finden würde.“' },
+                                        { id: 3, text: '„Wenn ich an deiner Stelle wäre, würde ich um Hilfe bitten.“' }
+                                    ].map(item => {
+                                        const userAns = ex4cAnswers[item.id];
+                                        const isCorrect = userAns === ex4cSolutions[item.id];
+                                        return (
+                                            <div key={item.id} className="p-3 bg-brand-cream rounded-2xl border border-black/10 space-y-1.5">
+                                                <p className="text-xs font-bold text-brand-dark leading-snug">{item.text}</p>
+                                                <select
+                                                    value={userAns}
+                                                    onChange={e => setEx4cAnswers({ ...ex4cAnswers, [item.id]: e.target.value })}
+                                                    className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                        ex4cChecked
+                                                            ? isCorrect ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                            : 'border-brand-dark'
+                                                    }`}
+                                                >
+                                                    <option value="">-- Situation wählen --</option>
+                                                    <option value="Situation 1">Situation 1</option>
+                                                    <option value="Situation 2">Situation 2</option>
+                                                    <option value="Situation 3">Situation 3</option>
+                                                </select>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx4cChecked(true);
+                                        const ok = Object.keys(ex4cSolutions).every(k => ex4cAnswers[k] === ex4cSolutions[k]);
+                                        showToast(ok ? '🎉 Konjunktiv II Gedanken perfekt zugeordnet!' : '⚠️ Überprüfen Sie die Zuordnung!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 4c Gedanken
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {/* PAGE 47 */}
+                    {activeSection === 'p47' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-mint text-brand-mintDark px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 47
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Pannen am Arbeitsplatz &bull; Entschuldigen</span>
+                            </div>
+
+                            <div className="space-y-2">
+                                <AudioPlayerCard
+                                    title="Audio 1.30: Panne beim Friseur"
+                                    src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-030.mp3"
+                                />
+                                <AudioPlayerCard
+                                    title="Audio 1.31: Problem mit dem Kurier"
+                                    src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-031.mp3"
+                                />
+                            </div>
+
+                            <RenderedWorkplaceMishaps />
+
+                            {/* Self-learning Hint */}
+                            <div className="p-3 bg-brand-yellowLight rounded-2xl border-2 border-brand-dark shadow-chunky-sm text-xs font-semibold text-brand-dark">
+                                <div className="flex items-center gap-1.5 font-black text-brand-coral mb-0.5">
+                                    <span className="material-symbols-rounded text-sm">tips_and_updates</span>
+                                    <span>Tipp: Höfliche Deeskalation</span>
+                                </div>
+                                <p className="text-[11px] text-zinc-700">
+                                    Im Berufsleben ist es wichtig, Missgeschicke sofort zuzugeben (<em>„Das war keine Absicht, es tut mir sehr leid“</em>) und direkt eine konkrete Lösung anzubieten (<em>„Ich kümmere mich sofort darum“</em>).
+                                </p>
+                            </div>
+                        </main>
+                    )}
+
+                    {/* PAGE 48 */}
+                    {activeSection === 'p48' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-sky text-sky-900 px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 48
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Die richtige Bewerbung &bull; Pronominaladverbien</span>
+                            </div>
+
+                            {/* Exercise 9a Verben mit Präpositionen */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-sky text-sky-900 border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">9a</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Welche Präposition passt zu welchem Verb?</h4>
+                                </div>
+
+                                <div className="space-y-2 pt-1">
+                                    {[
+                                        { id: 1, verb: '1. ankommen' },
+                                        { id: 2, verb: '2. gehören' },
+                                        { id: 3, verb: '3. sich bewerben' },
+                                        { id: 4, verb: '4. sich konzentrieren' }
+                                    ].map(item => {
+                                        const userAns = ex9aAnswers[item.id];
+                                        const isCorrect = userAns === ex9aSolutions[item.id];
+                                        return (
+                                            <div key={item.id} className="flex items-center justify-between p-2.5 bg-brand-cream rounded-xl border border-black/10">
+                                                <span className="text-xs font-black text-brand-dark">{item.verb}:</span>
+                                                <select
+                                                    value={userAns}
+                                                    onChange={e => setEx9aAnswers({ ...ex9aAnswers, [item.id]: e.target.value })}
+                                                    className={`bg-white border-2 rounded-xl px-3 py-1 text-xs font-black focus:outline-none transition ${
+                                                        ex9aChecked
+                                                            ? isCorrect ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                            : 'border-brand-dark'
+                                                    }`}
+                                                >
+                                                    <option value="">-- Präposition --</option>
+                                                    <option value="auf">auf</option>
+                                                    <option value="zu">zu</option>
+                                                    <option value="um">um</option>
+                                                    <option value="für">für</option>
+                                                    <option value="an">an</option>
+                                                </select>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx9aChecked(true);
+                                        const ok = Object.keys(ex9aSolutions).every(k => ex9aAnswers[k] === ex9aSolutions[k]);
+                                        showToast(ok ? '🎉 Alle Verben mit ihren festen Präpositionen verknüpft!' : '⚠️ Achten Sie auf feste Wendungen!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 9a Präpositionen
+                                </button>
+                            </div>
+
+                            {/* Exercise 9b Pronominaladverbien Regel */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">9b</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Grammatik: Personen vs. Dinge</h4>
+                                </div>
+
+                                <div className="space-y-3 pt-1">
+                                    <div>
+                                        <label className="text-[11px] font-black text-brand-dark block mb-1">
+                                            1. Wenn man über Personen spricht, nutzt man:
+                                        </label>
+                                        <select
+                                            value={ex9bAnswers[1]}
+                                            onChange={e => setEx9bAnswers({ ...ex9bAnswers, 1: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex9bChecked
+                                                    ? ex9bAnswers[1] === ex9bSolutions[1] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Regel wählen --</option>
+                                            <option value="Präposition + Personalpronomen (z.B. mit ihm, für sie)">Präposition + Personalpronomen (z.B. mit ihm, für sie)</option>
+                                            <option value="da(r) + Präposition (z.B. daran, dafür, darüber)">da(r) + Präposition (z.B. daran, dafür, darüber)</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label className="text-[11px] font-black text-brand-dark block mb-1">
+                                            2. Wenn man über Dinge, Themen oder Ereignisse spricht, nutzt man:
+                                        </label>
+                                        <select
+                                            value={ex9bAnswers[2]}
+                                            onChange={e => setEx9bAnswers({ ...ex9bAnswers, 2: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex9bChecked
+                                                    ? ex9bAnswers[2] === ex9bSolutions[2] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Regel wählen --</option>
+                                            <option value="Präposition + Personalpronomen (z.B. mit ihm, für sie)">Präposition + Personalpronomen (z.B. mit ihm, für sie)</option>
+                                            <option value="da(r) + Präposition (z.B. daran, dafür, darüber)">da(r) + Präposition (z.B. daran, dafür, darüber)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx9bChecked(true);
+                                        const ok = ex9bAnswers[1] === ex9bSolutions[1] && ex9bAnswers[2] === ex9bSolutions[2];
+                                        showToast(ok ? '🎉 Perfekt! Personen vs. da(r)-Formen verstanden.' : '⚠️ Personen = Pronomen, Dinge = da(r)-!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 9b Pronominaladverbien
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {/* PAGE 50 */}
+                    {activeSection === 'p50' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-yellow px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 50
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Jobsuche &bull; Audio 1.35</span>
+                            </div>
+
+                            <AudioPlayerCard
+                                title="Audio 1.35: Marcos Telefongespräch zur Bewerbung"
+                                src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-035.mp3"
+                            />
+
+                            <RenderedJobAdvertisements
+                                onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_course_img/cp4-img6.png')}
+                            />
+
+                            {/* Exercise 12a */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">12a</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Details aus dem Telefongespräch:</h4>
+                                </div>
+
+                                <div className="space-y-3 pt-1">
+                                    <div>
+                                        <label className="text-[11px] font-black text-brand-dark block mb-1">Passendes Inserat:</label>
+                                        <select
+                                            value={ex12aAnswers.ad}
+                                            onChange={e => setEx12aAnswers({ ...ex12aAnswers, ad: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex12aChecked
+                                                    ? ex12aAnswers.ad === ex12aSolutions.ad ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Inserat wählen --</option>
+                                            <option value="A">Inserat A</option>
+                                            <option value="B">Inserat B (Werkstudent IT)</option>
+                                            <option value="C">Inserat C</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label className="text-[11px] font-black text-brand-dark block mb-1">Arbeitszeit pro Woche:</label>
+                                        <select
+                                            value={ex12aAnswers.hours}
+                                            onChange={e => setEx12aAnswers({ ...ex12aAnswers, hours: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex12aChecked
+                                                    ? ex12aAnswers.hours === ex12aSolutions.hours ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Stunden wählen --</option>
+                                            <option value="10 Stunden">10 Stunden</option>
+                                            <option value="15 Stunden">15 Stunden</option>
+                                            <option value="20 Stunden">20 Stunden</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label className="text-[11px] font-black text-brand-dark block mb-1">Stundenlohn:</label>
+                                        <select
+                                            value={ex12aAnswers.wage}
+                                            onChange={e => setEx12aAnswers({ ...ex12aAnswers, wage: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex12aChecked
+                                                    ? ex12aAnswers.wage === ex12aSolutions.wage ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Lohn wählen --</option>
+                                            <option value="12,00 Euro">12,00 Euro</option>
+                                            <option value="14,50 Euro">14,50 Euro</option>
+                                            <option value="16,00 Euro">16,00 Euro</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx12aChecked(true);
+                                        const ok = ex12aAnswers.ad === ex12aSolutions.ad && ex12aAnswers.hours === ex12aSolutions.hours && ex12aAnswers.wage === ex12aSolutions.wage;
+                                        showToast(ok ? '🎉 Alle Daten aus dem Telefongespräch stimmen!' : '⚠️ Hören Sie Audio 1.35 nochmals an!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 12a Jobsuche
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {/* PAGE 51 */}
+                    {activeSection === 'p51' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-coral text-white px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 51
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Das Vorstellungsgespräch &bull; Benimm-Tipps</span>
+                            </div>
+
+                            <RenderedInterviewMistakes
+                                onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_course_img/cp4-img7.png')}
+                            />
+
+                            {/* Interactive Checklist for Job Interviews */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-2.5">
+                                <span className="text-[10px] font-black uppercase tracking-wider text-brand-dark/70 block">
+                                    Die goldene Checkliste für das Bewerbungsgespräch:
+                                </span>
+                                <ul className="text-xs text-zinc-800 font-semibold space-y-1.5 pl-1">
+                                    <li className="flex items-start gap-2">
+                                        <span className="material-symbols-rounded text-sm text-brand-coral">check_circle</span>
+                                        <span><strong>Pünktlichkeit:</strong> 5–10 Minuten vor dem Termin eintreffen.</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <span className="material-symbols-rounded text-sm text-brand-coral">check_circle</span>
+                                        <span><strong>Körpersprache:</strong> Aufrechte Sitzhaltung, Blickkontakt halten, fester Händedruck.</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <span className="material-symbols-rounded text-sm text-brand-coral">check_circle</span>
+                                        <span><strong>Vorbereitung:</strong> Informationen über das Unternehmen und eigene Fragen parat haben.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </main>
+                    )}
+
+                    {/* PAGE 52 */}
+                    {activeSection === 'p52' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-mint text-brand-mintDark px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 52
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Arbeiten im Ausland &bull; Digitale Nomaden</span>
+                            </div>
+
+                            <RenderedDigitalNomadSpotlight />
+
+                            {/* Video Triggers for Scenes 9 and 11 */}
+                            <div className="space-y-2">
+                                <div className="bg-brand-yellowLight rounded-2xl p-3 border-2 border-brand-dark flex items-center justify-between">
+                                    <span className="text-xs font-black text-brand-dark">Film Szene 9: Digitale Nomaden erklärt</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => setVideoModal('https://storage.googleapis.com/germanapp-media-2026/b1_coursevideo/NWn_B1_Film_009_UT.mp4')}
+                                        className="bg-brand-dark text-white text-xs font-black px-3 py-1 rounded-full shadow-chunky-sm active:translate-y-0.5 transition"
+                                    >
+                                        Play Szene 9
+                                    </button>
+                                </div>
+                                <div className="bg-brand-coralLight rounded-2xl p-3 border-2 border-brand-dark flex items-center justify-between">
+                                    <span className="text-xs font-black text-brand-dark">Film Szene 11: Leben &amp; Arbeiten in Porto</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => setVideoModal('https://storage.googleapis.com/germanapp-media-2026/b1_coursevideo/NWn_B1_Film_011_UT.mp4')}
+                                        className="bg-brand-coral text-white text-xs font-black px-3 py-1 rounded-full shadow-chunky-sm active:translate-y-0.5 transition"
+                                    >
+                                        Play Szene 11
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Exercise 16c Checkboxes */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-coral text-white border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">16c</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Warum möchte Markus länger in Porto bleiben?</h4>
+                                </div>
+
+                                <div className="space-y-2 pt-1">
+                                    {[
+                                        { id: 1, text: 'Er möchte die Kultur besser kennenlernen.' },
+                                        { id: 2, text: 'Er möchte sich einen festen Job in einer Bank suchen.' },
+                                        { id: 3, text: 'Er möchte Beziehungen aufbauen und Freunde finden.' },
+                                        { id: 4, text: 'Er hat in Deutschland keine Wohnung mehr.' },
+                                        { id: 5, text: 'Er findet es für seinen Beruf und seine Netzwerke wichtig.' }
+                                    ].map(item => {
+                                        const isChecked = ex16cCheckedState[item.id];
+                                        const correct = ex16cSolutions[item.id];
+                                        return (
+                                            <label
+                                                key={item.id}
+                                                className={`flex items-start gap-2.5 p-2.5 rounded-2xl border-2 transition cursor-pointer ${
+                                                    ex16cGraded
+                                                        ? isChecked === correct
+                                                            ? 'border-emerald-600 bg-emerald-50'
+                                                            : 'border-red-500 bg-red-50'
+                                                        : isChecked
+                                                            ? 'border-brand-dark bg-brand-yellowLight'
+                                                            : 'border-black/15 bg-white'
+                                                }`}
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isChecked}
+                                                    onChange={e => setEx16cCheckedState({ ...ex16cCheckedState, [item.id]: e.target.checked })}
+                                                    className="w-4 h-4 mt-0.5 accent-brand-coral rounded"
+                                                />
+                                                <span className="text-xs font-semibold text-brand-dark leading-snug">{item.text}</span>
+                                            </label>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx16cGraded(true);
+                                        const ok = Object.keys(ex16cSolutions).every(k => ex16cCheckedState[k] === ex16cSolutions[k]);
+                                        showToast(ok ? '🎉 Markus’ Gründe für Porto perfekt erkannt!' : '⚠️ Sehen Sie Szene 11 noch einmal an!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 16c Nomaden
+                                </button>
+                            </div>
+
+                            {/* Chapter 4 Completion Card */}
+                            <div className="bg-brand-mint text-brand-mintDark rounded-3xl p-5 border-2 border-brand-dark shadow-chunky space-y-2 text-center">
+                                <span className="material-symbols-rounded text-3xl">verified</span>
+                                <h3 className="text-lg font-black leading-tight text-brand-dark">Kapitel 4 Coursebook abgeschlossen!</h3>
+                                <p className="text-xs font-semibold text-zinc-700">
+                                    Deepen your Konjunktiv II drills and preposition practices in Workbook 4.
+                                </p>
+                                <a
+                                    href="../b1_workbook/cp4-b1workbook.html"
+                                    className="inline-flex items-center gap-1.5 bg-brand-dark hover:bg-zinc-800 text-white font-black text-xs px-5 py-2.5 rounded-full border border-brand-dark shadow-chunky-sm transition mt-2"
+                                >
+                                    <span>Launch Workbook 4</span>
+                                    <span>&rarr;</span>
+                                </a>
+                            </div>
+                        </main>
+                    )}
+
+                    {/* FIXED BOTTOM NAVIGATION DOCK */}
+                    <nav className="fixed bottom-3 left-0 right-0 z-40 max-w-md md:max-w-xl mx-auto px-4 pointer-events-none">
+                        <div className="bg-brand-dark/95 text-white backdrop-blur-lg p-2 rounded-full border-2 border-brand-dark shadow-2xl flex items-center justify-between pointer-events-auto">
+                            <a
+                                href="../../course-map-b1.html"
+                                className="flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold text-zinc-400 hover:text-white transition"
+                            >
+                                <span className="material-symbols-rounded text-base">arrow_back</span>
+                                <span>Course Map</span>
+                            </a>
+
+                            {/* Previous Section Button */}
+                            <button
+                                onClick={() => {
+                                    if (currentSectionIndex > 0) {
+                                        setActiveSection(SECTIONS[currentSectionIndex - 1].id);
+                                        window.scrollTo({ top: 120, behavior: 'smooth' });
+                                    }
+                                }}
+                                disabled={currentSectionIndex === 0}
+                                className={`flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold transition ${
+                                    currentSectionIndex === 0 ? 'opacity-30 cursor-not-allowed' : 'text-zinc-400 hover:text-white'
+                                }`}
+                            >
+                                <span className="material-symbols-rounded text-base">navigate_before</span>
+                                <span>Prev Page</span>
+                            </button>
+
+                            {/* Section indicator pill */}
+                            <div className="px-2 py-1 bg-brand-yellow text-brand-dark rounded-full text-[10px] font-black border border-brand-dark">
+                                {SECTIONS[currentSectionIndex].label}
+                            </div>
+
+                            {/* Next Section Button */}
+                            <button
+                                onClick={() => {
+                                    if (currentSectionIndex < SECTIONS.length - 1) {
+                                        setActiveSection(SECTIONS[currentSectionIndex + 1].id);
+                                        window.scrollTo({ top: 120, behavior: 'smooth' });
+                                    }
+                                }}
+                                disabled={currentSectionIndex === SECTIONS.length - 1}
+                                className={`flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold transition ${
+                                    currentSectionIndex === SECTIONS.length - 1 ? 'opacity-30 cursor-not-allowed' : 'text-zinc-400 hover:text-white'
+                                }`}
+                            >
+                                <span className="material-symbols-rounded text-base">navigate_next</span>
+                                <span>Next Page</span>
+                            </button>
+
+                            <a
+                                href="../b1_workbook/cp4-b1workbook.html"
+                                className="flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold text-brand-coral hover:text-white transition"
+                            >
+                                <span className="material-symbols-rounded text-base">edit</span>
+                                <span>Workbook</span>
+                            </a>
+                        </div>
+                    </nav>
+
+                    {/* LIGHTBOX MODAL */}
+                    {lightboxImg && (
+                        <div 
+                            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
+                            onClick={() => setLightboxImg(null)}
+                        >
+                            <div className="bg-white rounded-3xl p-3 max-w-lg w-full border-2 border-brand-dark shadow-2xl relative" onClick={e => e.stopPropagation()}>
+                                <button
+                                    type="button"
+                                    onClick={() => setLightboxImg(null)}
+                                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-brand-cream border border-brand-dark text-brand-dark flex items-center justify-center font-black"
+                                >
+                                    &times;
+                                </button>
+                                <img src={lightboxImg} alt="Textbook zoom view" className="w-full h-auto rounded-2xl" />
+                            </div>
+                        </div>
+                    )}
+
+                    {/* VIDEO PLAYER MODAL */}
+                    {videoModal && (
+                        <VideoPlayerModal 
+                            src={videoModal} 
+                            onClose={() => setVideoModal(null)} 
+                        />
+                    )}
+
+                    {/* SIGN OUT MODAL */}
+                    {showLogoutModal && (
+                        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+                            <div className="bg-white w-full max-w-sm rounded-t-4xl sm:rounded-4xl border-2 border-brand-dark shadow-2xl p-6 text-center animate-in zoom-in-95 duration-200">
+                                <div className="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3 border border-red-200">
+                                    <span className="material-symbols-rounded text-2xl font-bold">logout</span>
+                                </div>
+                                <h4 className="text-lg font-black text-brand-dark">Sign Out of GermanApp?</h4>
+                                <p className="text-xs text-zinc-600 font-semibold mt-1">
+                                    Your chapter progress is preserved. You can resume anytime.
+                                </p>
+
+                                <div className="mt-5 flex gap-2">
+                                    <button 
+                                        onClick={() => setShowLogoutModal(false)}
+                                        className="flex-1 bg-zinc-100 hover:bg-zinc-200 text-brand-dark py-2.5 rounded-full font-extrabold text-xs transition"
+                                    >
+                                        Stay
+                                    </button>
+                                    <button 
+                                        onClick={async () => {
+                                            try {
+                                                await fetch('/api/logout', { method: 'POST' });
+                                            } catch (e) {}
+                                            window.location.href = '../../index.html';
+                                        }}
+                                        className="flex-1 bg-brand-coral hover:bg-red-600 text-white py-2.5 rounded-full font-extrabold text-xs shadow-md transition"
+                                    >
+                                        Log Out
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* TOAST NOTIFICATION */}
+                    {toastMessage && (
+                        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-brand-dark text-white text-xs font-black px-4 py-2.5 rounded-full shadow-2xl flex items-center gap-2 border border-brand-yellow animate-bounce">
+                            <span className="w-2 h-2 rounded-full bg-brand-yellow"></span>
+                            <span>{toastMessage}</span>
+                        </div>
+                    )}
+
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

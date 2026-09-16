@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Coursebook &bull; Kapitel 5: Umweltfreundlich? | GermanApp B1.1</title>
+
+    <!-- Google Fonts Plus Jakarta Sans & Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,1,0">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            yellow: '#FED74C',
+                            yellowLight: '#FFF6D1',
+                            lavender: '#DACDFF',
+                            lavenderLight: '#F3EFFF',
+                            coral: '#FA7143',
+                            coralLight: '#FFE9E2',
+                            dark: '#161618',
+                            darkMuted: '#242428',
+                            cream: '#FAF8F5',
+                            mint: '#A7F3D0',
+                            mintDark: '#065F46',
+                            sky: '#BAE6FD',
+                            skyDark: '#0369A1'
+                        }
+                    },
+                    borderRadius: {
+                        '3xl': '1.5rem',
+                        '4xl': '2rem',
+                        '5xl': '2.5rem',
+                    },
+                    boxShadow: {
+                        'chunky': '0 6px 0px 0px #161618',
+                        'chunky-lg': '0 8px 0px 0px #161618',
+                        'chunky-sm': '0 3.5px 0px 0px #161618',
+                        'chunky-press': '0 1px 0px 0px #161618',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- React 18 & Babel CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        .animate-mascot {
+            animation: floatSlow 3.2s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-[#121214] text-brand-dark antialiased font-sans min-h-screen flex justify-center selection:bg-brand-yellow">
+    <div id="root" class="w-full"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo, useRef } = React;
+
+        window.addEventListener('unhandledrejection', (event) => {
+            if (
+                event.reason && 
+                (event.reason.name === 'AbortError' || 
+                 String(event.reason.message || '').includes('interrupted by a call to pause'))
+            ) {
+                event.preventDefault();
+            }
+        });
+
+        const GermanFlagIcon = ({ className = "w-8 h-8" }) => (
+            <div className={`${className} bg-brand-yellowLight rounded-xl border border-brand-dark flex items-center justify-center overflow-hidden shrink-0 shadow-chunky-sm`}>
+                <svg viewBox="0 0 64 64" className="w-full h-full p-0.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <clipPath id="flagCoursebookRoundedClipCp5">
+                        <rect x="4" y="10" width="56" height="44" rx="12" />
+                    </clipPath>
+                    <g clipPath="url(#flagCoursebookRoundedClipCp5)">
+                        <rect x="4" y="10" width="56" height="14.66" fill="#161618" />
+                        <rect x="4" y="24.66" width="56" height="14.68" fill="#E11D48" />
+                        <rect x="4" y="39.34" width="56" height="14.66" fill="#FED74C" />
+                        <path d="M4 10 L60 10 L4 44 Z" fill="#FFFFFF" opacity="0.15" />
+                    </g>
+                    <rect x="4" y="10" width="56" height="44" rx="12" stroke="#161618" strokeWidth="3" fill="none" />
+                </svg>
+            </div>
+        );
+
+        const FritzLederhosen = ({ className = "w-24 h-24" }) => (
+            <svg viewBox="0 0 160 170" className={`${className} animate-mascot drop-shadow-md`} fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M110 88 C124 74 136 60 144 46" stroke="#161618" strokeWidth="4" strokeLinecap="round" />
+                <path d="M106 90 C120 78 132 64 140 52" stroke="#FFFFFF" strokeWidth="9" strokeLinecap="round" />
+                <ellipse cx="145" cy="45" rx="7" ry="8" fill="#FFDFC4" stroke="#161618" strokeWidth="3" transform="rotate(20 145 45)" />
+                <circle cx="151" cy="42" r="2.5" fill="#FFDFC4" stroke="#161618" strokeWidth="2.5" />
+                <path d="M50 88 C38 98 32 110 40 120" stroke="#FFFFFF" strokeWidth="9" strokeLinecap="round" />
+                <path d="M50 88 C38 98 32 110 40 120" stroke="#161618" strokeWidth="4" strokeLinecap="round" fill="none" />
+                <circle cx="42" cy="120" r="6" fill="#FFDFC4" stroke="#161618" strokeWidth="3" />
+                <ellipse cx="64" cy="158" rx="11" ry="6" fill="#3D2314" stroke="#161618" strokeWidth="3" />
+                <ellipse cx="96" cy="158" rx="11" ry="6" fill="#3D2314" stroke="#161618" strokeWidth="3" />
+                <rect x="58" y="136" width="12" height="18" rx="4" fill="#FFFFFF" stroke="#161618" strokeWidth="3" />
+                <rect x="90" y="136" width="12" height="18" rx="4" fill="#FFFFFF" stroke="#161618" strokeWidth="3" />
+                <path d="M58 142H70M90 142H102" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" />
+                <path d="M54 112 L50 138 L74 138 L80 125 L86 138 L110 138 L106 112 Z" fill="#5C381E" stroke="#161618" strokeWidth="4" strokeLinejoin="round" />
+                <path d="M68 116 H92 V126 H68 Z" fill="#4A2D17" stroke="#FED74C" strokeWidth="2" strokeLinejoin="round" />
+                <circle cx="72" cy="121" r="1.5" fill="#FED74C" />
+                <circle cx="88" cy="121" r="1.5" fill="#FED74C" />
+                <path d="M52 74 C52 74 62 66 80 66 C98 66 108 74 108 74 L106 114 H54 Z" fill="#FFFFFF" stroke="#161618" strokeWidth="4" strokeLinejoin="round" />
+                <path d="M63 72 L64 114" stroke="#4A2D17" strokeWidth="6" strokeLinecap="round" />
+                <path d="M97 72 L96 114" stroke="#4A2D17" strokeWidth="6" strokeLinecap="round" />
+                <rect x="62" y="86" width="36" height="11" rx="3" fill="#4A2D17" stroke="#161618" strokeWidth="2.5" />
+                <circle cx="80" cy="91.5" r="2.5" fill="#FFFFFF" />
+                <circle cx="80" cy="91.5" r="1" fill="#FED74C" />
+                <ellipse cx="80" cy="50" rx="22" ry="20" fill="#FFDFC4" stroke="#161618" strokeWidth="4" />
+                <circle cx="58" cy="50" r="4.5" fill="#FFDFC4" stroke="#161618" strokeWidth="3" />
+                <circle cx="102" cy="50" r="4.5" fill="#FFDFC4" stroke="#161618" strokeWidth="3" />
+                <circle cx="68" cy="53" r="3.5" fill="#FFA58C" />
+                <circle cx="92" cy="53" r="3.5" fill="#FFA58C" />
+                <circle cx="72" cy="46" r="3.5" fill="#161618" />
+                <circle cx="88" cy="46" r="3.5" fill="#161618" />
+                <circle cx="71" cy="44.5" r="1.2" fill="#FFFFFF" />
+                <circle cx="87" cy="44.5" r="1.2" fill="#FFFFFF" />
+                <path d="M80 50 C76 46 66 48 66 52 C71 55 77 53 80 51 C83 53 89 55 94 52 C94 48 84 46 80 50 Z" fill="#E6A14B" stroke="#161618" strokeWidth="2" />
+                <path d="M75 54 Q80 59 85 54" stroke="#161618" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+                <path d="M60 36 C64 16 96 16 100 36 Z" fill="#2E5A36" stroke="#161618" strokeWidth="4" strokeLinejoin="round" />
+                <ellipse cx="80" cy="36" rx="28" ry="6" fill="#234629" stroke="#161618" strokeWidth="3.5" />
+                <path d="M58 35 Q80 33 102 35" stroke="#FED74C" strokeWidth="3" fill="none" />
+                <path d="M96 28 Q108 14 112 8 Q104 18 98 24" fill="#FA7143" stroke="#161618" strokeWidth="2" strokeLinejoin="round" />
+            </svg>
+        );
+
+        const AudioPlayerCard = ({ title, src, onPlay }) => {
+            const [isPlaying, setIsPlaying] = useState(false);
+            const audioRef = useRef(null);
+
+            useEffect(() => {
+                const audio = audioRef.current;
+                return () => {
+                    if (audio) {
+                        try {
+                            audio.pause();
+                        } catch (e) {}
+                    }
+                };
+            }, [src]);
+
+            const toggleAudio = () => {
+                const audio = audioRef.current;
+                if (!audio) return;
+
+                if (!audio.paused) {
+                    audio.pause();
+                    setIsPlaying(false);
+                } else {
+                    const playPromise = audio.play();
+                    if (playPromise !== undefined) {
+                        playPromise
+                            .then(() => {
+                                setIsPlaying(true);
+                                if (onPlay) onPlay(title);
+                            })
+                            .catch((err) => {
+                                if (err.name !== 'AbortError') {
+                                    console.warn('Audio playback error:', err);
+                                }
+                                setIsPlaying(false);
+                            });
+                    }
+                }
+            };
+
+            return (
+                <div className="bg-white border-2 border-brand-dark rounded-2xl p-2.5 sm:p-3 flex items-center justify-between gap-3 shadow-chunky-sm">
+                    <div className="flex items-center gap-2.5 truncate">
+                        <button
+                            type="button"
+                            onClick={toggleAudio}
+                            className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 border-2 border-brand-dark shadow-chunky-sm transition active:translate-y-0.5 ${
+                                isPlaying ? 'bg-brand-coral text-white' : 'bg-brand-yellow text-brand-dark hover:bg-yellow-400'
+                            }`}
+                            aria-label={isPlaying ? 'Pause Audio' : 'Play Audio'}
+                        >
+                            <span className="material-symbols-rounded text-lg">
+                                {isPlaying ? 'pause' : 'play_arrow'}
+                            </span>
+                        </button>
+                        <div className="truncate">
+                            <span className="text-[10px] font-black uppercase tracking-wider text-brand-coral block leading-none">Hörtext Audio</span>
+                            <span className="text-xs font-black text-brand-dark truncate block mt-0.5">{title}</span>
+                        </div>
+                    </div>
+                    <audio 
+                        ref={audioRef} 
+                        src={src} 
+                        onPlay={() => setIsPlaying(true)}
+                        onPause={() => setIsPlaying(false)}
+                        onEnded={() => setIsPlaying(false)}
+                        preload="none"
+                    />
+                    <a
+                        href={src}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-zinc-400 hover:text-brand-dark p-1 rounded-lg"
+                        title="Open direct audio file"
+                    >
+                        <span className="material-symbols-rounded text-base">open_in_new</span>
+                    </a>
+                </div>
+            );
+        };
+
+        const VideoPlayerModal = ({ src, onClose, title = "Video Player &bull; Unit 5" }) => {
+            const videoRef = useRef(null);
+
+            useEffect(() => {
+                const video = videoRef.current;
+                if (video) {
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch((err) => {
+                            if (err.name !== 'AbortError') {
+                                console.warn('Video play error:', err);
+                            }
+                        });
+                    }
+                }
+                return () => {
+                    if (video) {
+                        try {
+                            video.pause();
+                        } catch (e) {}
+                    }
+                };
+            }, [src]);
+
+            return (
+                <div 
+                    className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
+                    onClick={onClose}
+                >
+                    <div className="bg-brand-dark text-white rounded-3xl p-4 max-w-lg w-full border-2 border-brand-yellow shadow-2xl relative" onClick={e => e.stopPropagation()}>
+                        <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-700">
+                            <span className="text-xs font-black text-brand-yellow" dangerouslySetInnerHTML={{ __html: title }}></span>
+                            <button
+                                type="button"
+                                onClick={onClose}
+                                className="w-7 h-7 rounded-full bg-zinc-800 text-white flex items-center justify-center font-black hover:bg-zinc-700"
+                            >
+                                &times;
+                            </button>
+                        </div>
+                        <video ref={videoRef} src={src} controls className="w-full rounded-2xl shadow" />
+                    </div>
+                </div>
+            );
+        };
+
+        const TranslationReveal = ({ englishText, isOpen, onToggle }) => (
+            <div className="mt-1">
+                <button
+                    type="button"
+                    onClick={onToggle}
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-zinc-500 hover:text-brand-dark bg-zinc-100 hover:bg-zinc-200 px-2 py-0.5 rounded-full transition"
+                >
+                    <span className="material-symbols-rounded text-xs text-brand-coral">translate</span>
+                    <span>{isOpen ? 'Hide Translation' : 'Translate instruction'}</span>
+                </button>
+                {isOpen && (
+                    <div className="mt-1.5 p-2 bg-brand-lavenderLight rounded-xl border border-brand-lavender text-xs text-brand-dark font-medium leading-relaxed italic animate-in fade-in duration-200">
+                        {englishText}
+                    </div>
+                )}
+            </div>
+        );
+
+        const RenderedEcoFacts = ({ onZoomScan }) => {
+            const facts = [
+                { id: '1', title: 'Papierverbrauch', value: '241 kg', desc: 'pro Person in Deutschland pro Jahr', icon: 'description', bg: 'bg-amber-50 border-amber-300 text-amber-950' },
+                { id: '2', title: 'Wasserverbrauch', value: '123 Liter', desc: 'täglicher Frischwasserbedarf pro Person', icon: 'water_drop', bg: 'bg-sky-50 border-sky-300 text-sky-950' },
+                { id: '3', title: 'Plastikflaschen', value: '2.000.000', desc: 'Einwegflaschen stündlich verbraucht', icon: 'recycling', bg: 'bg-rose-50 border-rose-300 text-rose-950' },
+                { id: '4', title: 'Lebensmittelreste', value: '75 kg', desc: 'genießbares Essen im Müll pro Kopf/Jahr', icon: 'delete_sweep', bg: 'bg-emerald-50 border-emerald-300 text-emerald-950' },
+                { id: '5', title: 'Thermobecher', value: '15 Minuten', desc: 'durchschnittliche Nutzungsdauer eines Einwegbechers', icon: 'coffee', bg: 'bg-purple-50 border-purple-300 text-purple-950' },
+            ];
+
+            return (
+                <div className="space-y-2.5">
+                    <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 flex items-center gap-1">
+                            <span className="material-symbols-rounded text-sm text-brand-coral">analytics</span>
+                            <span>Zahlen &amp; Fakten zur Umwelt &bull; Deutschland</span>
+                        </span>
+                        <button
+                            type="button"
+                            onClick={onZoomScan}
+                            className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                        >
+                            <span className="material-symbols-rounded text-xs">zoom_in</span>
+                            <span>Scan ansehen</span>
+                        </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {facts.map(f => (
+                            <div key={f.id} className={`p-3 rounded-2xl border-2 border-brand-dark shadow-chunky-sm ${f.bg} flex flex-col justify-between`}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-xs font-black bg-brand-dark text-white px-2 py-0.5 rounded-full flex items-center gap-1">
+                                        <span className="material-symbols-rounded text-xs">{f.icon}</span>
+                                        <span>{f.id}. {f.title}</span>
+                                    </span>
+                                    <span className="text-xs font-black text-brand-coral bg-white px-2 py-0.5 rounded-full border border-black/10">
+                                        {f.value}
+                                    </span>
+                                </div>
+                                <p className="text-[11px] font-semibold opacity-90 leading-snug mt-1">{f.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const RenderedSupermarketShopping = ({ onZoomScan }) => (
+            <div className="p-3.5 bg-brand-yellowLight border-2 border-brand-dark rounded-2xl shadow-chunky-sm space-y-2 text-brand-dark">
+                <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-brand-coral flex items-center gap-1">
+                        <span className="material-symbols-rounded text-sm">shopping_cart</span>
+                        <span>Linda &amp; Juan im Supermarkt</span>
+                    </span>
+                    <button
+                        type="button"
+                        onClick={onZoomScan}
+                        className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                    >
+                        <span className="material-symbols-rounded text-xs">zoom_in</span>
+                        <span>Foto ansehen</span>
+                    </button>
+                </div>
+                <div className="bg-white/80 p-2.5 rounded-xl border border-black/10 text-xs font-medium space-y-1.5 leading-relaxed">
+                    <p><strong>Juan:</strong> &bdquo;Schau mal, die Erdbeeren aus Spanien sind viel billiger als die Bio-Beeren aus Deutschland.&ldquo;</p>
+                    <p><strong>Linda:</strong> &bdquo;Ja, aber denk an die langen Transportwege und das viele Plastik! Ich gebe lieber etwas mehr Geld für regionale Produkte aus, um die Umwelt zu schützen.&ldquo;</p>
+                    <p><strong>Kernaussage:</strong> Preisvergleich vs. Ökobilanz, Bioprodukte und Müllvermeidung.</p>
+                </div>
+            </div>
+        );
+
+        const RenderedEcoDuell = () => {
+            const duels = [
+                { id: '1', title: 'Duschen vs. Baden', winner: 'Duschen verbraucht ca. 40–50 l, ein Vollbad bis zu 150 l!', result: 'Duschen ist deutlich umweltfreundlicher.', bg: 'bg-sky-50 border-sky-300' },
+                { id: '2', title: 'Spülmaschine vs. Handwäsche', winner: 'Moderne, effizientere Spülmaschinen sparen Strom & Wasser.', result: 'Spülmaschine mit voller Beladung gewinnt.', bg: 'bg-emerald-50 border-emerald-300' },
+                { id: '3', title: 'Gedrucktes Buch vs. E-Book', winner: 'Erst ab ca. 30–50 gelesenen E-Books lohnt sich die Geräteherstellung ökologisch.', result: 'Für Wenigleser ist das Buch umweltfreundlicher.', bg: 'bg-amber-50 border-amber-300' },
+                { id: '4', title: 'Getränke & Transport', winner: 'Getränke aus der Region in Mehrwegflaschen haben die beste Ökobilanz.', result: 'Kürzeste Transportwege schonen das Klima.', bg: 'bg-purple-50 border-purple-300' }
+            ];
+
+            return (
+                <div className="space-y-2">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 flex items-center gap-1">
+                        <span className="material-symbols-rounded text-sm text-brand-coral">balance</span>
+                        <span>Das Öko-Duell &bull; Was ist wirklich grüner?</span>
+                    </span>
+
+                    <div className="space-y-2">
+                        {duels.map(d => (
+                            <div key={d.id} className={`p-3 rounded-2xl border-2 border-brand-dark shadow-chunky-sm ${d.bg}`}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-xs font-black bg-brand-dark text-white px-2 py-0.5 rounded-full">
+                                        {d.title}
+                                    </span>
+                                </div>
+                                <p className="text-[11px] font-semibold text-zinc-800 leading-snug">{d.winner}</p>
+                                <span className="text-[10px] font-black text-brand-coral block mt-1">Fazit: {d.result}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const RenderedGreenStartups = () => {
+            const startups = [
+                { name: 'SIRPLUS', mission: 'Rettet überschüssige, ablaufende Lebensmittel vor der Tonne und verkauft sie günstig im Online-Shop, damit sie nicht im Abfall landen.', tag: 'Food Rescue', bg: 'bg-emerald-50 border-emerald-300' },
+                { name: 'RECUP / Pfandbecher', mission: 'Cafés verlangen Becherpfand, damit Kunden den Becher wieder zurückbringen, um Millionen Wegwerfbecher zu reduzieren.', tag: 'Mehrweg-System', bg: 'bg-amber-50 border-amber-300' },
+                { name: 'SUNNYBAG', mission: 'Rucksäcke und Taschen mit integriertem Solarpanel und Akku, um auch unterwegs in der Natur emissionsfreien Strom zu erzeugen.', tag: 'Solar Energy', bg: 'bg-sky-50 border-sky-300' }
+            ];
+
+            return (
+                <div className="space-y-2">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 flex items-center gap-1">
+                        <span className="material-symbols-rounded text-sm text-brand-coral">eco</span>
+                        <span>Grüne Start-ups &bull; Innovationen</span>
+                    </span>
+
+                    <div className="space-y-2">
+                        {startups.map(s => (
+                            <div key={s.name} className={`p-3 rounded-2xl border-2 border-brand-dark shadow-chunky-sm ${s.bg}`}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <h4 className="text-xs font-black text-brand-dark">{s.name}</h4>
+                                    <span className="text-[10px] font-black bg-brand-dark text-white px-2 py-0.5 rounded-full">{s.tag}</span>
+                                </div>
+                                <p className="text-[11px] font-medium text-zinc-800 leading-snug">{s.mission}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const RenderedWeatherForecasts = () => {
+            const forecasts = [
+                { id: '1', title: 'Vorhersage 1 (Sommer & Hitze)', temp: '32 °C', details: 'Sonnig, schwül, am Nachmittag schwere Gewitter und Schauer.', match: 'Foto C (Sommer)', bg: 'bg-amber-50 border-amber-300' },
+                { id: '2', title: 'Vorhersage 2 (Winter & Frost)', temp: '-4 bis -1 °C', details: 'Dauerfrost, Schneefall im Bergland und glatte Straßen am Mittwoch.', match: 'Foto D (Winter)', bg: 'bg-sky-50 border-sky-300' },
+                { id: '3', title: 'Vorhersage 3 (Herbstwind & Küste)', temp: '14 bis 20 °C', details: 'Wechselhaft bewölkt, stürmische Böen an Nord- und Ostsee.', match: 'Foto B (Herbst)', bg: 'bg-purple-50 border-purple-300' },
+                { id: '4', title: 'Vorhersage 4 (Frühling & Nebel)', temp: '8 bis 10 °C', details: 'Dichte Nebelfelder am Morgen, im Tagesverlauf milde Aufheiterung.', match: 'Foto A (Frühling)', bg: 'bg-emerald-50 border-emerald-300' }
+            ];
+
+            return (
+                <div className="space-y-2">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 flex items-center gap-1">
+                        <span className="material-symbols-rounded text-sm text-brand-coral">cloud</span>
+                        <span>Wetter in D-A-CH &bull; 4 Regionen</span>
+                    </span>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {forecasts.map(f => (
+                            <div key={f.id} className={`p-3 rounded-2xl border-2 border-brand-dark shadow-chunky-sm ${f.bg} flex flex-col justify-between`}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-[11px] font-black text-brand-dark">{f.title}</span>
+                                    <span className="text-[10px] font-black bg-brand-coral text-white px-2 py-0.5 rounded-full">{f.temp}</span>
+                                </div>
+                                <p className="text-[11px] font-semibold text-zinc-800 leading-snug">{f.details}</p>
+                                <span className="text-[10px] font-black text-zinc-500 mt-1.5 block">Passend zu: {f.match}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const RenderedPloggingSpotlight = () => (
+            <div className="p-4 bg-brand-mint text-brand-mintDark border-2 border-brand-dark rounded-3xl shadow-chunky-sm space-y-2">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                        <span className="material-symbols-rounded text-xl">directions_run</span>
+                        <h4 className="text-xs font-black text-brand-dark">Plogging: Joggen &amp; Müll sammeln</h4>
+                    </div>
+                    <span className="text-[10px] font-black bg-brand-mintDark text-white px-2 py-0.5 rounded-full">Audio 1.44</span>
+                </div>
+                <p className="text-xs font-semibold leading-relaxed text-zinc-800">
+                    Der Trend kommt aus Schweden (&bdquo;plocka upp&ldquo; + &bdquo;jogga&ldquo;): Man geht laufen und hebt dabei herumliegenden Müll auf. Man braucht nur Laufschuhe, Handschuhe und eine Mülltüte.
+                </p>
+                <div className="bg-white/80 p-2.5 rounded-xl border border-black/10 text-[11px] font-bold text-zinc-800 flex items-center gap-2">
+                    <span className="material-symbols-rounded text-brand-coral text-base">verified</span>
+                    <span>Doppelter Nutzen: Verbrennt viele Kalorien durch Kniebeugen und säubert die Natur!</span>
+                </div>
+            </div>
+        );
+
+        const RenderedFoodsharingSpotlight = ({ onZoomScan }) => (
+            <div className="p-4 bg-brand-coralLight border-2 border-brand-dark rounded-3xl shadow-chunky-sm space-y-2.5 text-brand-dark">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                        <span className="material-symbols-rounded text-xl text-brand-coral">volunteer_activism</span>
+                        <h4 className="text-xs font-black text-brand-dark">Foodsharing Mainz &bull; Gemeinsam gegen Verschwendung</h4>
+                    </div>
+                    <span className="text-[10px] font-black bg-brand-coral text-white px-2 py-0.5 rounded-full">Film 12 &amp; 13</span>
+                </div>
+                <p className="text-xs font-semibold leading-relaxed">
+                    Über 400 ehrenamtliche Helfer holen überschüssige Lebensmittel von Bäckereien und Märkten ab. Was noch genießbar ist, wandert in frei zugängliche Verteilerschränke für jedermann.
+                </p>
+                <div className="grid grid-cols-2 gap-2 text-[11px]">
+                    <div className="bg-white p-2 rounded-xl border border-black/10">
+                        <strong className="block text-brand-coral">Urs &amp; Petra</strong>
+                        <span>Pflegen den Schrank am Kirchhof und retten frisches Obst.</span>
+                    </div>
+                    <div className="bg-white p-2 rounded-xl border border-black/10">
+                        <strong className="block text-brand-coral">Javad &amp; Kirsten</strong>
+                        <span>Spenden Backwaren bzw. bringen Essen ins Studentenwohnheim.</span>
+                    </div>
+                </div>
+                <div className="flex justify-end pt-1">
+                    <button
+                        type="button"
+                        onClick={onZoomScan}
+                        className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                    >
+                        <span className="material-symbols-rounded text-xs">zoom_in</span>
+                        <span>Foto-Scan ansehen</span>
+                    </button>
+                </div>
+            </div>
+        );
+
+        function App() {
+            const [activeSection, setActiveSection] = useState('guide');
+
+            const [lightboxImg, setLightboxImg] = useState(null);
+            const [videoModal, setVideoModal] = useState(null);
+
+            const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+            const [showLogoutModal, setShowLogoutModal] = useState(false);
+            const [toastMessage, setToastMessage] = useState('');
+
+            const [openTranslations, setOpenTranslations] = useState({});
+
+            const toggleTranslation = (id) => {
+                setOpenTranslations(prev => ({ ...prev, [id]: !prev[id] }));
+            };
+
+            const showToast = (msg) => {
+                setToastMessage(msg);
+                setTimeout(() => setToastMessage(''), 3000);
+            };
+
+            // Exercise 1a Eco Facts: 1: b (241 kg), 2: b (123 l), 3: c (2.000.000), 4: b (75 kg), 5: c (15 Min)
+            const [ex1aAnswers, setEx1aAnswers] = useState({ 1: '', 2: '', 3: '', 4: '', 5: '' });
+            const [ex1aChecked, setEx1aChecked] = useState(false);
+            const ex1aSolutions = { 1: 'b', 2: 'b', 3: 'c', 4: 'b', 5: 'c' };
+
+            // Exercise 2a Supermarket Checkboxes:
+            // Correct: 1 (gutes Essen), 2 (Preise vergleichen), 3 (Bioprodukte), 4 (regionale Lebensmittel),
+            // 5 (lange Transportwege), 6 (Müll und Verpackung), 7 (Wasser), 8 (die Umwelt schützen)
+            const [ex2aCheckedState, setEx2aCheckedState] = useState({
+                1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false, 10: false, 11: false
+            });
+            const [ex2aGraded, setEx2aGraded] = useState(false);
+            const ex2aSolutions = {
+                1: true, 2: true, 3: true, 4: true, 5: true, 6: true, 7: true, 8: true, 9: false, 10: false, 11: false
+            };
+
+            // Exercise 5a Eco Comparisons: 1: f, 2: r, 3: f, 4: f, 5: r
+            const [ex5aAnswers, setEx5aAnswers] = useState({ 1: '', 2: '', 3: '', 4: '', 5: '' });
+            const [ex5aChecked, setEx5aChecked] = useState(false);
+            const ex5aSolutions = { 1: 'f', 2: 'r', 3: 'f', 4: 'f', 5: 'r' };
+
+            // Exercise 5b/c Grammar Comparative/Superlative before nouns: "Sätze 2, 4 und 5"
+            const [ex5bcAnswer, setEx5bcAnswer] = useState('');
+            const [ex5bcChecked, setEx5bcChecked] = useState(false);
+            const ex5bcSolution = 'Sätze 2, 4 und 5';
+
+            // Exercise 9a Sentence connections: 1: B, 2: D, 3: F
+            const [ex9aAnswers, setEx9aAnswers] = useState({ 1: '', 2: '', 3: '' });
+            const [ex9aChecked, setEx9aChecked] = useState(false);
+            const ex9aSolutions = { 1: 'B', 2: 'D', 3: 'F' };
+
+            // Exercise 9b Purpose Clauses: 1: damit, 2: um ... zu oder damit
+            const [ex9bAnswers, setEx9bAnswers] = useState({ 1: '', 2: '' });
+            const [ex9bChecked, setEx9bChecked] = useState(false);
+            const ex9bSolutions = {
+                1: 'damit (Nebensatz mit konjugiertem Verb am Ende)',
+                2: 'um ... zu (Infinitiv mit zu am Ende) oder damit'
+            };
+
+            // Exercise 11b Weather photo matching: 1: C, 2: D, 3: B, 4: A
+            const [ex11bAnswers, setEx11bAnswers] = useState({ 1: '', 2: '', 3: '', 4: '' });
+            const [ex11bChecked, setEx11bChecked] = useState(false);
+            const ex11bSolutions = { 1: 'C', 2: 'D', 3: 'B', 4: 'A' };
+
+            // Exercise 13c Plogging: 1: true, 2: false, 3: false, 4: false, 5: true
+            const [ex13cCheckedState, setEx13cCheckedState] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false });
+            const [ex13cGraded, setEx13cGraded] = useState(false);
+            const ex13cSolutions = { 1: true, 2: false, 3: false, 4: false, 5: true };
+
+            // Exercise 14a/b Foodsharing: 1: true, 2: false, 3: true, 4: true
+            const [ex14CheckedState, setEx14CheckedState] = useState({ 1: false, 2: false, 3: false, 4: false });
+            const [ex14Graded, setEx14Graded] = useState(false);
+            const ex14Solutions = { 1: true, 2: false, 3: true, 4: true };
+
+            const SECTIONS = [
+                { id: 'guide', label: 'Overview', icon: 'school', title: 'Chapter Overview & Teacher Guide' },
+                { id: 'p54', label: 'S. 54', icon: 'analytics', title: 'Zahlen, Fakten & Supermarkt' },
+                { id: 'p55', label: 'S. 55', icon: 'shopping_cart', title: 'Beim Einkaufen' },
+                { id: 'p56', label: 'S. 56', icon: 'balance', title: 'Das Öko-Duell' },
+                { id: 'p57', label: 'S. 57', icon: 'psychology', title: 'Komparativ & Superlativ' },
+                { id: 'p59', label: 'S. 59', icon: 'eco', title: 'Start-ups: damit & um... zu' },
+                { id: 'p60', label: 'S. 60', icon: 'cloud', title: 'Wetter in D-A-CH' },
+                { id: 'p61', label: 'S. 61', icon: 'directions_run', title: 'Engagement: Plogging' },
+                { id: 'p62', label: 'S. 62', icon: 'volunteer_activism', title: 'Foodsharing Mainz' },
+            ];
+
+            const currentSectionIndex = SECTIONS.findIndex(s => s.id === activeSection);
+
+            return (
+                <div className="w-full max-w-md md:max-w-xl mx-auto min-h-screen bg-brand-cream pb-32 relative shadow-2xl overflow-x-hidden">
+                    
+                    {/* STICKY TOP APP BAR */}
+                    <header className="sticky top-0 z-30 bg-brand-cream/95 backdrop-blur-md px-5 pt-4 pb-3 border-b-2 border-brand-dark/10 flex items-center justify-between">
+                        <div>
+                            <div className="inline-flex items-center gap-1.5 bg-brand-dark text-white px-3 py-1 rounded-full text-xs font-black tracking-wide">
+                                <span>GermanApp</span>
+                                <span className="text-brand-yellow">✦</span>
+                                <span className="text-[10px] text-zinc-300 font-bold uppercase tracking-wider">Level B1.1</span>
+                            </div>
+                            <h1 className="text-xl sm:text-2xl font-black tracking-tight text-brand-dark mt-1 flex items-center gap-1.5">
+                                <span>Kapitel 5: Umweltfreundlich?</span>
+                            </h1>
+                        </div>
+
+                        {/* German Flag Badge Dropdown Trigger */}
+                        <div className="relative">
+                            <button
+                                type="button"
+                                onClick={() => setShowProfileDropdown(prev => !prev)}
+                                className="flex items-center gap-1.5 bg-white hover:bg-zinc-100 text-brand-dark p-1 sm:px-2.5 sm:py-1 rounded-full border-2 border-brand-dark shadow-chunky-sm active:translate-y-0.5 transition"
+                                aria-label="Toggle User Navigation"
+                            >
+                                <GermanFlagIcon className="w-8 h-8" />
+                                <span className="material-symbols-rounded text-base text-brand-dark hidden sm:inline">
+                                    {showProfileDropdown ? 'expand_less' : 'expand_more'}
+                                </span>
+                            </button>
+
+                            {/* Dropdown Menu */}
+                            {showProfileDropdown && (
+                                <>
+                                    <div 
+                                        className="fixed inset-0 z-40" 
+                                        onClick={() => setShowProfileDropdown(false)}
+                                    ></div>
+                                    <div className="absolute right-0 top-full mt-2 w-52 bg-white border-2 border-brand-dark rounded-2xl shadow-chunky p-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
+                                        <div className="px-3 py-2 border-b border-zinc-100 mb-1 flex items-center gap-2">
+                                            <GermanFlagIcon className="w-7 h-7 rounded-lg" />
+                                            <div>
+                                                <span className="text-[10px] font-black uppercase text-zinc-400 block leading-tight">Student View</span>
+                                                <span className="text-xs font-black text-brand-dark">German Learner</span>
+                                            </div>
+                                        </div>
+
+                                        <a
+                                            href="../../student-portal.html"
+                                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-black text-brand-dark hover:bg-brand-yellowLight transition"
+                                        >
+                                            <span className="material-symbols-rounded text-base text-brand-coral">dashboard</span>
+                                            <span>Student Portal</span>
+                                        </a>
+
+                                        <a
+                                            href="../../course-map-b1.html"
+                                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-black text-brand-dark hover:bg-brand-yellowLight transition"
+                                        >
+                                            <span className="material-symbols-rounded text-base text-brand-coral">map</span>
+                                            <span>B1 Course Map</span>
+                                        </a>
+
+                                        <hr className="my-1 border-zinc-100" />
+
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setShowProfileDropdown(false);
+                                                setShowLogoutModal(true);
+                                            }}
+                                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-black text-red-600 hover:bg-red-50 transition text-left"
+                                        >
+                                            <span className="material-symbols-rounded text-base">logout</span>
+                                            <span>Sign Out</span>
+                                        </button>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </header>
+
+                    {/* HERO BANNER */}
+                    <section className="px-4 pt-3">
+                        <div className="bg-brand-yellow rounded-4xl p-5 sm:p-6 border-3 border-brand-dark shadow-chunky relative overflow-hidden">
+                            <span className="absolute top-3 right-5 text-xl opacity-60">✦</span>
+                            <span className="absolute bottom-3 left-5 text-xl opacity-60">♥</span>
+
+                            <div className="flex items-center justify-between relative z-10">
+                                <div className="max-w-[65%]">
+                                    <div className="inline-flex items-center gap-1.5 bg-brand-dark text-white px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider mb-2">
+                                        <span>Coursebook &bull; Einheit 5</span>
+                                    </div>
+                                    <h2 className="text-2xl sm:text-3xl font-black text-brand-dark leading-tight tracking-tight">
+                                        Umweltfreundlich?
+                                    </h2>
+                                    <p className="text-xs font-semibold text-brand-dark/85 mt-1.5 leading-relaxed">
+                                        Eco-footprint comparisons, purpose clauses with <em>damit</em> and <em>um ... zu</em>, green start-ups, weather, and foodsharing.
+                                    </p>
+                                </div>
+
+                                <div className="w-24 flex justify-center items-center">
+                                    <FritzLederhosen className="w-24 h-24" />
+                                </div>
+                            </div>
+
+                            {/* Jump to Workbook Shortcut */}
+                            <div className="mt-4 pt-3 border-t border-brand-dark/15 flex items-center justify-between gap-2">
+                                <a
+                                    href="../../course-map-b1.html"
+                                    className="flex-1 bg-white hover:bg-zinc-100 text-brand-dark py-2 px-3 rounded-full font-black text-xs border border-brand-dark shadow-chunky-sm text-center active:translate-y-0.5 transition"
+                                >
+                                    &larr; Back to Map
+                                </a>
+                                <a
+                                    href="../b1_workbook/cp5-b1workbook.html"
+                                    className="flex-1 bg-brand-coral hover:bg-orange-600 text-white py-2 px-3 rounded-full font-black text-xs border border-brand-dark shadow-chunky-sm flex items-center justify-center gap-1 active:translate-y-0.5 transition"
+                                >
+                                    <span>Open Workbook 5</span>
+                                    <span>&rarr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* OVERVIEW / TEACHER'S GUIDE */}
+                    {activeSection === 'guide' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="bg-brand-lavenderLight rounded-3xl p-5 border-2 border-brand-dark shadow-chunky-sm">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className="w-8 h-8 rounded-xl bg-brand-lavender border border-brand-dark flex items-center justify-center text-brand-dark shrink-0">
+                                        <span className="material-symbols-rounded text-base">school</span>
+                                    </span>
+                                    <h3 className="text-base font-black text-brand-dark leading-tight">
+                                        Teacher's Guide &amp; Unit Objectives
+                                    </h3>
+                                </div>
+                                <p className="text-xs text-brand-dark/90 font-semibold leading-relaxed">
+                                    Welcome to Chapter 5! In this unit, you will master German communication around sustainability, eco-friendly consumer habits, weather forecasts, and community eco-initiatives.
+                                </p>
+
+                                <div className="mt-3 pt-3 border-t border-brand-dark/10 space-y-1.5">
+                                    <span className="text-[10px] font-black uppercase tracking-wider text-brand-dark/70 block">Key Competencies:</span>
+                                    <ul className="text-xs text-zinc-700 font-semibold space-y-1 pl-1">
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Discuss ecological figures, water, and plastic consumption.</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Make complex comparisons using <strong>Komparativ &amp; Superlativ vor Nomen</strong>.</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Express purpose and intentions with <strong>damit</strong> and <strong>um ... zu</strong>.</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Understand weather forecasts across Germany, Austria, and Switzerland.</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Explore eco-initiatives like <em>Plogging</em> and <em>Foodsharing</em>.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {/* Grammar Spotlight */}
+                            <div className="bg-brand-cream rounded-3xl p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-8 h-8 rounded-xl bg-brand-yellow border border-brand-dark flex items-center justify-center text-brand-dark shrink-0">
+                                        <span className="material-symbols-rounded text-base">psychology</span>
+                                    </span>
+                                    <h3 className="text-base font-black text-brand-dark leading-tight">
+                                        Grammar Spotlight: Komparativ vor Nomen &amp; Finalsätze
+                                    </h3>
+                                </div>
+
+                                <div className="bg-white p-3.5 rounded-2xl border border-black/10 text-xs text-zinc-700 font-medium space-y-2">
+                                    <div>
+                                        <strong className="text-brand-dark">1. Komparativ &amp; Superlativ vor Nomen:</strong>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; Komparativ: <em>effizienter &rarr; effizient<strong>ere</strong> Geschirrspüler</em> | <em>gut &rarr; eine bess<strong>ere</strong> Ökobilanz</em></p>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; Superlativ: <em>mit dem kürz<strong>esten</strong> Transportweg</em></p>
+                                    </div>
+                                    <div className="pt-1 border-t border-zinc-100">
+                                        <strong className="text-brand-dark">2. Finalsätze (Zweck &amp; Absicht):</strong>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; <strong>damit:</strong> Verschiedene Subjekte &rarr; <em>Die Cafés verlangen Pfand, <strong>damit die Kunden</strong> die Becher zurückbringen.</em></p>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; <strong>um ... zu:</strong> Gleiches Subjekt &rarr; <em>Viele kaufen Solar-Taschen, <strong>um</strong> Strom <strong>zu haben</strong>.</em></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={() => setActiveSection('p54')}
+                                className="w-full bg-brand-coral hover:bg-orange-600 text-white font-black text-xs py-3 px-4 rounded-full border-2 border-brand-dark shadow-chunky active:translate-y-0.5 transition flex items-center justify-center gap-2"
+                            >
+                                <span>Start Page 54: Zahlen &amp; Fakten zur Umwelt</span>
+                                <span>&rarr;</span>
+                            </button>
+                        </main>
+                    )}
+
+                    {activeSection === 'p54' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-yellow px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 54
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Zahlen, Fakten &amp; Supermarkt</span>
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-3 sm:p-4 border-2 border-brand-dark shadow-chunky-sm">
+                                <RenderedEcoFacts
+                                    onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_course_img/cp5-img1.png')}
+                                />
+                            </div>
+
+                            {/* Exercise 1a Eco Facts Quiz */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">1a</span>
+                                    <div>
+                                        <h4 className="text-xs font-black text-brand-dark leading-tight">Raten Sie: Welche Antworten stimmen?</h4>
+                                        <p className="text-[11px] text-zinc-500 font-medium">Wählen Sie die korrekten Fakten zu Papier, Wasser und Müll.</p>
+                                    </div>
+                                </div>
+                                <TranslationReveal
+                                    englishText="Facts and figures about the environment. Guess which answers are correct."
+                                    isOpen={!!openTranslations['1a']}
+                                    onToggle={() => toggleTranslation('1a')}
+                                />
+
+                                <div className="space-y-3 pt-1">
+                                    {[
+                                        { id: 1, label: '1. Papierverbrauch pro Kopf/Jahr', opts: [{ v: 'a', t: 'a) 120 kg' }, { v: 'b', t: 'b) 241 kg (Korrekt)' }, { v: 'c', t: 'c) 350 kg' }] },
+                                        { id: 2, label: '2. Täglicher Wasserverbrauch pro Person', opts: [{ v: 'a', t: 'a) 85 Liter' }, { v: 'b', t: 'b) 123 Liter (Korrekt)' }, { v: 'c', t: 'c) 200 Liter' }] },
+                                        { id: 3, label: '3. Plastikflaschen pro Stunde in Deutschland', opts: [{ v: 'a', t: 'a) 500.000' }, { v: 'b', t: 'b) 1.200.000' }, { v: 'c', t: 'c) 2.000.000 (Korrekt)' }] },
+                                        { id: 4, label: '4. Lebensmittel im Müll pro Kopf/Jahr', opts: [{ v: 'a', t: 'a) 42 kg' }, { v: 'b', t: 'b) 75 kg (Korrekt)' }, { v: 'c', t: 'c) 110 kg' }] },
+                                        { id: 5, label: '5. Nutzungsdauer Einwegbecher im Schnitt', opts: [{ v: 'a', t: 'a) 30 Minuten' }, { v: 'b', t: 'b) 20 Minuten' }, { v: 'c', t: 'c) 15 Minuten (Korrekt)' }] }
+                                    ].map(item => {
+                                        const userAns = ex1aAnswers[item.id];
+                                        const isCorrect = userAns === ex1aSolutions[item.id];
+                                        return (
+                                            <div key={item.id} className="p-3 bg-brand-cream rounded-2xl border border-black/10 space-y-1">
+                                                <span className="text-xs font-black text-brand-dark block">{item.label}:</span>
+                                                <select
+                                                    value={userAns}
+                                                    onChange={e => setEx1aAnswers({ ...ex1aAnswers, [item.id]: e.target.value })}
+                                                    className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                        ex1aChecked
+                                                            ? isCorrect ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                            : 'border-brand-dark'
+                                                    }`}
+                                                >
+                                                    <option value="">-- Zahl wählen --</option>
+                                                    {item.opts.map(o => <option key={o.v} value={o.v}>{o.t}</option>)}
+                                                </select>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx1aChecked(true);
+                                        const ok = Object.keys(ex1aSolutions).every(k => ex1aAnswers[k] === ex1aSolutions[k]);
+                                        showToast(ok ? '🎉 Beeindruckend! Alle Umweltfakten stimmen!' : '⚠️ Überprüfen Sie Ihre Schätzungen!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 1a Fakten
+                                </button>
+                            </div>
+
+                            {/* Audio 1.36 Card */}
+                            <AudioPlayerCard
+                                title="Audio 1.36: Linda & Juan im Supermarkt"
+                                src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-036.mp3"
+                            />
+
+                            {/* Exercise 2a Topics Checkbox */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-coral text-white border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">2a</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Um welche Themen geht es im Gespräch?</h4>
+                                </div>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                                    {[
+                                        { id: 1, text: 'gutes Essen' },
+                                        { id: 2, text: 'Preise vergleichen' },
+                                        { id: 3, text: 'Bioprodukte' },
+                                        { id: 4, text: 'regionale Lebensmittel' },
+                                        { id: 5, text: 'lange Transportwege' },
+                                        { id: 6, text: 'Müll und Verpackung' },
+                                        { id: 7, text: 'Wasser' },
+                                        { id: 8, text: 'die Umwelt schützen' },
+                                        { id: 9, text: 'Tiere schützen' },
+                                        { id: 10, text: 'Recycling' },
+                                        { id: 11, text: 'Energie sparen' }
+                                    ].map(item => {
+                                        const isChecked = ex2aCheckedState[item.id];
+                                        const correct = ex2aSolutions[item.id];
+                                        return (
+                                            <label
+                                                key={item.id}
+                                                className={`flex items-start gap-2.5 p-2.5 rounded-2xl border-2 transition cursor-pointer ${
+                                                    ex2aGraded
+                                                        ? isChecked === correct
+                                                            ? 'border-emerald-600 bg-emerald-50'
+                                                            : 'border-red-500 bg-red-50'
+                                                        : isChecked
+                                                            ? 'border-brand-dark bg-brand-yellowLight'
+                                                            : 'border-black/15 bg-white'
+                                                }`}
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isChecked}
+                                                    onChange={e => setEx2aCheckedState({ ...ex2aCheckedState, [item.id]: e.target.checked })}
+                                                    className="w-4 h-4 mt-0.5 accent-brand-coral rounded"
+                                                />
+                                                <span className="text-xs font-semibold text-brand-dark leading-snug">{item.text}</span>
+                                            </label>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx2aGraded(true);
+                                        const ok = Object.keys(ex2aSolutions).every(k => ex2aCheckedState[k] === ex2aSolutions[k]);
+                                        showToast(ok ? '🎉 Alle Gesprächsthemen genau erkannt!' : '⚠️ Hören Sie Audio 1.36 nochmals an!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 2a Themen
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {activeSection === 'p55' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-lavender px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 55
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Beim Einkaufen &bull; Kriterien</span>
+                            </div>
+
+                            <RenderedSupermarketShopping
+                                onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_course_img/cp5-img2.png')}
+                            />
+
+                            {/* Self-Expression Prompt */}
+                            <div className="bg-white rounded-3xl p-4 border-2 border-brand-dark shadow-chunky-sm space-y-2">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-lavender border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">2b</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Was ist für Sie wichtig beim Einkaufen?</h4>
+                                </div>
+                                <TranslationReveal
+                                    englishText="What is important to you when shopping (price, quality, brand, origin, organic...)? Discuss in class."
+                                    isOpen={!!openTranslations['2b']}
+                                    onToggle={() => toggleTranslation('2b')}
+                                />
+                                <div className="p-3 bg-brand-cream rounded-2xl border border-black/10 text-xs font-medium text-zinc-700 italic leading-relaxed">
+                                    &bdquo;Ich achte vor allem auf regionale Herkunft und Bio-Siegel. Der Preis ist zwar auch wichtig, aber ich kaufe lieber weniger und dafür nachhaltiger.&ldquo;
+                                </div>
+                            </div>
+                        </main>
+                    )}
+
+                    {activeSection === 'p56' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-coral text-white px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 56
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Das Öko-Duell &bull; Vergleiche</span>
+                            </div>
+
+                            <RenderedEcoDuell />
+
+                            {/* Exercise 5a True/False Comparisons */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-coral text-white border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">5a</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Ökovergleiche: Richtig (r) oder falsch (f)?</h4>
+                                </div>
+
+                                <div className="space-y-2.5 pt-1">
+                                    {[
+                                        { id: 1, text: 'Duschen ist für die Umwelt schlechter als Baden.' },
+                                        { id: 2, text: 'Heute kann man effizientere Geschirrspüler kaufen als früher.' },
+                                        { id: 3, text: 'Von Hand zu spülen ist am umweltfreundlichsten.' },
+                                        { id: 4, text: 'Gedruckte Bücher haben immer eine bessere Ökobilanz als E-Books.' },
+                                        { id: 5, text: 'Am besten kauft man das Getränk mit dem kürzesten Transportweg.' }
+                                    ].map(item => {
+                                        const userAns = ex5aAnswers[item.id];
+                                        const isCorrect = userAns === ex5aSolutions[item.id];
+                                        return (
+                                            <div key={item.id} className="flex items-center justify-between p-2.5 bg-brand-cream rounded-xl border border-black/10">
+                                                <span className="text-xs font-bold text-brand-dark flex-1 mr-2">{item.id}. {item.text}</span>
+                                                <select
+                                                    value={userAns}
+                                                    onChange={e => setEx5aAnswers({ ...ex5aAnswers, [item.id]: e.target.value })}
+                                                    className={`bg-white border-2 rounded-xl px-3 py-1 text-xs font-black focus:outline-none transition ${
+                                                        ex5aChecked
+                                                            ? isCorrect ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                            : 'border-brand-dark'
+                                                    }`}
+                                                >
+                                                    <option value="">-- r/f --</option>
+                                                    <option value="r">r (richtig)</option>
+                                                    <option value="f">f (falsch)</option>
+                                                </select>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx5aChecked(true);
+                                        const ok = Object.keys(ex5aSolutions).every(k => ex5aAnswers[k] === ex5aSolutions[k]);
+                                        showToast(ok ? '🎉 Perfekt! Alle Ökovergleiche stimmen.' : '⚠️ Prüfen Sie Duschen vs. Baden und E-Books!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 5a Ökovergleiche
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {activeSection === 'p57' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-mint text-brand-mintDark px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 57
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Grammatik &bull; Komparativ vor Nomen</span>
+                            </div>
+
+                            {/* Exercise 5b/c */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-mint text-brand-mintDark border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">5b</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Welche Sätze enthalten Steigerungsformen direkt vor einem Nomen?</h4>
+                                </div>
+
+                                <div className="space-y-3 pt-1">
+                                    <div className="p-3 bg-brand-cream rounded-2xl border border-black/10 space-y-1">
+                                        <label className="text-xs font-black text-brand-dark block">Auswahl:</label>
+                                        <select
+                                            value={ex5bcAnswer}
+                                            onChange={e => setEx5bcAnswer(e.target.value)}
+                                            className={`w-full bg-white border-2 rounded-xl p-2.5 text-xs font-black focus:outline-none transition ${
+                                                ex5bcChecked
+                                                    ? ex5bcAnswer === ex5bcSolution ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Sätze wählen --</option>
+                                            <option value="Sätze 1, 2 und 3">Sätze 1, 2 und 3</option>
+                                            <option value="Sätze 2, 4 und 5">Sätze 2, 4 und 5 (effizientere Geschirrspüler, bessere Ökobilanz, kürzester Transportweg)</option>
+                                            <option value="Sätze 1, 3 und 5">Sätze 1, 3 und 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx5bcChecked(true);
+                                        showToast(ex5bcAnswer === ex5bcSolution ? '🎉 Genau! Sätze 2, 4 und 5 stehen vor dem Nomen mit Adjektivendung.' : '⚠️ Achten Sie auf Adjektive direkt vor Nomen!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 5b/c Grammatik
+                                </button>
+                            </div>
+
+                            {/* Reference Banner */}
+                            <div className="p-4 bg-brand-yellowLight border-2 border-brand-dark rounded-3xl shadow-chunky-sm space-y-1.5">
+                                <span className="text-[10px] font-black uppercase tracking-wider text-brand-dark/70 block">Grammatikregel: Steigerung vor Nomen</span>
+                                <div className="text-xs font-bold text-brand-dark space-y-1">
+                                    <p><strong className="text-brand-coral">Komparativ:</strong> Grundform + <strong>-er-</strong> + Adjektivendung &rarr; <em>effizient-er-e Geschirrspüler</em></p>
+                                    <p><strong className="text-emerald-700">Superlativ:</strong> Grundform + <strong>-(e)st-</strong> + Adjektivendung &rarr; <em>mit dem kürz-est-en Transportweg</em></p>
+                                </div>
+                            </div>
+                        </main>
+                    )}
+
+                    {activeSection === 'p59' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-sky text-sky-900 px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 59
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Grüne Start-ups &bull; damit &amp; um ... zu</span>
+                            </div>
+
+                            <RenderedGreenStartups />
+
+                            {/* Exercise 9a Sentence Connections */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-sky text-sky-900 border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">9a</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Sätze verbinden mit damit oder um ... zu:</h4>
+                                </div>
+
+                                <div className="space-y-3 pt-1">
+                                    {[
+                                        { id: 1, text: '1. SIRPLUS rettet Lebensmittel,' },
+                                        { id: 2, text: '2. Das Start-up hat einen Online-Shop,' },
+                                        { id: 3, text: '3. Die SUNNYBAG-Taschen haben einen Akku,' }
+                                    ].map(item => {
+                                        const userAns = ex9aAnswers[item.id];
+                                        const isCorrect = userAns === ex9aSolutions[item.id];
+                                        return (
+                                            <div key={item.id} className="p-3 bg-brand-cream rounded-2xl border border-black/10 space-y-1.5">
+                                                <span className="text-xs font-black text-brand-dark">{item.text}</span>
+                                                <select
+                                                    value={userAns}
+                                                    onChange={e => setEx9aAnswers({ ...ex9aAnswers, [item.id]: e.target.value })}
+                                                    className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                        ex9aChecked
+                                                            ? isCorrect ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                            : 'border-brand-dark'
+                                                    }`}
+                                                >
+                                                    <option value="">-- Satzende wählen --</option>
+                                                    <option value="A">A) um in der Natur Strom zu haben.</option>
+                                                    <option value="B">B) damit sie nicht im Abfall landen.</option>
+                                                    <option value="C">C) um die Wegwerfbecher zu reduzieren.</option>
+                                                    <option value="D">D) um die Waren in ganz Deutschland zu verkaufen.</option>
+                                                    <option value="E">E) damit die Kunden die Becher zurückbringen.</option>
+                                                    <option value="F">F) damit man das Handy immer aufladen kann.</option>
+                                                </select>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx9aChecked(true);
+                                        const ok = Object.keys(ex9aSolutions).every(k => ex9aAnswers[k] === ex9aSolutions[k]);
+                                        showToast(ok ? '🎉 Alle Absichten perfekt verknüpft!' : '⚠️ Achten Sie auf Subjekte und Sinn!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 9a Satzverbindungen
+                                </button>
+                            </div>
+
+                            {/* Exercise 9b Grammar Rule */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">9b</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Grammatik: Wann nutzt man damit vs. um ... zu?</h4>
+                                </div>
+
+                                <div className="space-y-3 pt-1">
+                                    <div>
+                                        <label className="text-[11px] font-black text-brand-dark block mb-1">
+                                            1. Subjekte in Haupt- und Nebensatz sind verschieden:
+                                        </label>
+                                        <select
+                                            value={ex9bAnswers[1]}
+                                            onChange={e => setEx9bAnswers({ ...ex9bAnswers, 1: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex9bChecked
+                                                    ? ex9bAnswers[1] === ex9bSolutions[1] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Regel wählen --</option>
+                                            <option value="damit (Nebensatz mit konjugiertem Verb am Ende)">damit (Nebensatz mit konjugiertem Verb am Ende)</option>
+                                            <option value="um ... zu (Infinitivsatz am Ende)">um ... zu (Infinitivsatz am Ende)</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label className="text-[11px] font-black text-brand-dark block mb-1">
+                                            2. Subjekte in Haupt- und Nebensatz sind identisch:
+                                        </label>
+                                        <select
+                                            value={ex9bAnswers[2]}
+                                            onChange={e => setEx9bAnswers({ ...ex9bAnswers, 2: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex9bChecked
+                                                    ? ex9bAnswers[2] === ex9bSolutions[2] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Regel wählen --</option>
+                                            <option value="nur damit">nur damit</option>
+                                            <option value="um ... zu (Infinitiv mit zu am Ende) oder damit">um ... zu (Infinitiv mit zu am Ende) oder damit</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx9bChecked(true);
+                                        const ok = ex9bAnswers[1] === ex9bSolutions[1] && ex9bAnswers[2] === ex9bSolutions[2];
+                                        showToast(ok ? '🎉 Subjekt-Regel für damit / um ... zu perfekt verstanden!' : '⚠️ Verschiedene Subjekte &rarr; nur damit!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 9b Finalsätze
+                                </button>
+                            </div>
+
+                            {/* Video Clip 12-13 Trigger */}
+                            <div className="bg-brand-coralLight rounded-3xl p-4 border-2 border-brand-dark shadow-chunky-sm flex items-center justify-between gap-3">
+                                <div>
+                                    <span className="text-[10px] font-black uppercase text-brand-coral block">Video Clip</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Video 12–13: Pro &amp; Contra Nachhaltigkeit</h4>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setVideoModal('https://storage.googleapis.com/germanapp-media-2026/b1_coursevideo/NWn_B1_Film_012-013_K5_UT.mp4')}
+                                    className="bg-brand-coral hover:bg-orange-600 text-white font-black text-xs px-3.5 py-2 rounded-full border border-brand-dark shadow-chunky-sm shrink-0 flex items-center gap-1 active:translate-y-0.5 transition"
+                                >
+                                    <span className="material-symbols-rounded text-sm">play_circle</span>
+                                    <span>Play Video</span>
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {activeSection === 'p60' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-yellow px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 60
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Das Wetter in D-A-CH &bull; Audios 1.40–1.43</span>
+                            </div>
+
+                            <RenderedWeatherForecasts />
+
+                            <div className="space-y-2">
+                                <AudioPlayerCard title="Audio 1.40: Wettervorhersage 1" src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-040.mp3" />
+                                <AudioPlayerCard title="Audio 1.41: Wettervorhersage 2" src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-041.mp3" />
+                                <AudioPlayerCard title="Audio 1.42: Wettervorhersage 3" src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-042.mp3" />
+                                <AudioPlayerCard title="Audio 1.43: Wettervorhersage 4" src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-043.mp3" />
+                            </div>
+
+                            {/* Exercise 11b Weather photo match */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">11b</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Welche Vorhersage passt zu welchem Wetterfoto?</h4>
+                                </div>
+
+                                <div className="space-y-2.5 pt-1">
+                                    {[
+                                        { id: 1, label: 'Vorhersage 1 (ca. 32 Grad, Gewitter)' },
+                                        { id: 2, label: 'Vorhersage 2 (minus 4 bis minus 1 Grad)' },
+                                        { id: 3, label: 'Vorhersage 3 (14 bis 20 Grad, Wind)' },
+                                        { id: 4, label: 'Vorhersage 4 (über 8–10 Grad, Nebel)' }
+                                    ].map(item => {
+                                        const userAns = ex11bAnswers[item.id];
+                                        const isCorrect = userAns === ex11bSolutions[item.id];
+                                        return (
+                                            <div key={item.id} className="flex items-center justify-between p-2.5 bg-brand-cream rounded-xl border border-black/10">
+                                                <span className="text-xs font-black text-brand-dark">{item.label}:</span>
+                                                <select
+                                                    value={userAns}
+                                                    onChange={e => setEx11bAnswers({ ...ex11bAnswers, [item.id]: e.target.value })}
+                                                    className={`bg-white border-2 rounded-xl px-3 py-1 text-xs font-black focus:outline-none transition ${
+                                                        ex11bChecked
+                                                            ? isCorrect ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                            : 'border-brand-dark'
+                                                    }`}
+                                                >
+                                                    <option value="">-- Foto wählen --</option>
+                                                    <option value="A">Foto A (Frühling/Nebel)</option>
+                                                    <option value="B">Foto B (Herbstwind)</option>
+                                                    <option value="C">Foto C (Sommerhitze)</option>
+                                                    <option value="D">Foto D (Winterfrost)</option>
+                                                </select>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx11bChecked(true);
+                                        const ok = Object.keys(ex11bSolutions).every(k => ex11bAnswers[k] === ex11bSolutions[k]);
+                                        showToast(ok ? '🎉 Alle Wetterberichte korrekt zugeordnet!' : '⚠️ Achten Sie auf Temperatur und Wetterphänomen!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 11b Wetter
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {activeSection === 'p61' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-mint text-brand-mintDark px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 61
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Engagement &bull; Plogging &bull; Audio 1.44</span>
+                            </div>
+
+                            <AudioPlayerCard
+                                title="Audio 1.44: Der Plogging-Trend"
+                                src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-044.mp3"
+                            />
+
+                            <RenderedPloggingSpotlight />
+
+                            {/* Exercise 13c Checkboxes */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-coral text-white border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">13c</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Plogging: Welche Aussagen sind richtig?</h4>
+                                </div>
+
+                                <div className="space-y-2 pt-1">
+                                    {[
+                                        { id: 1, text: '„Plogging“ bedeutet „beim Joggen Müll aufheben“.' },
+                                        { id: 2, text: 'Plogging ist ein aufwändiger Sport, man benötigt viele teure Dinge.' },
+                                        { id: 3, text: 'Beim Plogging geht es vor allem um Schnelligkeit und Rekorde.' },
+                                        { id: 4, text: 'Zum Plogging muss man sich unbedingt einer festen Gruppe anschließen.' },
+                                        { id: 5, text: 'Plogging ist gesund und gleichzeitig gut für die Umwelt.' }
+                                    ].map(item => {
+                                        const isChecked = ex13cCheckedState[item.id];
+                                        const correct = ex13cSolutions[item.id];
+                                        return (
+                                            <label
+                                                key={item.id}
+                                                className={`flex items-start gap-2.5 p-2.5 rounded-2xl border-2 transition cursor-pointer ${
+                                                    ex13cGraded
+                                                        ? isChecked === correct
+                                                            ? 'border-emerald-600 bg-emerald-50'
+                                                            : 'border-red-500 bg-red-50'
+                                                        : isChecked
+                                                            ? 'border-brand-dark bg-brand-yellowLight'
+                                                            : 'border-black/15 bg-white'
+                                                }`}
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isChecked}
+                                                    onChange={e => setEx13cCheckedState({ ...ex13cCheckedState, [item.id]: e.target.checked })}
+                                                    className="w-4 h-4 mt-0.5 accent-brand-coral rounded"
+                                                />
+                                                <span className="text-xs font-semibold text-brand-dark leading-snug">{item.text}</span>
+                                            </label>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx13cGraded(true);
+                                        const ok = Object.keys(ex13cSolutions).every(k => ex13cCheckedState[k] === ex13cSolutions[k]);
+                                        showToast(ok ? '🎉 Plogging-Aussagen perfekt bewertet!' : '⚠️ Hören Sie Audio 1.44 noch einmal!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 13c Plogging
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {activeSection === 'p62' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-coral text-white px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 62
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Foodsharing Mainz &bull; Video 12 &amp; 13</span>
+                            </div>
+
+                            <RenderedFoodsharingSpotlight
+                                onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_course_img/cp5-img9.png')}
+                            />
+
+                            {/* Video Triggers for Scenes 12 and 13 */}
+                            <div className="space-y-2">
+                                <div className="bg-brand-yellowLight rounded-2xl p-3 border-2 border-brand-dark flex items-center justify-between">
+                                    <span className="text-xs font-black text-brand-dark">Film Szene 12: Foodsharing erklärt</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => setVideoModal('https://storage.googleapis.com/germanapp-media-2026/b1_coursevideo/NWn_B1_Film_012_UT.mp4')}
+                                        className="bg-brand-dark text-white text-xs font-black px-3 py-1 rounded-full shadow-chunky-sm active:translate-y-0.5 transition"
+                                    >
+                                        Play Szene 12
+                                    </button>
+                                </div>
+                                <div className="bg-brand-coralLight rounded-2xl p-3 border-2 border-brand-dark flex items-center justify-between">
+                                    <span className="text-xs font-black text-brand-dark">Film Szene 13: Die Verteiler-Stationen</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => setVideoModal('https://storage.googleapis.com/germanapp-media-2026/b1_coursevideo/NWn_B1_Film_013_UT.mp4')}
+                                        className="bg-brand-coral text-white text-xs font-black px-3 py-1 rounded-full shadow-chunky-sm active:translate-y-0.5 transition"
+                                    >
+                                        Play Szene 13
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Exercise 14a/b Checkboxes */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-coral text-white border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">14</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Foodsharing: Welche Aussagen treffen zu?</h4>
+                                </div>
+
+                                <div className="space-y-2 pt-1">
+                                    {[
+                                        { id: 1, text: 'Über 400 Personen arbeiten bei Foodsharing Mainz ehrenamtlich mit.' },
+                                        { id: 2, text: 'Foodsharing verkauft überschüssige Lebensmittel in Supermärkten mit Rabatt.' },
+                                        { id: 3, text: 'Anna möchte helfen, dass nicht so viele Lebensmittel im Müll landen.' },
+                                        { id: 4, text: 'Die Lebensmittel bekommen Bedürftige, aber auch Freunde und Bekannte.' }
+                                    ].map(item => {
+                                        const isChecked = ex14CheckedState[item.id];
+                                        const correct = ex14Solutions[item.id];
+                                        return (
+                                            <label
+                                                key={item.id}
+                                                className={`flex items-start gap-2.5 p-2.5 rounded-2xl border-2 transition cursor-pointer ${
+                                                    ex14Graded
+                                                        ? isChecked === correct
+                                                            ? 'border-emerald-600 bg-emerald-50'
+                                                            : 'border-red-500 bg-red-50'
+                                                        : isChecked
+                                                            ? 'border-brand-dark bg-brand-yellowLight'
+                                                            : 'border-black/15 bg-white'
+                                                }`}
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isChecked}
+                                                    onChange={e => setEx14CheckedState({ ...ex14CheckedState, [item.id]: e.target.checked })}
+                                                    className="w-4 h-4 mt-0.5 accent-brand-coral rounded"
+                                                />
+                                                <span className="text-xs font-semibold text-brand-dark leading-snug">{item.text}</span>
+                                            </label>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx14Graded(true);
+                                        const ok = Object.keys(ex14Solutions).every(k => ex14CheckedState[k] === ex14Solutions[k]);
+                                        showToast(ok ? '🎉 Foodsharing-Fakten perfekt verstanden!' : '⚠️ Foodsharing verkauft nichts – alles wird verschenkt!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 14 Foodsharing
+                                </button>
+                            </div>
+
+                            {/* Chapter 5 Completion Card */}
+                            <div className="bg-brand-mint text-brand-mintDark rounded-3xl p-5 border-2 border-brand-dark shadow-chunky space-y-2 text-center">
+                                <span className="material-symbols-rounded text-3xl">verified</span>
+                                <h3 className="text-lg font-black leading-tight text-brand-dark">Kapitel 5 Coursebook abgeschlossen!</h3>
+                                <p className="text-xs font-semibold text-zinc-700">
+                                    Deepen your comparative adjective endings and final clause drills in Workbook 5.
+                                </p>
+                                <a
+                                    href="../b1_workbook/cp5-b1workbook.html"
+                                    className="inline-flex items-center gap-1.5 bg-brand-dark hover:bg-zinc-800 text-white font-black text-xs px-5 py-2.5 rounded-full border border-brand-dark shadow-chunky-sm transition mt-2"
+                                >
+                                    <span>Launch Workbook 5</span>
+                                    <span>&rarr;</span>
+                                </a>
+                            </div>
+                        </main>
+                    )}
+
+                    <nav className="fixed bottom-3 left-0 right-0 z-40 max-w-md md:max-w-xl mx-auto px-4 pointer-events-none">
+                        <div className="bg-brand-dark/95 text-white backdrop-blur-lg p-2 rounded-full border-2 border-brand-dark shadow-2xl flex items-center justify-between pointer-events-auto">
+                            <a
+                                href="../../course-map-b1.html"
+                                className="flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold text-zinc-400 hover:text-white transition"
+                            >
+                                <span className="material-symbols-rounded text-base">arrow_back</span>
+                                <span>Course Map</span>
+                            </a>
+
+                            {/* Previous Section Button */}
+                            <button
+                                onClick={() => {
+                                    if (currentSectionIndex > 0) {
+                                        setActiveSection(SECTIONS[currentSectionIndex - 1].id);
+                                        window.scrollTo({ top: 120, behavior: 'smooth' });
+                                    }
+                                }}
+                                disabled={currentSectionIndex === 0}
+                                className={`flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold transition ${
+                                    currentSectionIndex === 0 ? 'opacity-30 cursor-not-allowed' : 'text-zinc-400 hover:text-white'
+                                }`}
+                            >
+                                <span className="material-symbols-rounded text-base">navigate_before</span>
+                                <span>Prev Page</span>
+                            </button>
+
+                            {/* Section indicator pill */}
+                            <div className="px-2 py-1 bg-brand-yellow text-brand-dark rounded-full text-[10px] font-black border border-brand-dark">
+                                {SECTIONS[currentSectionIndex].label}
+                            </div>
+
+                            {/* Next Section Button */}
+                            <button
+                                onClick={() => {
+                                    if (currentSectionIndex < SECTIONS.length - 1) {
+                                        setActiveSection(SECTIONS[currentSectionIndex + 1].id);
+                                        window.scrollTo({ top: 120, behavior: 'smooth' });
+                                    }
+                                }}
+                                disabled={currentSectionIndex === SECTIONS.length - 1}
+                                className={`flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold transition ${
+                                    currentSectionIndex === SECTIONS.length - 1 ? 'opacity-30 cursor-not-allowed' : 'text-zinc-400 hover:text-white'
+                                }`}
+                            >
+                                <span className="material-symbols-rounded text-base">navigate_next</span>
+                                <span>Next Page</span>
+                            </button>
+
+                            <a
+                                href="../b1_workbook/cp5-b1workbook.html"
+                                className="flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold text-brand-coral hover:text-white transition"
+                            >
+                                <span className="material-symbols-rounded text-base">edit</span>
+                                <span>Workbook</span>
+                            </a>
+                        </div>
+                    </nav>
+
+                    {/* LIGHTBOX MODAL */}
+                    {lightboxImg && (
+                        <div 
+                            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
+                            onClick={() => setLightboxImg(null)}
+                        >
+                            <div className="bg-white rounded-3xl p-3 max-w-lg w-full border-2 border-brand-dark shadow-2xl relative" onClick={e => e.stopPropagation()}>
+                                <button
+                                    type="button"
+                                    onClick={() => setLightboxImg(null)}
+                                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-brand-cream border border-brand-dark text-brand-dark flex items-center justify-center font-black"
+                                >
+                                    &times;
+                                </button>
+                                <img src={lightboxImg} alt="Textbook zoom view" className="w-full h-auto rounded-2xl" />
+                            </div>
+                        </div>
+                    )}
+
+                    {/* VIDEO PLAYER MODAL */}
+                    {videoModal && (
+                        <VideoPlayerModal 
+                            src={videoModal} 
+                            onClose={() => setVideoModal(null)} 
+                        />
+                    )}
+
+                    {/* SIGN OUT MODAL */}
+                    {showLogoutModal && (
+                        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+                            <div className="bg-white w-full max-w-sm rounded-t-4xl sm:rounded-4xl border-2 border-brand-dark shadow-2xl p-6 text-center animate-in zoom-in-95 duration-200">
+                                <div className="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3 border border-red-200">
+                                    <span className="material-symbols-rounded text-2xl font-bold">logout</span>
+                                </div>
+                                <h4 className="text-lg font-black text-brand-dark">Sign Out of GermanApp?</h4>
+                                <p className="text-xs text-zinc-600 font-semibold mt-1">
+                                    Your chapter progress is preserved. You can resume anytime.
+                                </p>
+
+                                <div className="mt-5 flex gap-2">
+                                    <button 
+                                        onClick={() => setShowLogoutModal(false)}
+                                        className="flex-1 bg-zinc-100 hover:bg-zinc-200 text-brand-dark py-2.5 rounded-full font-extrabold text-xs transition"
+                                    >
+                                        Stay
+                                    </button>
+                                    <button 
+                                        onClick={async () => {
+                                            try {
+                                                await fetch('/api/logout', { method: 'POST' });
+                                            } catch (e) {}
+                                            window.location.href = '../../index.html';
+                                        }}
+                                        className="flex-1 bg-brand-coral hover:bg-red-600 text-white py-2.5 rounded-full font-extrabold text-xs shadow-md transition"
+                                    >
+                                        Log Out
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* TOAST NOTIFICATION */}
+                    {toastMessage && (
+                        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-brand-dark text-white text-xs font-black px-4 py-2.5 rounded-full shadow-2xl flex items-center gap-2 border border-brand-yellow animate-bounce">
+                            <span className="w-2 h-2 rounded-full bg-brand-yellow"></span>
+                            <span>{toastMessage}</span>
+                        </div>
+                    )}
+
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Workbook &bull; Kapitel 1: Gute Reise! | GermanApp B1.1</title>
+
+    <!-- Google Fonts Plus Jakarta Sans & Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,1,0">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            yellow: '#FED74C',
+                            yellowLight: '#FFF6D1',
+                            lavender: '#DACDFF',
+                            lavenderLight: '#F3EFFF',
+                            coral: '#FA7143',
+                            coralLight: '#FFE9E2',
+                            dark: '#161618',
+                            darkMuted: '#242428',
+                            cream: '#FAF8F5',
+                            mint: '#A7F3D0',
+                            mintDark: '#065F46',
+                            sky: '#BAE6FD',
+                            skyDark: '#0369A1'
+                        }
+                    },
+                    borderRadius: {
+                        '3xl': '1.5rem',
+                        '4xl': '2rem',
+                        '5xl': '2.5rem',
+                    },
+                    boxShadow: {
+                        'chunky': '0 6px 0px 0px #161618',
+                        'chunky-lg': '0 8px 0px 0px #161618',
+                        'chunky-sm': '0 3.5px 0px 0px #161618',
+                        'chunky-press': '0 1px 0px 0px #161618',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- React 18 & Babel CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        .animate-mascot {
+            animation: floatSlow 3.2s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-[#121214] text-brand-dark antialiased font-sans min-h-screen flex justify-center selection:bg-brand-yellow">
+    <div id="root" class="w-full"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo, useRef } = React;
+
+        // Suppress benign media AbortError when play() is interrupted
+        window.addEventListener('unhandledrejection', (event) => {
+            if (
+                event.reason && 
+                (event.reason.name === 'AbortError' || 
+                 String(event.reason.message || '').includes('interrupted by a call to pause'))
+            ) {
+                event.preventDefault();
+            }
+        });
+
+        const GermanFlagIcon = ({ className = "w-8 h-8" }) => (
+            <div className={`${className} bg-brand-yellowLight rounded-xl border border-brand-dark flex items-center justify-center overflow-hidden shrink-0 shadow-chunky-sm`}>
+                <svg viewBox="0 0 64 64" className="w-full h-full p-0.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <clipPath id="flagWorkbookRoundedClipCp1">
+                        <rect x="4" y="10" width="56" height="44" rx="12" />
+                    </clipPath>
+                    <g clipPath="url(#flagWorkbookRoundedClipCp1)">
+                        <rect x="4" y="10" width="56" height="14.66" fill="#161618" />
+                        <rect x="4" y="24.66" width="56" height="14.68" fill="#E11D48" />
+                        <rect x="4" y="39.34" width="56" height="14.66" fill="#FED74C" />
+                        <path d="M4 10 L60 10 L4 44 Z" fill="#FFFFFF" opacity="0.15" />
+                    </g>
+                    <rect x="4" y="10" width="56" height="44" rx="12" stroke="#161618" strokeWidth="3" fill="none" />
+                </svg>
+            </div>
+        );
+
+        const FritzLederhosen = ({ className = "w-24 h-24" }) => (
+            <svg viewBox="0 0 160 170" className={`${className} animate-mascot drop-shadow-md`} fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M110 88 C124 74 136 60 144 46" stroke="#161618" strokeWidth="4" strokeLinecap="round" />
+                <path d="M106 90 C120 78 132 64 140 52" stroke="#FFFFFF" strokeWidth="9" strokeLinecap="round" />
+                <ellipse cx="145" cy="45" rx="7" ry="8" fill="#FFDFC4" stroke="#161618" strokeWidth="3" transform="rotate(20 145 45)" />
+                <circle cx="151" cy="42" r="2.5" fill="#FFDFC4" stroke="#161618" strokeWidth="2.5" />
+                <path d="M50 88 C38 98 32 110 40 120" stroke="#FFFFFF" strokeWidth="9" strokeLinecap="round" />
+                <path d="M50 88 C38 98 32 110 40 120" stroke="#161618" strokeWidth="4" strokeLinecap="round" fill="none" />
+                <circle cx="42" cy="120" r="6" fill="#FFDFC4" stroke="#161618" strokeWidth="3" />
+                <ellipse cx="64" cy="158" rx="11" ry="6" fill="#3D2314" stroke="#161618" strokeWidth="3" />
+                <ellipse cx="96" cy="158" rx="11" ry="6" fill="#3D2314" stroke="#161618" strokeWidth="3" />
+                <rect x="58" y="136" width="12" height="18" rx="4" fill="#FFFFFF" stroke="#161618" strokeWidth="3" />
+                <rect x="90" y="136" width="12" height="18" rx="4" fill="#FFFFFF" stroke="#161618" strokeWidth="3" />
+                <path d="M58 142H70M90 142H102" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" />
+                <path d="M54 112 L50 138 L74 138 L80 125 L86 138 L110 138 L106 112 Z" fill="#5C381E" stroke="#161618" strokeWidth="4" strokeLinejoin="round" />
+                <path d="M68 116 H92 V126 H68 Z" fill="#4A2D17" stroke="#FED74C" strokeWidth="2" strokeLinejoin="round" />
+                <circle cx="72" cy="121" r="1.5" fill="#FED74C" />
+                <circle cx="88" cy="121" r="1.5" fill="#FED74C" />
+                <path d="M52 74 C52 74 62 66 80 66 C98 66 108 74 108 74 L106 114 H54 Z" fill="#FFFFFF" stroke="#161618" strokeWidth="4" strokeLinejoin="round" />
+                <path d="M63 72 L64 114" stroke="#4A2D17" strokeWidth="6" strokeLinecap="round" />
+                <path d="M97 72 L96 114" stroke="#4A2D17" strokeWidth="6" strokeLinecap="round" />
+                <rect x="62" y="86" width="36" height="11" rx="3" fill="#4A2D17" stroke="#161618" strokeWidth="2.5" />
+                <circle cx="80" cy="91.5" r="2.5" fill="#FFFFFF" />
+                <circle cx="80" cy="91.5" r="1" fill="#FED74C" />
+                <ellipse cx="80" cy="50" rx="22" ry="20" fill="#FFDFC4" stroke="#161618" strokeWidth="4" />
+                <circle cx="58" cy="50" r="4.5" fill="#FFDFC4" stroke="#161618" strokeWidth="3" />
+                <circle cx="102" cy="50" r="4.5" fill="#FFDFC4" stroke="#161618" strokeWidth="3" />
+                <circle cx="68" cy="53" r="3.5" fill="#FFA58C" />
+                <circle cx="92" cy="53" r="3.5" fill="#FFA58C" />
+                <circle cx="72" cy="46" r="3.5" fill="#161618" />
+                <circle cx="88" cy="46" r="3.5" fill="#161618" />
+                <circle cx="71" cy="44.5" r="1.2" fill="#FFFFFF" />
+                <circle cx="87" cy="44.5" r="1.2" fill="#FFFFFF" />
+                <path d="M80 50 C76 46 66 48 66 52 C71 55 77 53 80 51 C83 53 89 55 94 52 C94 48 84 46 80 50 Z" fill="#E6A14B" stroke="#161618" strokeWidth="2" />
+                <path d="M75 54 Q80 59 85 54" stroke="#161618" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+                <path d="M60 36 C64 16 96 16 100 36 Z" fill="#2E5A36" stroke="#161618" strokeWidth="4" strokeLinejoin="round" />
+                <ellipse cx="80" cy="36" rx="28" ry="6" fill="#234629" stroke="#161618" strokeWidth="3.5" />
+                <path d="M58 35 Q80 33 102 35" stroke="#FED74C" strokeWidth="3" fill="none" />
+                <path d="M96 28 Q108 14 112 8 Q104 18 98 24" fill="#FA7143" stroke="#161618" strokeWidth="2" strokeLinejoin="round" />
+            </svg>
+        );
+
+        const AudioPlayerCard = ({ title, src, onPlay }) => {
+            const [isPlaying, setIsPlaying] = useState(false);
+            const audioRef = useRef(null);
+
+            useEffect(() => {
+                const audio = audioRef.current;
+                return () => {
+                    if (audio) {
+                        try {
+                            audio.pause();
+                        } catch (e) {}
+                    }
+                };
+            }, [src]);
+
+            const toggleAudio = () => {
+                const audio = audioRef.current;
+                if (!audio) return;
+
+                if (!audio.paused) {
+                    audio.pause();
+                    setIsPlaying(false);
+                } else {
+                    const playPromise = audio.play();
+                    if (playPromise !== undefined) {
+                        playPromise
+                            .then(() => {
+                                setIsPlaying(true);
+                                if (onPlay) onPlay(title);
+                            })
+                            .catch((err) => {
+                                if (err.name !== 'AbortError') {
+                                    console.warn('Audio playback error:', err);
+                                }
+                                setIsPlaying(false);
+                            });
+                    }
+                }
+            };
+
+            return (
+                <div className="bg-white border-2 border-brand-dark rounded-2xl p-2.5 sm:p-3 flex items-center justify-between gap-3 shadow-chunky-sm">
+                    <div className="flex items-center gap-2.5 truncate">
+                        <button
+                            type="button"
+                            onClick={toggleAudio}
+                            className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 border-2 border-brand-dark shadow-chunky-sm transition active:translate-y-0.5 ${
+                                isPlaying ? 'bg-brand-coral text-white' : 'bg-brand-yellow text-brand-dark hover:bg-yellow-400'
+                            }`}
+                            aria-label={isPlaying ? 'Pause Audio' : 'Play Audio'}
+                        >
+                            <span className="material-symbols-rounded text-lg">
+                                {isPlaying ? 'pause' : 'play_arrow'}
+                            </span>
+                        </button>
+                        <div className="truncate">
+                            <span className="text-[10px] font-black uppercase tracking-wider text-brand-coral block leading-none">Übungs-Audio</span>
+                            <span className="text-xs font-black text-brand-dark truncate block mt-0.5">{title}</span>
+                        </div>
+                    </div>
+                    <audio 
+                        ref={audioRef} 
+                        src={src} 
+                        onPlay={() => setIsPlaying(true)}
+                        onPause={() => setIsPlaying(false)}
+                        onEnded={() => setIsPlaying(false)}
+                        preload="none"
+                    />
+                    <a
+                        href={src}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-zinc-400 hover:text-brand-dark p-1 rounded-lg"
+                        title="Open direct audio file"
+                    >
+                        <span className="material-symbols-rounded text-base">open_in_new</span>
+                    </a>
+                </div>
+            );
+        };
+
+        const TranslationReveal = ({ englishText, isOpen, onToggle }) => (
+            <div className="mt-1">
+                <button
+                    type="button"
+                    onClick={onToggle}
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-zinc-500 hover:text-brand-dark bg-zinc-100 hover:bg-zinc-200 px-2 py-0.5 rounded-full transition"
+                >
+                    <span className="material-symbols-rounded text-xs text-brand-coral">translate</span>
+                    <span>{isOpen ? 'Hide Translation' : 'Translate instruction'}</span>
+                </button>
+                {isOpen && (
+                    <div className="mt-1.5 p-2 bg-brand-lavenderLight rounded-xl border border-brand-lavender text-xs text-brand-dark font-medium leading-relaxed italic animate-in fade-in duration-200">
+                        {englishText}
+                    </div>
+                )}
+            </div>
+        );
+
+        const RenderedNatureVacation = ({ onZoomScan }) => {
+            const vocabulary = [
+                { word: 'faulenzen', meaning: 'nichts tun & entspannen', icon: 'weekend', bg: 'bg-amber-50 text-amber-950 border-amber-300' },
+                { word: 'der Himmel', meaning: 'Sonne & blauer Himmel', icon: 'wb_sunny', bg: 'bg-sky-50 text-sky-950 border-sky-300' },
+                { word: 'im Freien', meaning: 'draußen in der Natur', icon: 'forest', bg: 'bg-emerald-50 text-emerald-950 border-emerald-300' },
+                { word: 'das Insekt, -en', meaning: 'Mücken & Mückenschutz', icon: 'pest_control', bg: 'bg-rose-50 text-rose-950 border-rose-300' },
+                { word: 'das Netz, -e', meaning: 'Schutz vor dem Zelteingang', icon: 'grid_4x4', bg: 'bg-purple-50 text-purple-950 border-purple-300' },
+                { word: 'giftig', meaning: 'Pilze vorsichtig sammeln', icon: 'warning', bg: 'bg-red-50 text-red-950 border-red-300' }
+            ];
+
+            return (
+                <div className="space-y-2.5">
+                    <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 flex items-center gap-1">
+                            <span className="material-symbols-rounded text-sm text-brand-coral">nature_people</span>
+                            <span>Wortschatz &bull; Urlaub in der Natur</span>
+                        </span>
+                        <button
+                            type="button"
+                            onClick={onZoomScan}
+                            className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                        >
+                            <span className="material-symbols-rounded text-xs">zoom_in</span>
+                            <span>Scan ansehen</span>
+                        </button>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        {vocabulary.map((v, i) => (
+                            <div key={i} className={`p-2.5 rounded-2xl border-2 border-brand-dark shadow-chunky-sm ${v.bg} flex flex-col justify-between`}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="material-symbols-rounded text-base">{v.icon}</span>
+                                    <span className="text-[9px] font-black uppercase px-1.5 py-0.5 rounded bg-white/70 border border-black/10">Natur</span>
+                                </div>
+                                <div>
+                                    <h5 className="text-xs font-black text-brand-dark">{v.word}</h5>
+                                    <p className="text-[10px] font-medium opacity-80 mt-0.5 leading-tight">{v.meaning}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const RenderedHolidayReports = ({ onZoomScan }) => (
+            <div className="p-3.5 bg-brand-sky border-2 border-brand-dark rounded-2xl shadow-chunky-sm space-y-2 text-brand-dark">
+                <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-sky-900 flex items-center gap-1">
+                        <span className="material-symbols-rounded text-base">cloudy</span>
+                        <span>Reisetagebuch &bull; Norwegen</span>
+                    </span>
+                    <button
+                        type="button"
+                        onClick={onZoomScan}
+                        className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                    >
+                        <span className="material-symbols-rounded text-xs">zoom_in</span>
+                        <span>Foto ansehen</span>
+                    </button>
+                </div>
+                <div className="bg-white/90 p-3 rounded-xl border border-black/10 text-xs font-semibold leading-relaxed space-y-1.5">
+                    <p className="italic text-zinc-700">
+                        &bdquo;Es gibt kein schlechtes Wetter, es gibt nur schlechte Kleidung...&ldquo;
+                    </p>
+                    <p className="text-[11px] text-zinc-800">
+                        Wind, Dauerregen und Sturm im Zelt! Am ersten Tag haben wir noch gelacht, doch jetzt ist die Enttäuschung groß. Heute übernachten wir in einem gemütlichen Hotel mit warmem Bett.
+                    </p>
+                </div>
+            </div>
+        );
+
+        const RenderedHolidayHeadings = ({ onZoomScan }) => {
+            const texts = [
+                { id: '1', title: 'Kinder auf dem Bauernhof', desc: 'Tiere füttern, auf dem Traktor mitfahren und den echten Landalltag erleben.', match: 'C' },
+                { id: '2', title: 'Mehrere Kurzreisen im Trend', desc: 'Lieber 3–4 verlängerte Wochenendtrips übers Jahr verteilt als 3 Wochen am Stück.', match: 'F' },
+                { id: '3', title: 'Frühbucher-Vorteil', desc: 'Wer bis Januar bucht, sichert sich die besten Zimmer und die größte Auswahl.', match: 'I' },
+                { id: '4', title: 'Schulferien & Hochsaison', desc: 'Familien mit schulpflichtigen Kindern zahlen in den Sommerferien spürbar mehr.', match: 'G' },
+                { id: '5', title: 'Deutschland als Reiseziel Nr. 1', desc: 'Ostsee, Bayern und die Mosel bleiben die Lieblingsreiseziele im eigenen Land.', match: 'D' }
+            ];
+
+            return (
+                <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 flex items-center gap-1">
+                            <span className="material-symbols-rounded text-sm text-brand-coral">newspaper</span>
+                            <span>Texte 1–5 &bull; Rund um den Urlaub</span>
+                        </span>
+                        <button
+                            type="button"
+                            onClick={onZoomScan}
+                            className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                        >
+                            <span className="material-symbols-rounded text-xs">zoom_in</span>
+                            <span>Scan</span>
+                        </button>
+                    </div>
+
+                    <div className="space-y-2">
+                        {texts.map(t => (
+                            <div key={t.id} className="p-3 bg-white border-2 border-brand-dark rounded-2xl shadow-chunky-sm">
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-xs font-black bg-brand-dark text-white px-2 py-0.5 rounded-full">
+                                        Text {t.id}
+                                    </span>
+                                    <span className="text-[10px] font-black bg-brand-yellow px-2 py-0.5 rounded-full border border-brand-dark">
+                                        Überschrift {t.match}
+                                    </span>
+                                </div>
+                                <h5 className="text-xs font-black text-brand-dark mt-1">{t.title}</h5>
+                                <p className="text-[11px] font-semibold text-zinc-600 mt-0.5 leading-snug">{t.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const RenderedChatTravelPlanning = ({ onZoomScan }) => (
+            <div className="p-3.5 bg-brand-yellowLight border-2 border-brand-dark rounded-2xl shadow-chunky-sm space-y-2 text-brand-dark">
+                <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-brand-coral flex items-center gap-1">
+                        <span className="material-symbols-rounded text-sm">chat</span>
+                        <span>Chat &bull; Anna &amp; Paula Urlaubsplanung</span>
+                    </span>
+                    <button
+                        type="button"
+                        onClick={onZoomScan}
+                        className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                    >
+                        <span className="material-symbols-rounded text-xs">zoom_in</span>
+                        <span>Scan ansehen</span>
+                    </button>
+                </div>
+                <div className="bg-white/90 p-2.5 rounded-xl border border-black/10 text-xs font-semibold space-y-1 leading-relaxed">
+                    <p><strong>Anna:</strong> &bdquo;Komm mal her! Ich möchte dir was zeigen. Kinder unter 15 dürfen gar nicht mitkommen – reine Erholung für Erwachsene!&ldquo;</p>
+                    <p><strong>Paula:</strong> &bdquo;Muss ich das jetzt sofort sehen? Kannst du es mir nicht einfach sagen?&ldquo;</p>
+                    <p><strong>Fokus:</strong> Modalverben im Präsens (<em>möchte, muss, kannst, darf</em>) und Präteritum (<em>wollte, konnte</em>).</p>
+                </div>
+            </div>
+        );
+
+        const RenderedStoryLiz = () => (
+            <div className="p-3.5 bg-brand-lavenderLight border-2 border-brand-dark rounded-2xl shadow-chunky-sm space-y-2 text-brand-dark">
+                <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-brand-dark flex items-center gap-1">
+                        <span className="material-symbols-rounded text-base text-brand-coral">train</span>
+                        <span>Liz macht eine Reise &bull; Bildgeschichte</span>
+                    </span>
+                    <span className="text-[10px] font-black bg-brand-coral text-white px-2 py-0.5 rounded-full">Kreatives Schreiben</span>
+                </div>
+                <p className="text-xs font-semibold leading-relaxed text-zinc-800">
+                    Liz reist am Freitag von Köln nach Kiel, um Sara zu besuchen. Durch 20 Minuten Verspätung verpasst sie den Anschlusszug in Hamburg. Am Ende nimmt sie ein Taxi und erreicht das Konzert gerade noch rechtzeitig!
+                </p>
+                <div className="bg-white/90 p-2.5 rounded-xl border border-black/10 text-[11px] font-bold text-zinc-800 flex items-center gap-1.5">
+                    <span className="material-symbols-rounded text-brand-coral text-sm">tips_and_updates</span>
+                    <span>Wichtige Konnektoren: <em>deshalb, da, obwohl, nachdem, trotzdem</em>.</span>
+                </div>
+            </div>
+        );
+
+        function App() {
+            const [activeSection, setActiveSection] = useState('guide');
+
+            const [lightboxImg, setLightboxImg] = useState(null);
+
+            const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+            const [showLogoutModal, setShowLogoutModal] = useState(false);
+            const [toastMessage, setToastMessage] = useState('');
+
+            const [openTranslations, setOpenTranslations] = useState({});
+
+            const toggleTranslation = (id) => {
+                setOpenTranslations(prev => ({ ...prev, [id]: !prev[id] }));
+            };
+
+            const showToast = (msg) => {
+                setToastMessage(msg);
+                setTimeout(() => setToastMessage(''), 3000);
+            };
+
+            // Exercise 1a Nature gaps:
+            // 1: faulenzen, 2: Himmel, 3: übernachte, 4: Insekten, 5: Netz, 6: Pilze, 7: giftig
+            const [ex1aAnswers, setEx1aAnswers] = useState({ 1: '', 2: '', 3: '', 4: '', 5: '', 6: '', 7: '' });
+            const [ex1aChecked, setEx1aChecked] = useState(false);
+            const ex1aSolutions = {
+                1: 'faulenzen',
+                2: 'Himmel',
+                3: 'übernachte',
+                4: 'Insekten',
+                5: 'Netz',
+                6: 'Pilze',
+                7: 'giftig'
+            };
+
+            // Exercise 1b Gear from Audio 1.1 & 1.2:
+            // Bootstour: Sonnencreme, Schlafsack, Bücher, Spiele
+            // Surfen: Regenkleidung, Sonnenbrille, Augentropfen, Sonnencreme
+            const [ex1bAnswers, setEx1bAnswers] = useState({
+                boot1: '', boot2: '', surf1: '', surf2: ''
+            });
+            const [ex1bChecked, setEx1bChecked] = useState(false);
+            const ex1bSolutions = {
+                boot1: 'Sonnencreme',
+                boot2: 'Schlafsack',
+                surf1: 'Regenkleidung',
+                surf2: 'Sonnenbrille'
+            };
+
+            // Exercise 2 Norway report options:
+            // 1: Wetter, 2: mit, 3: wahr, 4: gelacht, 5: Enttäuschung, 6: wollen, 7: übernachten
+            const [ex2Answers, setEx2Answers] = useState({ 1: '', 2: '', 3: '', 4: '', 5: '', 6: '', 7: '' });
+            const [ex2Checked, setEx2Checked] = useState(false);
+            const ex2Solutions = { 1: 'Wetter', 2: 'mit', 3: 'wahr', 4: 'gelacht', 5: 'Enttäuschung', 6: 'wollen', 7: 'übernachten' };
+
+            // Exercise 3 Texts to headings:
+            // 1 -> C, 2 -> F, 3 -> I, 4 -> G, 5 -> D
+            const [ex3Answers, setEx3Answers] = useState({ 1: '', 2: '', 3: '', 4: '', 5: '' });
+            const [ex3Checked, setEx3Checked] = useState(false);
+            const ex3Solutions = { 1: 'C', 2: 'F', 3: 'I', 4: 'G', 5: 'D' };
+
+            // Exercise 4a Modal verbs in chat:
+            // 1: möchte, 2: Muss, 3: Kannst, 4: musst, 5: kannst, 6: dürfen
+            const [ex4aAnswers, setEx4aAnswers] = useState({ 1: '', 2: '', 3: '', 4: '', 5: '', 6: '' });
+            const [ex4aChecked, setEx4aChecked] = useState(false);
+            const ex4aSolutions = { 1: 'möchte', 2: 'Muss', 3: 'Kannst', 4: 'musst', 5: 'kannst', 6: 'dürfen' };
+
+            // Exercise 4b Modal verbs in Präteritum:
+            // 1: wollten ... planen, 2: konnten ... finden, 3: wollte ... erholen
+            const [ex4bAnswers, setEx4bAnswers] = useState({ 1: '', 2: '', 3: '' });
+            const [ex4bChecked, setEx4bChecked] = useState(false);
+            const ex4bSolutions = {
+                1: 'wollten planen',
+                2: 'konnten finden',
+                3: 'wollte erholen'
+            };
+
+            // Exercise 4c Infinitiv Chat phrases:
+            // 1: einen gemeinsamen Urlaub zu planen., 2: im Urlaub viel zu unternehmen.
+            const [ex4cAnswers, setEx4cAnswers] = useState({ 1: '', 2: '' });
+            const [ex4cChecked, setEx4cChecked] = useState(false);
+            const ex4cSolutions = {
+                1: 'einen gemeinsamen Urlaub zu planen.',
+                2: 'im Urlaub viel zu unternehmen.'
+            };
+
+            // Exercise 4d Verb forms:
+            // 1: habe vor, 2: versuche, 3: fängt an
+            const [ex4dAnswers, setEx4dAnswers] = useState({ 1: '', 2: '', 3: '' });
+            const [ex4dChecked, setEx4dChecked] = useState(false);
+            const ex4dSolutions = { 1: 'habe vor', 2: 'versuche', 3: 'fängt an' };
+
+            // Exercise 5b Infinitiv mit zu:
+            // 2: lange zu arbeiten, 3: am Abend auszugehen, 4: Obst einzukaufen
+            const [ex5bAnswers, setEx5bAnswers] = useState({ 2: '', 3: '', 4: '' });
+            const [ex5bChecked, setEx5bChecked] = useState(false);
+            const ex5bSolutions = {
+                2: 'lange zu arbeiten',
+                3: 'am Abend auszugehen',
+                4: 'Obst einzukaufen'
+            };
+
+            // Exercise 6 Audio 1.3 Main point:
+            const [ex6Answer, setEx6Answer] = useState('');
+            const [ex6Checked, setEx6Checked] = useState(false);
+            const ex6Solution = 'B';
+
+            // Exercise 8b weil/da vs. obwohl:
+            // 1: weil, 2: Obwohl, 3: weil
+            const [ex8bAnswers, setEx8bAnswers] = useState({ 1: '', 2: '', 3: '' });
+            const [ex8bChecked, setEx8bChecked] = useState(false);
+            const ex8bSolutions = { 1: 'weil', 2: 'Obwohl', 3: 'weil' };
+
+            // Exercise 8e Conjunctions:
+            // 1: weil/da, 2: trotzdem
+            const [ex8eAnswers, setEx8eAnswers] = useState({ 1: '', 2: '' });
+            const [ex8eChecked, setEx8eChecked] = useState(false);
+            const ex8eSolutions = { 1: 'weil/da', 2: 'trotzdem' };
+
+            // Exercise 10a Phonetics Audio 1.4:
+            // 1: n, 2: ng, 3: nk
+            const [ex10aAnswers, setEx10aAnswers] = useState({ 1: '', 2: '', 3: '' });
+            const [ex10aChecked, setEx10aChecked] = useState(false);
+            const ex10aSolutions = { 1: 'n', 2: 'ng', 3: 'nk' };
+
+            // Exercise W1 Nominalized Infinitives:
+            // 1: das Reisen, 2: beim Fliegen, 3: Zum Erholen
+            const [exW1Answers, setExW1Answers] = useState({ 1: '', 2: '', 3: '' });
+            const [exW1Checked, setExW1Checked] = useState(false);
+            const exW1Solutions = { 1: 'das Reisen', 2: 'beim Fliegen', 3: 'Zum Erholen' };
+
+            const SECTIONS = [
+                { id: 'guide', label: 'Overview', icon: 'school', title: 'Chapter Overview & Teacher Guide' },
+                { id: 'p6', label: 'S. 6', icon: 'nature', title: 'Urlaub in der Natur & Ausrüstung' },
+                { id: 'p7', label: 'S. 7', icon: 'edit_calendar', title: 'Reiseplanung & Modalverben' },
+                { id: 'p8', label: 'S. 8', icon: 'favorite', title: 'Vorlieben & Infinitiv mit zu' },
+                { id: 'p10', label: 'S. 10', icon: 'sync_alt', title: 'Konnektoren: weil, obwohl, trotzdem' },
+                { id: 'p11', label: 'S. 11', icon: 'record_voice_over', title: 'Phonetik: n, ng, nk' },
+                { id: 'p12', label: 'S. 12', icon: 'history_edu', title: 'Infinitiv als Nomen & Geschichte' },
+            ];
+
+            const currentSectionIndex = SECTIONS.findIndex(s => s.id === activeSection);
+
+            return (
+                <div className="w-full max-w-md md:max-w-xl mx-auto min-h-screen bg-brand-cream pb-32 relative shadow-2xl overflow-x-hidden">
+                    
+                    <header className="sticky top-0 z-30 bg-brand-cream/95 backdrop-blur-md px-5 pt-4 pb-3 border-b-2 border-brand-dark/10 flex items-center justify-between">
+                        <div>
+                            <div className="inline-flex items-center gap-1.5 bg-brand-dark text-white px-3 py-1 rounded-full text-xs font-black tracking-wide">
+                                <span>GermanApp</span>
+                                <span className="text-brand-lavender">✦</span>
+                                <span className="text-[10px] text-zinc-300 font-bold uppercase tracking-wider">Workbook B1.1</span>
+                            </div>
+                            <h1 className="text-xl sm:text-2xl font-black tracking-tight text-brand-dark mt-1 flex items-center gap-1.5">
+                                <span>Kapitel 1: Gute Reise!</span>
+                            </h1>
+                        </div>
+
+                        {/* German Flag Badge Dropdown Trigger */}
+                        <div className="relative">
+                            <button
+                                type="button"
+                                onClick={() => setShowProfileDropdown(prev => !prev)}
+                                className="flex items-center gap-1.5 bg-white hover:bg-zinc-100 text-brand-dark p-1 sm:px-2.5 sm:py-1 rounded-full border-2 border-brand-dark shadow-chunky-sm active:translate-y-0.5 transition"
+                                aria-label="Toggle User Navigation"
+                            >
+                                <GermanFlagIcon className="w-8 h-8" />
+                                <span className="material-symbols-rounded text-base text-brand-dark hidden sm:inline">
+                                    {showProfileDropdown ? 'expand_less' : 'expand_more'}
+                                </span>
+                            </button>
+
+                            {/* Dropdown Menu */}
+                            {showProfileDropdown && (
+                                <>
+                                    <div 
+                                        className="fixed inset-0 z-40" 
+                                        onClick={() => setShowProfileDropdown(false)}
+                                    ></div>
+                                    <div className="absolute right-0 top-full mt-2 w-52 bg-white border-2 border-brand-dark rounded-2xl shadow-chunky p-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
+                                        <div className="px-3 py-2 border-b border-zinc-100 mb-1 flex items-center gap-2">
+                                            <GermanFlagIcon className="w-7 h-7 rounded-lg" />
+                                            <div>
+                                                <span className="text-[10px] font-black uppercase text-zinc-400 block leading-tight">Student View</span>
+                                                <span className="text-xs font-black text-brand-dark">German Learner</span>
+                                            </div>
+                                        </div>
+
+                                        <a
+                                            href="../../student-portal.html"
+                                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-black text-brand-dark hover:bg-brand-yellowLight transition"
+                                        >
+                                            <span className="material-symbols-rounded text-base text-brand-coral">dashboard</span>
+                                            <span>Student Portal</span>
+                                        </a>
+
+                                        <a
+                                            href="../../course-map-b1.html"
+                                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-black text-brand-dark hover:bg-brand-yellowLight transition"
+                                        >
+                                            <span className="material-symbols-rounded text-base text-brand-coral">map</span>
+                                            <span>B1 Course Map</span>
+                                        </a>
+
+                                        <hr className="my-1 border-zinc-100" />
+
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setShowProfileDropdown(false);
+                                                setShowLogoutModal(true);
+                                            }}
+                                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-black text-red-600 hover:bg-red-50 transition text-left"
+                                        >
+                                            <span className="material-symbols-rounded text-base">logout</span>
+                                            <span>Sign Out</span>
+                                        </button>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </header>
+
+                    <section className="px-4 pt-3">
+                        <div className="bg-brand-lavender rounded-4xl p-5 sm:p-6 border-3 border-brand-dark shadow-chunky relative overflow-hidden">
+                            <span className="absolute top-3 right-5 text-xl opacity-60">✦</span>
+                            <span className="absolute bottom-3 left-5 text-xl opacity-60">♥</span>
+
+                            <div className="flex items-center justify-between relative z-10">
+                                <div className="max-w-[65%]">
+                                    <div className="inline-flex items-center gap-1.5 bg-brand-dark text-white px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider mb-2">
+                                        <span>Workbook &bull; Einheit 1</span>
+                                    </div>
+                                    <h2 className="text-2xl sm:text-3xl font-black text-brand-dark leading-tight tracking-tight">
+                                        Gute Reise!
+                                    </h2>
+                                    <p className="text-xs font-semibold text-brand-dark/85 mt-1.5 leading-relaxed">
+                                        Grammar drills: <em>Infinitiv mit zu</em>, modal verbs in <em>Präteritum</em>, subordinate clauses with <em>weil/obwohl</em>, and phonetics.
+                                    </p>
+                                </div>
+
+                                <div className="w-24 flex justify-center items-center">
+                                    <FritzLederhosen className="w-24 h-24" />
+                                </div>
+                            </div>
+
+                            {/* Jump to Coursebook Shortcut */}
+                            <div className="mt-4 pt-3 border-t border-brand-dark/15 flex items-center justify-between gap-2">
+                                <a
+                                    href="../../course-map-b1.html"
+                                    className="flex-1 bg-white hover:bg-zinc-100 text-brand-dark py-2 px-3 rounded-full font-black text-xs border border-brand-dark shadow-chunky-sm text-center active:translate-y-0.5 transition"
+                                >
+                                    &larr; Back to Map
+                                </a>
+                                <a
+                                    href="../b1_coursebook/cp1-b1coursebook.html"
+                                    className="flex-1 bg-brand-yellow hover:bg-yellow-400 text-brand-dark py-2 px-3 rounded-full font-black text-xs border border-brand-dark shadow-chunky-sm flex items-center justify-center gap-1 active:translate-y-0.5 transition"
+                                >
+                                    <span>Open Coursebook 1</span>
+                                    <span>&rarr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    {activeSection === 'guide' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="bg-brand-yellowLight rounded-3xl p-5 border-2 border-brand-dark shadow-chunky-sm">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className="w-8 h-8 rounded-xl bg-brand-yellow border border-brand-dark flex items-center justify-center text-brand-dark shrink-0">
+                                        <span className="material-symbols-rounded text-base">school</span>
+                                    </span>
+                                    <h3 className="text-base font-black text-brand-dark leading-tight">
+                                        Teacher's Guide &amp; Practice Goals
+                                    </h3>
+                                </div>
+                                <p className="text-xs text-brand-dark/90 font-semibold leading-relaxed">
+                                    Welcome to the Chapter 1 Workbook! This unit consolidates your travel vocabulary, modal verbs in simple past, infinitive clauses with <em>zu</em>, and subordinate clauses with causal (<em>weil/da</em>) and concessive (<em>obwohl/trotzdem</em>) conjunctions.
+                                </p>
+
+                                <div className="mt-3 pt-3 border-t border-brand-dark/10 space-y-1.5">
+                                    <span className="text-[10px] font-black uppercase tracking-wider text-brand-dark/70 block">Key Practice Targets:</span>
+                                    <ul className="text-xs text-zinc-700 font-semibold space-y-1 pl-1">
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Consolidate nature, camping, and travel gear vocabulary through gap-fill drills.</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Practice modal verbs in Past Tense (<em>wollte, musste, konnte, durfte</em>).</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Master infinitive structures with <em>zu</em> (including separable verbs: <em>aufzustehen</em>, <em>einzukaufen</em>).</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Apply causal and concessive conjunctions (<em>weil/da</em> vs. <em>obwohl</em> vs. <em>trotzdem</em>) with proper word order.</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Distinguish nasal sounds (<em>n, ng, nk</em>) through auditory discrimination.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {/* Grammar Spotlight */}
+                            <div className="bg-brand-cream rounded-3xl p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-8 h-8 rounded-xl bg-brand-coral text-white border border-brand-dark flex items-center justify-center shrink-0">
+                                        <span className="material-symbols-rounded text-base">psychology</span>
+                                    </span>
+                                    <h3 className="text-base font-black text-brand-dark leading-tight">
+                                        Grammar Reference: Infinitiv mit zu &amp; Konnektoren
+                                    </h3>
+                                </div>
+
+                                <div className="bg-white p-3.5 rounded-2xl border border-black/10 text-xs text-zinc-700 font-medium space-y-2">
+                                    <div>
+                                        <strong className="text-brand-dark">1. Infinitiv mit "zu":</strong>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; Einfache Verben: <em>Es ist wichtig, im Urlaub <strong>zu entspannen</strong>.</em></p>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; Trennbare Verben: <em>Ich habe vor, früh <strong>aufzustehen</strong>.</em></p>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; Modalverben brauchen <strong>KEIN</strong> <em>zu</em>: <em>Ich wollte nach Kiel fahren.</em></p>
+                                    </div>
+                                    <div className="pt-1 border-t border-zinc-100">
+                                        <strong className="text-brand-dark">2. Konnektoren &amp; Verbposition:</strong>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; <strong>weil / da / obwohl:</strong> Nebensatz &rarr; konjugiertes Verb am Satzende (<em>... obwohl das Wetter schlecht <strong>ist</strong>.</em>)</p>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; <strong>trotzdem / deshalb:</strong> Hauptsatz &rarr; Verb auf Position 2 (<em>... trotzdem <strong>fahre</strong> ich weg.</em>)</p>
+                                    </div>
+                                    <div className="pt-1 border-t border-zinc-100">
+                                        <strong className="text-brand-dark">3. Infinitiv als Nomen:</strong>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; <em>reisen &rarr; das Reisen | beim Fliegen | zum Erholen</em></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={() => setActiveSection('p6')}
+                                className="w-full bg-brand-coral hover:bg-orange-600 text-white font-black text-xs py-3 px-4 rounded-full border-2 border-brand-dark shadow-chunky active:translate-y-0.5 transition flex items-center justify-center gap-2"
+                            >
+                                <span>Start Page 6: Urlaub in der Natur</span>
+                                <span>&rarr;</span>
+                            </button>
+                        </main>
+                    )}
+
+                    {activeSection === 'p6' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-yellow px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 6
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Urlaub in der Natur &bull; Übungen 1–3</span>
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-3 sm:p-4 border-2 border-brand-dark shadow-chunky-sm">
+                                <RenderedNatureVacation
+                                    onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_work_img/cp1_img1.png')}
+                                />
+                            </div>
+
+                            {/* Exercise 1a: Nature Gaps */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">1a</span>
+                                    <div>
+                                        <h4 className="text-xs font-black text-brand-dark leading-tight">Urlaub in der Natur. Ergänzen Sie die Wörter:</h4>
+                                        <p className="text-[11px] text-zinc-500 font-medium">Wählen Sie aus dem Kasten die passenden Wörter aus.</p>
+                                    </div>
+                                </div>
+                                <TranslationReveal
+                                    englishText="Holiday in nature. Fill in the missing words from the pool."
+                                    isOpen={!!openTranslations['1a']}
+                                    onToggle={() => toggleTranslation('1a')}
+                                />
+
+                                <div className="p-2.5 bg-brand-yellowLight rounded-xl border border-brand-dark/20 text-[11px] font-black text-brand-dark text-center">
+                                    faulenzen &bull; Himmel &bull; übernachte &bull; Insekten &bull; Netz &bull; Pilze &bull; giftig
+                                </div>
+
+                                <div className="space-y-2.5 pt-1 text-xs font-medium text-zinc-800 leading-relaxed">
+                                    <div className="p-2.5 bg-brand-cream rounded-xl border border-black/10 space-y-1.5">
+                                        <span>Im Sommer kann man wunderbar (1)</span>
+                                        <select
+                                            value={ex1aAnswers[1]}
+                                            onChange={e => setEx1aAnswers({ ...ex1aAnswers, 1: e.target.value })}
+                                            className={`bg-white border-2 rounded-xl px-2 py-1 text-xs font-black focus:outline-none transition ${
+                                                ex1aChecked
+                                                    ? ex1aAnswers[1] === ex1aSolutions[1] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Lücke 1 --</option>
+                                            <option value="faulenzen">faulenzen</option>
+                                            <option value="übernachte">übernachte</option>
+                                            <option value="Himmel">Himmel</option>
+                                        </select>
+                                        <span>und es genießen, wenn die Sonne vom (2)</span>
+                                        <select
+                                            value={ex1aAnswers[2]}
+                                            onChange={e => setEx1aAnswers({ ...ex1aAnswers, 2: e.target.value })}
+                                            className={`bg-white border-2 rounded-xl px-2 py-1 text-xs font-black focus:outline-none transition ${
+                                                ex1aChecked
+                                                    ? ex1aAnswers[2] === ex1aSolutions[2] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Lücke 2 --</option>
+                                            <option value="Himmel">Himmel</option>
+                                            <option value="Netz">Netz</option>
+                                            <option value="Pilze">Pilze</option>
+                                        </select>
+                                        <span>scheint. Deshalb (3)</span>
+                                        <select
+                                            value={ex1aAnswers[3]}
+                                            onChange={e => setEx1aAnswers({ ...ex1aAnswers, 3: e.target.value })}
+                                            className={`bg-white border-2 rounded-xl px-2 py-1 text-xs font-black focus:outline-none transition ${
+                                                ex1aChecked
+                                                    ? ex1aAnswers[3] === ex1aSolutions[3] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Lücke 3 --</option>
+                                            <option value="übernachte">übernachte</option>
+                                            <option value="faulenzen">faulenzen</option>
+                                        </select>
+                                        <span>ich manchmal auch im Freien.</span>
+                                    </div>
+
+                                    <div className="p-2.5 bg-brand-cream rounded-xl border border-black/10 space-y-1.5">
+                                        <span>Man braucht Schutz gegen (4)</span>
+                                        <select
+                                            value={ex1aAnswers[4]}
+                                            onChange={e => setEx1aAnswers({ ...ex1aAnswers, 4: e.target.value })}
+                                            className={`bg-white border-2 rounded-xl px-2 py-1 text-xs font-black focus:outline-none transition ${
+                                                ex1aChecked
+                                                    ? ex1aAnswers[4] === ex1aSolutions[4] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Lücke 4 --</option>
+                                            <option value="Insekten">Insekten</option>
+                                            <option value="Pilze">Pilze</option>
+                                        </select>
+                                        <span>durch ein (5)</span>
+                                        <select
+                                            value={ex1aAnswers[5]}
+                                            onChange={e => setEx1aAnswers({ ...ex1aAnswers, 5: e.target.value })}
+                                            className={`bg-white border-2 rounded-xl px-2 py-1 text-xs font-black focus:outline-none transition ${
+                                                ex1aChecked
+                                                    ? ex1aAnswers[5] === ex1aSolutions[5] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Lücke 5 --</option>
+                                            <option value="Netz">Netz</option>
+                                            <option value="Himmel">Himmel</option>
+                                        </select>
+                                        <span>vor dem Zelt. Im Herbst kann man (6)</span>
+                                        <select
+                                            value={ex1aAnswers[6]}
+                                            onChange={e => setEx1aAnswers({ ...ex1aAnswers, 6: e.target.value })}
+                                            className={`bg-white border-2 rounded-xl px-2 py-1 text-xs font-black focus:outline-none transition ${
+                                                ex1aChecked
+                                                    ? ex1aAnswers[6] === ex1aSolutions[6] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Lücke 6 --</option>
+                                            <option value="Pilze">Pilze</option>
+                                            <option value="Insekten">Insekten</option>
+                                        </select>
+                                        <span>sammeln, aber vorsichtig: manche sind (7)</span>
+                                        <select
+                                            value={ex1aAnswers[7]}
+                                            onChange={e => setEx1aAnswers({ ...ex1aAnswers, 7: e.target.value })}
+                                            className={`bg-white border-2 rounded-xl px-2 py-1 text-xs font-black focus:outline-none transition ${
+                                                ex1aChecked
+                                                    ? ex1aAnswers[7] === ex1aSolutions[7] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Lücke 7 --</option>
+                                            <option value="giftig">giftig</option>
+                                            <option value="faulenzen">faulenzen</option>
+                                        </select>
+                                        <span>!</span>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx1aChecked(true);
+                                        const ok = Object.keys(ex1aSolutions).every(k => ex1aAnswers[k] === ex1aSolutions[k]);
+                                        showToast(ok ? '🎉 Alle Naturwörter perfekt ergänzt!' : '⚠️ Prüfen Sie die Lücken noch einmal!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 1a Lückentext
+                                </button>
+                            </div>
+
+                            <div className="space-y-2">
+                                <AudioPlayerCard title="Audio 1.1: Was brauchen sie? (Bootstour)" src="https://storage.googleapis.com/germanapp-media-2026/b1_workbookaudio/NWn_B1_UEB_Audio_1-001.mp3" />
+                                <AudioPlayerCard title="Audio 1.2: Was brauchen sie? (Surfen)" src="https://storage.googleapis.com/germanapp-media-2026/b1_workbookaudio/NWn_B1_UEB_Audio_1-002.mp3" />
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-coral text-white border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">1b</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Was brauchen die Personen für ihren Urlaub?</h4>
+                                </div>
+
+                                <div className="space-y-3 pt-1">
+                                    <div className="p-3 bg-brand-cream rounded-2xl border border-black/10 space-y-2">
+                                        <span className="text-xs font-black text-brand-coral block">Bootstour (Audio 1.1):</span>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <select
+                                                value={ex1bAnswers.boot1}
+                                                onChange={e => setEx1bAnswers({ ...ex1bAnswers, boot1: e.target.value })}
+                                                className={`bg-white border-2 rounded-xl p-1.5 text-xs font-black ${
+                                                    ex1bChecked ? (ex1bAnswers.boot1 === ex1bSolutions.boot1 ? 'border-emerald-600 bg-emerald-50' : 'border-red-500 bg-red-50') : 'border-brand-dark'
+                                                }`}
+                                            >
+                                                <option value="">-- Ding 1 --</option>
+                                                <option value="Sonnencreme">Sonnencreme</option>
+                                                <option value="Handschuhe">Handschuhe</option>
+                                            </select>
+                                            <select
+                                                value={ex1bAnswers.boot2}
+                                                onChange={e => setEx1bAnswers({ ...ex1bAnswers, boot2: e.target.value })}
+                                                className={`bg-white border-2 rounded-xl p-1.5 text-xs font-black ${
+                                                    ex1bChecked ? (ex1bAnswers.boot2 === ex1bSolutions.boot2 ? 'border-emerald-600 bg-emerald-50' : 'border-red-500 bg-red-50') : 'border-brand-dark'
+                                                }`}
+                                            >
+                                                <option value="">-- Ding 2 --</option>
+                                                <option value="Schlafsack">Schlafsack</option>
+                                                <option value="Surfbrett">Surfbrett</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="p-3 bg-brand-cream rounded-2xl border border-black/10 space-y-2">
+                                        <span className="text-xs font-black text-brand-coral block">Surfen an der Ostsee (Audio 1.2):</span>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <select
+                                                value={ex1bAnswers.surf1}
+                                                onChange={e => setEx1bAnswers({ ...ex1bAnswers, surf1: e.target.value })}
+                                                className={`bg-white border-2 rounded-xl p-1.5 text-xs font-black ${
+                                                    ex1bChecked ? (ex1bAnswers.surf1 === ex1bSolutions.surf1 ? 'border-emerald-600 bg-emerald-50' : 'border-red-500 bg-red-50') : 'border-brand-dark'
+                                                }`}
+                                            >
+                                                <option value="">-- Ding 1 --</option>
+                                                <option value="Regenkleidung">Regenkleidung</option>
+                                                <option value="Wanderstöcke">Wanderstöcke</option>
+                                            </select>
+                                            <select
+                                                value={ex1bAnswers.surf2}
+                                                onChange={e => setEx1bAnswers({ ...ex1bAnswers, surf2: e.target.value })}
+                                                className={`bg-white border-2 rounded-xl p-1.5 text-xs font-black ${
+                                                    ex1bChecked ? (ex1bAnswers.surf2 === ex1bSolutions.surf2 ? 'border-emerald-600 bg-emerald-50' : 'border-red-500 bg-red-50') : 'border-brand-dark'
+                                                }`}
+                                            >
+                                                <option value="">-- Ding 2 --</option>
+                                                <option value="Sonnenbrille">Sonnenbrille</option>
+                                                <option value="Zelt">Zelt</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx1bChecked(true);
+                                        const ok = Object.keys(ex1bSolutions).every(k => ex1bAnswers[k] === ex1bSolutions[k]);
+                                        showToast(ok ? '🎉 Alle Ausrüstungsgegenstände stimmen!' : '⚠️ Hören Sie nochmals in die Audios!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 1b Ausrüstung
+                                </button>
+                            </div>
+
+                            <RenderedHolidayReports
+                                onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_work_img/cp1_img2.png')}
+                            />
+
+                            <div className="bg-white rounded-3xl p-3 sm:p-4 border-2 border-brand-dark shadow-chunky-sm">
+                                <RenderedHolidayHeadings
+                                    onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_work_img/cp1_img3.png')}
+                                />
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-mint text-brand-mintDark border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">3</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Suchen Sie zu jedem Text die passende Überschrift:</h4>
+                                </div>
+
+                                <div className="space-y-2 pt-1">
+                                    {[
+                                        { id: 1, label: 'Text 1 (Bauernhof)' },
+                                        { id: 2, label: 'Text 2 (Urlaubsdauer)' },
+                                        { id: 3, label: 'Text 3 (Frühbucher)' },
+                                        { id: 4, label: 'Text 4 (Saison & Kinder)' },
+                                        { id: 5, label: 'Text 5 (Urlaubsziele D)' }
+                                    ].map(item => {
+                                        const userAns = ex3Answers[item.id];
+                                        const isCorrect = userAns === ex3Solutions[item.id];
+                                        return (
+                                            <div key={item.id} className="flex items-center justify-between p-2.5 bg-brand-cream rounded-xl border border-black/10">
+                                                <span className="text-xs font-bold text-brand-dark">{item.label}:</span>
+                                                <select
+                                                    value={userAns}
+                                                    onChange={e => setEx3Answers({ ...ex3Answers, [item.id]: e.target.value })}
+                                                    className={`bg-white border-2 rounded-xl px-3 py-1 text-xs font-black focus:outline-none transition ${
+                                                        ex3Checked
+                                                            ? isCorrect ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                            : 'border-brand-dark'
+                                                    }`}
+                                                >
+                                                    <option value="">-- Überschrift --</option>
+                                                    <option value="C">C) Alltag auf dem Bauernhof</option>
+                                                    <option value="F">F) Mehrere kürzere Urlaube</option>
+                                                    <option value="I">I) Wer früh bucht, hat die Wahl</option>
+                                                    <option value="G">G) Mit Schulkindern wird es teurer</option>
+                                                    <option value="D">D) Urlaub im eigenen Land</option>
+                                                </select>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx3Checked(true);
+                                        const ok = Object.keys(ex3Solutions).every(k => ex3Answers[k] === ex3Solutions[k]);
+                                        showToast(ok ? '🎉 Alle Überschriften perfekt zugeordnet!' : '⚠️ Prüfen Sie die Textinhalte!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 3 Überschriften
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {activeSection === 'p7' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-lavender px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 7
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Reiseplanung &bull; Modalverben &amp; Präteritum</span>
+                            </div>
+
+                            <RenderedChatTravelPlanning
+                                onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_work_img/cp1_img4.png')}
+                            />
+
+                            {/* Exercise 4a: Modal verbs in Chat */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">4a</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Wählen Sie die richtigen Modalverben im Gespräch:</h4>
+                                </div>
+
+                                <div className="space-y-2.5 pt-1 text-xs font-medium text-zinc-800 leading-relaxed">
+                                    <div className="p-2.5 bg-brand-cream rounded-xl border border-black/10 space-y-1">
+                                        <span>• Komm mal her! Ich</span>
+                                        <select
+                                            value={ex4aAnswers[1]}
+                                            onChange={e => setEx4aAnswers({ ...ex4aAnswers, 1: e.target.value })}
+                                            className={`mx-1 bg-white border-2 rounded-xl px-2 py-0.5 text-xs font-black ${
+                                                ex4aChecked ? (ex4aAnswers[1] === ex4aSolutions[1] ? 'border-emerald-600 bg-emerald-50' : 'border-red-500 bg-red-50') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- wählen --</option>
+                                            <option value="möchte">möchte</option>
+                                            <option value="werde">werde</option>
+                                        </select>
+                                        <span>dir was zeigen. Ist das nicht cool?</span>
+                                    </div>
+
+                                    <div className="p-2.5 bg-brand-cream rounded-xl border border-black/10 space-y-1">
+                                        <span>• Was denn?</span>
+                                        <select
+                                            value={ex4aAnswers[2]}
+                                            onChange={e => setEx4aAnswers({ ...ex4aAnswers, 2: e.target.value })}
+                                            className={`mx-1 bg-white border-2 rounded-xl px-2 py-0.5 text-xs font-black ${
+                                                ex4aChecked ? (ex4aAnswers[2] === ex4aSolutions[2] ? 'border-emerald-600 bg-emerald-50' : 'border-red-500 bg-red-50') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- wählen --</option>
+                                            <option value="Muss">Muss</option>
+                                            <option value="Soll">Soll</option>
+                                        </select>
+                                        <span>ich das jetzt sofort sehen?</span>
+                                        <select
+                                            value={ex4aAnswers[3]}
+                                            onChange={e => setEx4aAnswers({ ...ex4aAnswers, 3: e.target.value })}
+                                            className={`mx-1 bg-white border-2 rounded-xl px-2 py-0.5 text-xs font-black ${
+                                                ex4aChecked ? (ex4aAnswers[3] === ex4aSolutions[3] ? 'border-emerald-600 bg-emerald-50' : 'border-red-500 bg-red-50') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- wählen --</option>
+                                            <option value="Kannst">Kannst</option>
+                                            <option value="Wirst">Wirst</option>
+                                        </select>
+                                        <span>du es mir nicht einfach sagen?</span>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx4aChecked(true);
+                                        const ok = Object.keys(ex4aSolutions).every(k => ex4aAnswers[k] === ex4aSolutions[k]);
+                                        showToast(ok ? '🎉 Modalverben im Chat stimmen genau!' : '⚠️ Prüfen Sie die Modalverben!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 4a Modalverben
+                                </button>
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-coral text-white border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">4b</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Modalverb im Präteritum + Infinitiv:</h4>
+                                </div>
+
+                                <div className="space-y-2.5 pt-1">
+                                    <div className="p-2.5 bg-brand-cream rounded-xl border border-black/10">
+                                        <span className="text-xs font-bold block mb-1">1. planen: Anna und Paula ... ihren Urlaub ...</span>
+                                        <select
+                                            value={ex4bAnswers[1]}
+                                            onChange={e => setEx4bAnswers({ ...ex4bAnswers, 1: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex4bChecked ? (ex4bAnswers[1] === ex4bSolutions[1] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Form wählen --</option>
+                                            <option value="wollten planen">wollten ... planen</option>
+                                            <option value="mussten planen">mussten ... planen</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="p-2.5 bg-brand-cream rounded-xl border border-black/10">
+                                        <span className="text-xs font-bold block mb-1">2. finden: Sie ... keine gemeinsame Lösung ...</span>
+                                        <select
+                                            value={ex4bAnswers[2]}
+                                            onChange={e => setEx4bAnswers({ ...ex4bAnswers, 2: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex4bChecked ? (ex4bAnswers[2] === ex4bSolutions[2] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Form wählen --</option>
+                                            <option value="konnten finden">konnten ... finden</option>
+                                            <option value="durften finden">durften ... finden</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="p-2.5 bg-brand-cream rounded-xl border border-black/10">
+                                        <span className="text-xs font-bold block mb-1">3. erholen: Paula ... sich im Urlaub einfach nur ...</span>
+                                        <select
+                                            value={ex4bAnswers[3]}
+                                            onChange={e => setEx4bAnswers({ ...ex4bAnswers, 3: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex4bChecked ? (ex4bAnswers[3] === ex4bSolutions[3] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Form wählen --</option>
+                                            <option value="wollte erholen">wollte ... erholen</option>
+                                            <option value="sollte erholen">sollte ... erholen</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx4bChecked(true);
+                                        const ok = Object.keys(ex4bSolutions).every(k => ex4bAnswers[k] === ex4bSolutions[k]);
+                                        showToast(ok ? '🎉 Präteritum der Modalverben perfekt!' : '⚠️ Modalverben: wollten, konnten, wollte!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 4b Präteritum
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {activeSection === 'p8' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-coral text-white px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 8
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Infinitiv mit zu &bull; Vorlieben</span>
+                            </div>
+
+                            {/* Exercise 5b: Infinitiv mit zu */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-coral text-white border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">5b</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Sätze ergänzen mit Infinitiv + zu:</h4>
+                                </div>
+
+                                <div className="space-y-3 pt-1">
+                                    <div className="p-3 bg-brand-cream rounded-2xl border border-black/10">
+                                        <span className="text-xs font-bold block mb-1">1. Alexandra findet es normal,</span>
+                                        <span className="text-xs font-black text-emerald-800">sehr früh aufzustehen. (Muster)</span>
+                                    </div>
+
+                                    <div className="p-3 bg-brand-cream rounded-2xl border border-black/10">
+                                        <span className="text-xs font-bold block mb-1">2. Per hat heute keine Lust, (lange / arbeiten):</span>
+                                        <select
+                                            value={ex5bAnswers[2]}
+                                            onChange={e => setEx5bAnswers({ ...ex5bAnswers, 2: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex5bChecked ? (ex5bAnswers[2] === ex5bSolutions[2] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Infinitiv wählen --</option>
+                                            <option value="lange zu arbeiten">lange zu arbeiten</option>
+                                            <option value="lange arbeiten">lange arbeiten</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="p-3 bg-brand-cream rounded-2xl border border-black/10">
+                                        <span className="text-xs font-bold block mb-1">3. Janine freut sich, (am Abend / ausgehen):</span>
+                                        <select
+                                            value={ex5bAnswers[3]}
+                                            onChange={e => setEx5bAnswers({ ...ex5bAnswers, 3: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex5bChecked ? (ex5bAnswers[3] === ex5bSolutions[3] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Infinitiv wählen --</option>
+                                            <option value="am Abend auszugehen">am Abend auszugehen (trennbar!)</option>
+                                            <option value="am Abend zu ausgehen">am Abend zu ausgehen</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="p-3 bg-brand-cream rounded-2xl border border-black/10">
+                                        <span className="text-xs font-bold block mb-1">4. Ivan darf nicht vergessen, (Obst / einkaufen):</span>
+                                        <select
+                                            value={ex5bAnswers[4]}
+                                            onChange={e => setEx5bAnswers({ ...ex5bAnswers, 4: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex5bChecked ? (ex5bAnswers[4] === ex5bSolutions[4] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Infinitiv wählen --</option>
+                                            <option value="Obst einzukaufen">Obst einzukaufen (trennbar!)</option>
+                                            <option value="Obst zu einkaufen">Obst zu einkaufen</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx5bChecked(true);
+                                        const ok = Object.keys(ex5bSolutions).every(k => ex5bAnswers[k] === ex5bSolutions[k]);
+                                        showToast(ok ? '🎉 Alle Infinitivsätze mit zu stimmen!' : '⚠️ Achten Sie auf trennbare Verben: aus-zu-gehen!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 5b Infinitiv
+                                </button>
+                            </div>
+
+                            <AudioPlayerCard title="Audio 1.3: Wegfahren oder nicht?" src="https://storage.googleapis.com/germanapp-media-2026/b1_workbookaudio/NWn_B1_UEB_Audio_1-003.mp3" />
+
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">6</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Hauptaussage der Sprecherin:</h4>
+                                </div>
+
+                                <select
+                                    value={ex6Answer}
+                                    onChange={e => setEx6Answer(e.target.value)}
+                                    className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                        ex6Checked ? (ex6Answer === ex6Solution ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700') : 'border-brand-dark'
+                                    }`}
+                                >
+                                    <option value="">-- Aussage wählen --</option>
+                                    <option value="A">A) Sie möchte nicht wegfahren.</option>
+                                    <option value="B">B) Sie hat nicht vor wegzufahren.</option>
+                                </select>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx6Checked(true);
+                                        showToast(ex6Answer === ex6Solution ? '🎉 Richtig verstanden: B (nicht vorhaben)!' : '⚠️ Hören Sie Audio 1.3 noch einmal an!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 6 Hörtext
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {activeSection === 'p10' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-mint text-brand-mintDark px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 10
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Konnektoren &bull; weil/da, obwohl, trotzdem</span>
+                            </div>
+
+                            {/* Reference Banner */}
+                            <div className="p-4 bg-brand-yellowLight border-2 border-brand-dark rounded-3xl shadow-chunky-sm space-y-1.5">
+                                <span className="text-[10px] font-black uppercase tracking-wider text-brand-dark/70 block">Konnektoren-Regel:</span>
+                                <div className="text-xs font-bold text-brand-dark space-y-1">
+                                    <p><strong className="text-brand-coral">weil / da / obwohl:</strong> Nebensatz &rarr; Verb am Satzende!</p>
+                                    <p><strong className="text-emerald-700">trotzdem / deshalb:</strong> Hauptsatz &rarr; Verb auf Position 2!</p>
+                                </div>
+                            </div>
+
+                            {/* Exercise 8b */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-mint text-brand-mintDark border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">8b</span>
+                                    <h4 className="text-xs font-black text-brand-dark">weil/da oder obwohl wählen:</h4>
+                                </div>
+
+                                <div className="space-y-2.5 pt-1">
+                                    <div className="p-2.5 bg-brand-cream rounded-xl border border-black/10 space-y-1">
+                                        <span className="text-xs font-bold block">1. Mir gefällt Aarburg, ... ich die Altstadt romantisch finde:</span>
+                                        <select
+                                            value={ex8bAnswers[1]}
+                                            onChange={e => setEx8bAnswers({ ...ex8bAnswers, 1: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black ${
+                                                ex8bChecked ? (ex8bAnswers[1] === ex8bSolutions[1] ? 'border-emerald-600 bg-emerald-50' : 'border-red-500 bg-red-50') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Konnektor --</option>
+                                            <option value="weil">weil (Grund)</option>
+                                            <option value="obwohl">obwohl (Gegensatz)</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="p-2.5 bg-brand-cream rounded-xl border border-black/10 space-y-1">
+                                        <span className="text-xs font-bold block">2. ... viele Leute den Ort zu voll finden, fahre ich gerne hin:</span>
+                                        <select
+                                            value={ex8bAnswers[2]}
+                                            onChange={e => setEx8bAnswers({ ...ex8bAnswers, 2: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black ${
+                                                ex8bChecked ? (ex8bAnswers[2] === ex8bSolutions[2] ? 'border-emerald-600 bg-emerald-50' : 'border-red-500 bg-red-50') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Konnektor --</option>
+                                            <option value="Da">Da</option>
+                                            <option value="Obwohl">Obwohl (Gegengrund)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx8bChecked(true);
+                                        const ok = ex8bAnswers[1] === ex8bSolutions[1] && ex8bAnswers[2] === ex8bSolutions[2];
+                                        showToast(ok ? '🎉 Beide Konnektoren stimmen!' : '⚠️ Achten Sie auf Grund vs. Gegengrund!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 8b Konnektoren
+                                </button>
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">8e</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Welcher Konnektor passt?</h4>
+                                </div>
+
+                                <div className="space-y-2.5 pt-1">
+                                    <div className="p-2.5 bg-brand-cream rounded-xl border border-black/10 space-y-1">
+                                        <span className="text-xs font-bold block">1. Jan will nicht schon wieder nach Rügen, ... er schon oft dort war:</span>
+                                        <select
+                                            value={ex8eAnswers[1]}
+                                            onChange={e => setEx8eAnswers({ ...ex8eAnswers, 1: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black ${
+                                                ex8eChecked ? (ex8eAnswers[1] === ex8eSolutions[1] ? 'border-emerald-600 bg-emerald-50' : 'border-red-500 bg-red-50') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Konnektor --</option>
+                                            <option value="weil/da">weil/da (Verb am Ende)</option>
+                                            <option value="trotzdem">trotzdem</option>
+                                            <option value="deshalb">deshalb</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="p-2.5 bg-brand-cream rounded-xl border border-black/10 space-y-1">
+                                        <span className="text-xs font-bold block">2. Ich habe nur zwei Tage Urlaub, ... will ich noch verreisen:</span>
+                                        <select
+                                            value={ex8eAnswers[2]}
+                                            onChange={e => setEx8eAnswers({ ...ex8eAnswers, 2: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black ${
+                                                ex8eChecked ? (ex8eAnswers[2] === ex8eSolutions[2] ? 'border-emerald-600 bg-emerald-50' : 'border-red-500 bg-red-50') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Konnektor --</option>
+                                            <option value="weil/da">weil/da</option>
+                                            <option value="trotzdem">trotzdem (Inversion: trotzdem will ich)</option>
+                                            <option value="deshalb">deshalb</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx8eChecked(true);
+                                        const ok = ex8eAnswers[1] === ex8eSolutions[1] && ex8eAnswers[2] === ex8eSolutions[2];
+                                        showToast(ok ? '🎉 Perfekt! Verbstellung und Sinn stimmen.' : '⚠️ Prüfen Sie die Verbposition!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 8e Satzlogik
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {activeSection === 'p11' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-lavender px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 11
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Aussprache &bull; Laute n, ng, nk</span>
+                            </div>
+
+                            <AudioPlayerCard title="Audio 1.4: Phonetikübung n, ng oder nk" src="https://storage.googleapis.com/germanapp-media-2026/b1_workbookaudio/NWn_B1_UEB_Audio_1-004.mp3" />
+
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">10a</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Was hören Sie? Wählen Sie n, ng oder nk:</h4>
+                                </div>
+
+                                <div className="space-y-2 pt-1">
+                                    {[
+                                        { id: 1, label: '1. Wort (reiner Alveolar-Nasal)' },
+                                        { id: 2, label: '2. Wort (Velar-Nasal ohne Verschluss)' },
+                                        { id: 3, label: '3. Wort (Velar-Nasal mit k-Laut)' }
+                                    ].map(item => {
+                                        const userAns = ex10aAnswers[item.id];
+                                        const isCorrect = userAns === ex10aSolutions[item.id];
+                                        return (
+                                            <div key={item.id} className="flex items-center justify-between p-2.5 bg-brand-cream rounded-xl border border-black/10">
+                                                <span className="text-xs font-black text-brand-dark">{item.label}:</span>
+                                                <select
+                                                    value={userAns}
+                                                    onChange={e => setEx10aAnswers({ ...ex10aAnswers, [item.id]: e.target.value })}
+                                                    className={`bg-white border-2 rounded-xl px-3 py-1 text-xs font-black focus:outline-none transition ${
+                                                        ex10aChecked
+                                                            ? isCorrect ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                            : 'border-brand-dark'
+                                                    }`}
+                                                >
+                                                    <option value="">-- Laut --</option>
+                                                    <option value="n">n</option>
+                                                    <option value="ng">ng</option>
+                                                    <option value="nk">nk</option>
+                                                </select>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx10aChecked(true);
+                                        const ok = Object.keys(ex10aSolutions).every(k => ex10aAnswers[k] === ex10aSolutions[k]);
+                                        showToast(ok ? '🎉 Alle Nasallaute genau herausgehört!' : '⚠️ Hören Sie Audio 1.4 noch einmal an!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 10a Phonetik
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {activeSection === 'p12' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-sky text-sky-900 px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 12
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Wortbildung &amp; Textproduktion</span>
+                            </div>
+
+                            {/* Exercise W1: Infinitiv als Nomen */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-sky text-sky-900 border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">W1</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Infinitiv als Nomen (das Reisen, beim Fliegen):</h4>
+                                </div>
+
+                                <div className="space-y-2.5 pt-1 text-xs font-medium text-zinc-800 leading-relaxed">
+                                    <div className="p-2.5 bg-brand-cream rounded-xl border border-black/10 space-y-1">
+                                        <span>„Mir macht</span>
+                                        <select
+                                            value={exW1Answers[1]}
+                                            onChange={e => setExW1Answers({ ...exW1Answers, 1: e.target.value })}
+                                            className={`mx-1 bg-white border-2 rounded-xl px-2 py-0.5 text-xs font-black ${
+                                                exW1Checked ? (exW1Answers[1] === exW1Solutions[1] ? 'border-emerald-600 bg-emerald-50' : 'border-red-500 bg-red-50') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Nomen 1 --</option>
+                                            <option value="das Reisen">das Reisen</option>
+                                            <option value="das Kochen">das Kochen</option>
+                                        </select>
+                                        <span>keinen Spaß und</span>
+                                        <select
+                                            value={exW1Answers[2]}
+                                            onChange={e => setExW1Answers({ ...exW1Answers, 2: e.target.value })}
+                                            className={`mx-1 bg-white border-2 rounded-xl px-2 py-0.5 text-xs font-black ${
+                                                exW1Checked ? (exW1Answers[2] === exW1Solutions[2] ? 'border-emerald-600 bg-emerald-50' : 'border-red-500 bg-red-50') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Nomen 2 --</option>
+                                            <option value="beim Fliegen">beim Fliegen</option>
+                                            <option value="beim Zelten">beim Zelten</option>
+                                        </select>
+                                        <span>habe ich Angst.</span>
+                                        <select
+                                            value={exW1Answers[3]}
+                                            onChange={e => setExW1Answers({ ...exW1Answers, 3: e.target.value })}
+                                            className={`mx-1 bg-white border-2 rounded-xl px-2 py-0.5 text-xs font-black ${
+                                                exW1Checked ? (exW1Answers[3] === exW1Solutions[3] ? 'border-emerald-600 bg-emerald-50' : 'border-red-500 bg-red-50') : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Nomen 3 --</option>
+                                            <option value="Zum Erholen">Zum Erholen</option>
+                                            <option value="Zum Kochen">Zum Kochen</option>
+                                        </select>
+                                        <span>bleibe ich lieber zu Hause.“</span>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setExW1Checked(true);
+                                        const ok = Object.keys(exW1Solutions).every(k => exW1Answers[k] === exW1Solutions[k]);
+                                        showToast(ok ? '🎉 Alle nominalisierten Infinitive stimmen!' : '⚠️ Großschreibung beachten: das Reisen, beim Fliegen!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check W1 Wortbildung
+                                </button>
+                            </div>
+
+                            <RenderedStoryLiz />
+
+                            {/* Chapter 1 Completion Card */}
+                            <div className="bg-brand-mint text-brand-mintDark rounded-3xl p-5 border-2 border-brand-dark shadow-chunky space-y-2 text-center">
+                                <span className="material-symbols-rounded text-3xl">verified</span>
+                                <h3 className="text-lg font-black leading-tight text-brand-dark">Kapitel 1 Workbook abgeschlossen!</h3>
+                                <p className="text-xs font-semibold text-zinc-700">
+                                    Great work! You have strengthened your travel grammar and sentence structures. Continue to Chapter 2!
+                                </p>
+                                <a
+                                    href="../b1_coursebook/cp2-b1coursebook.html"
+                                    className="inline-flex items-center gap-1.5 bg-brand-dark hover:bg-zinc-800 text-white font-black text-xs px-5 py-2.5 rounded-full border border-brand-dark shadow-chunky-sm transition mt-2"
+                                >
+                                    <span>Advance to Coursebook 2</span>
+                                    <span>&rarr;</span>
+                                </a>
+                            </div>
+                        </main>
+                    )}
+
+                    <nav className="fixed bottom-3 left-0 right-0 z-40 max-w-md md:max-w-xl mx-auto px-4 pointer-events-none">
+                        <div className="bg-brand-dark/95 text-white backdrop-blur-lg p-2 rounded-full border-2 border-brand-dark shadow-2xl flex items-center justify-between pointer-events-auto">
+                            <a
+                                href="../../course-map-b1.html"
+                                className="flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold text-zinc-400 hover:text-white transition"
+                            >
+                                <span className="material-symbols-rounded text-base">arrow_back</span>
+                                <span>Course Map</span>
+                            </a>
+
+                            {/* Previous Section Button */}
+                            <button
+                                onClick={() => {
+                                    if (currentSectionIndex > 0) {
+                                        setActiveSection(SECTIONS[currentSectionIndex - 1].id);
+                                        window.scrollTo({ top: 120, behavior: 'smooth' });
+                                    }
+                                }}
+                                disabled={currentSectionIndex === 0}
+                                className={`flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold transition ${
+                                    currentSectionIndex === 0 ? 'opacity-30 cursor-not-allowed' : 'text-zinc-400 hover:text-white'
+                                }`}
+                            >
+                                <span className="material-symbols-rounded text-base">navigate_before</span>
+                                <span>Prev Page</span>
+                            </button>
+
+                            {/* Section indicator pill */}
+                            <div className="px-2 py-1 bg-brand-yellow text-brand-dark rounded-full text-[10px] font-black border border-brand-dark">
+                                {SECTIONS[currentSectionIndex].label}
+                            </div>
+
+                            {/* Next Section Button */}
+                            <button
+                                onClick={() => {
+                                    if (currentSectionIndex < SECTIONS.length - 1) {
+                                        setActiveSection(SECTIONS[currentSectionIndex + 1].id);
+                                        window.scrollTo({ top: 120, behavior: 'smooth' });
+                                    }
+                                }}
+                                disabled={currentSectionIndex === SECTIONS.length - 1}
+                                className={`flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold transition ${
+                                    currentSectionIndex === SECTIONS.length - 1 ? 'opacity-30 cursor-not-allowed' : 'text-zinc-400 hover:text-white'
+                                }`}
+                            >
+                                <span className="material-symbols-rounded text-base">navigate_next</span>
+                                <span>Next Page</span>
+                            </button>
+
+                            <a
+                                href="../b1_coursebook/cp1-b1coursebook.html"
+                                className="flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold text-brand-yellow hover:text-white transition"
+                            >
+                                <span className="material-symbols-rounded text-base">menu_book</span>
+                                <span>Coursebook</span>
+                            </a>
+                        </div>
+                    </nav>
+
+                    {lightboxImg && (
+                        <div 
+                            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
+                            onClick={() => setLightboxImg(null)}
+                        >
+                            <div className="bg-white rounded-3xl p-3 max-w-lg w-full border-2 border-brand-dark shadow-2xl relative" onClick={e => e.stopPropagation()}>
+                                <button
+                                    type="button"
+                                    onClick={() => setLightboxImg(null)}
+                                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-brand-cream border border-brand-dark text-brand-dark flex items-center justify-center font-black"
+                                >
+                                    &times;
+                                </button>
+                                <img src={lightboxImg} alt="Workbook zoom view" className="w-full h-auto rounded-2xl" />
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Sign Out Confirmation Modal */}
+                    {showLogoutModal && (
+                        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+                            <div className="bg-white w-full max-w-sm rounded-t-4xl sm:rounded-4xl border-2 border-brand-dark shadow-2xl p-6 text-center animate-in zoom-in-95 duration-200">
+                                <div className="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3 border border-red-200">
+                                    <span className="material-symbols-rounded text-2xl font-bold">logout</span>
+                                </div>
+                                <h4 className="text-lg font-black text-brand-dark">Sign Out of GermanApp?</h4>
+                                <p className="text-xs text-zinc-600 font-semibold mt-1">
+                                    Your workbook progress is preserved. You can resume anytime.
+                                </p>
+
+                                <div className="mt-5 flex gap-2">
+                                    <button 
+                                        onClick={() => setShowLogoutModal(false)}
+                                        className="flex-1 bg-zinc-100 hover:bg-zinc-200 text-brand-dark py-2.5 rounded-full font-extrabold text-xs transition"
+                                    >
+                                        Stay
+                                    </button>
+                                    <button 
+                                        onClick={async () => {
+                                            try {
+                                                await fetch('/api/logout', { method: 'POST' });
+                                            } catch (e) {}
+                                            window.location.href = '../../index.html';
+                                        }}
+                                        className="flex-1 bg-brand-coral hover:bg-red-600 text-white py-2.5 rounded-full font-extrabold text-xs shadow-md transition"
+                                    >
+                                        Log Out
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Toast Notification */}
+                    {toastMessage && (
+                        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-brand-dark text-white text-xs font-black px-4 py-2.5 rounded-full shadow-2xl flex items-center gap-2 border border-brand-yellow animate-bounce">
+                            <span className="w-2 h-2 rounded-full bg-brand-yellow"></span>
+                            <span>{toastMessage}</span>
+                        </div>
+                    )}
+
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Coursebook &bull; Kapitel 1: Gute Reise! | GermanApp B1.1</title>
+
+    <!-- Google Fonts Plus Jakarta Sans & Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,1,0">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            yellow: '#FED74C',
+                            yellowLight: '#FFF6D1',
+                            lavender: '#DACDFF',
+                            lavenderLight: '#F3EFFF',
+                            coral: '#FA7143',
+                            coralLight: '#FFE9E2',
+                            dark: '#161618',
+                            darkMuted: '#242428',
+                            cream: '#FAF8F5',
+                            mint: '#A7F3D0',
+                            mintDark: '#065F46',
+                            sky: '#BAE6FD',
+                            skyDark: '#0369A1'
+                        }
+                    },
+                    borderRadius: {
+                        '3xl': '1.5rem',
+                        '4xl': '2rem',
+                        '5xl': '2.5rem',
+                    },
+                    boxShadow: {
+                        'chunky': '0 6px 0px 0px #161618',
+                        'chunky-lg': '0 8px 0px 0px #161618',
+                        'chunky-sm': '0 3.5px 0px 0px #161618',
+                        'chunky-press': '0 1px 0px 0px #161618',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- React 18 & Babel CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        .animate-mascot {
+            animation: floatSlow 3.2s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-[#121214] text-brand-dark antialiased font-sans min-h-screen flex justify-center selection:bg-brand-yellow">
+    <div id="root" class="w-full"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo, useRef } = React;
+
+        window.addEventListener('unhandledrejection', (event) => {
+            if (
+                event.reason && 
+                (event.reason.name === 'AbortError' || 
+                 String(event.reason.message || '').includes('interrupted by a call to pause'))
+            ) {
+                event.preventDefault();
+            }
+        });
+
+        const GermanFlagIcon = ({ className = "w-8 h-8" }) => (
+            <div className={`${className} bg-brand-yellowLight rounded-xl border border-brand-dark flex items-center justify-center overflow-hidden shrink-0 shadow-chunky-sm`}>
+                <svg viewBox="0 0 64 64" className="w-full h-full p-0.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <clipPath id="flagCoursebookRoundedClip">
+                        <rect x="4" y="10" width="56" height="44" rx="12" />
+                    </clipPath>
+                    <g clipPath="url(#flagCoursebookRoundedClip)">
+                        <rect x="4" y="10" width="56" height="14.66" fill="#161618" />
+                        <rect x="4" y="24.66" width="56" height="14.68" fill="#E11D48" />
+                        <rect x="4" y="39.34" width="56" height="14.66" fill="#FED74C" />
+                        <path d="M4 10 L60 10 L4 44 Z" fill="#FFFFFF" opacity="0.15" />
+                    </g>
+                    <rect x="4" y="10" width="56" height="44" rx="12" stroke="#161618" strokeWidth="3" fill="none" />
+                </svg>
+            </div>
+        );
+
+        const FritzLederhosen = ({ className = "w-24 h-24" }) => (
+            <svg viewBox="0 0 160 170" className={`${className} animate-mascot drop-shadow-md`} fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M110 88 C124 74 136 60 144 46" stroke="#161618" strokeWidth="4" strokeLinecap="round" />
+                <path d="M106 90 C120 78 132 64 140 52" stroke="#FFFFFF" strokeWidth="9" strokeLinecap="round" />
+                <ellipse cx="145" cy="45" rx="7" ry="8" fill="#FFDFC4" stroke="#161618" strokeWidth="3" transform="rotate(20 145 45)" />
+                <circle cx="151" cy="42" r="2.5" fill="#FFDFC4" stroke="#161618" strokeWidth="2.5" />
+                <path d="M50 88 C38 98 32 110 40 120" stroke="#FFFFFF" strokeWidth="9" strokeLinecap="round" />
+                <path d="M50 88 C38 98 32 110 40 120" stroke="#161618" strokeWidth="4" strokeLinecap="round" fill="none" />
+                <circle cx="42" cy="120" r="6" fill="#FFDFC4" stroke="#161618" strokeWidth="3" />
+                <ellipse cx="64" cy="158" rx="11" ry="6" fill="#3D2314" stroke="#161618" strokeWidth="3" />
+                <ellipse cx="96" cy="158" rx="11" ry="6" fill="#3D2314" stroke="#161618" strokeWidth="3" />
+                <rect x="58" y="136" width="12" height="18" rx="4" fill="#FFFFFF" stroke="#161618" strokeWidth="3" />
+                <rect x="90" y="136" width="12" height="18" rx="4" fill="#FFFFFF" stroke="#161618" strokeWidth="3" />
+                <path d="M58 142H70M90 142H102" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" />
+                <path d="M54 112 L50 138 L74 138 L80 125 L86 138 L110 138 L106 112 Z" fill="#5C381E" stroke="#161618" strokeWidth="4" strokeLinejoin="round" />
+                <path d="M68 116 H92 V126 H68 Z" fill="#4A2D17" stroke="#FED74C" strokeWidth="2" strokeLinejoin="round" />
+                <circle cx="72" cy="121" r="1.5" fill="#FED74C" />
+                <circle cx="88" cy="121" r="1.5" fill="#FED74C" />
+                <path d="M52 74 C52 74 62 66 80 66 C98 66 108 74 108 74 L106 114 H54 Z" fill="#FFFFFF" stroke="#161618" strokeWidth="4" strokeLinejoin="round" />
+                <path d="M63 72 L64 114" stroke="#4A2D17" strokeWidth="6" strokeLinecap="round" />
+                <path d="M97 72 L96 114" stroke="#4A2D17" strokeWidth="6" strokeLinecap="round" />
+                <rect x="62" y="86" width="36" height="11" rx="3" fill="#4A2D17" stroke="#161618" strokeWidth="2.5" />
+                <circle cx="80" cy="91.5" r="2.5" fill="#FFFFFF" />
+                <circle cx="80" cy="91.5" r="1" fill="#FED74C" />
+                <ellipse cx="80" cy="50" rx="22" ry="20" fill="#FFDFC4" stroke="#161618" strokeWidth="4" />
+                <circle cx="58" cy="50" r="4.5" fill="#FFDFC4" stroke="#161618" strokeWidth="3" />
+                <circle cx="102" cy="50" r="4.5" fill="#FFDFC4" stroke="#161618" strokeWidth="3" />
+                <circle cx="68" cy="53" r="3.5" fill="#FFA58C" />
+                <circle cx="92" cy="53" r="3.5" fill="#FFA58C" />
+                <circle cx="72" cy="46" r="3.5" fill="#161618" />
+                <circle cx="88" cy="46" r="3.5" fill="#161618" />
+                <circle cx="71" cy="44.5" r="1.2" fill="#FFFFFF" />
+                <circle cx="87" cy="44.5" r="1.2" fill="#FFFFFF" />
+                <path d="M80 50 C76 46 66 48 66 52 C71 55 77 53 80 51 C83 53 89 55 94 52 C94 48 84 46 80 50 Z" fill="#E6A14B" stroke="#161618" strokeWidth="2" />
+                <path d="M75 54 Q80 59 85 54" stroke="#161618" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+                <path d="M60 36 C64 16 96 16 100 36 Z" fill="#2E5A36" stroke="#161618" strokeWidth="4" strokeLinejoin="round" />
+                <ellipse cx="80" cy="36" rx="28" ry="6" fill="#234629" stroke="#161618" strokeWidth="3.5" />
+                <path d="M58 35 Q80 33 102 35" stroke="#FED74C" strokeWidth="3" fill="none" />
+                <path d="M96 28 Q108 14 112 8 Q104 18 98 24" fill="#FA7143" stroke="#161618" strokeWidth="2" strokeLinejoin="round" />
+            </svg>
+        );
+
+        const AudioPlayerCard = ({ title, src, onPlay }) => {
+            const [isPlaying, setIsPlaying] = useState(false);
+            const audioRef = useRef(null);
+
+            useEffect(() => {
+                const audio = audioRef.current;
+                return () => {
+                    if (audio) {
+                        try {
+                            audio.pause();
+                        } catch (e) {}
+                    }
+                };
+            }, [src]);
+
+            const toggleAudio = () => {
+                const audio = audioRef.current;
+                if (!audio) return;
+
+                if (!audio.paused) {
+                    audio.pause();
+                    setIsPlaying(false);
+                } else {
+                    const playPromise = audio.play();
+                    if (playPromise !== undefined) {
+                        playPromise
+                            .then(() => {
+                                setIsPlaying(true);
+                                if (onPlay) onPlay(title);
+                            })
+                            .catch((err) => {
+                                if (err.name !== 'AbortError') {
+                                    console.warn('Audio playback error:', err);
+                                }
+                                setIsPlaying(false);
+                            });
+                    }
+                }
+            };
+
+            return (
+                <div className="bg-white border-2 border-brand-dark rounded-2xl p-2.5 sm:p-3 flex items-center justify-between gap-3 shadow-chunky-sm">
+                    <div className="flex items-center gap-2.5 truncate">
+                        <button
+                            type="button"
+                            onClick={toggleAudio}
+                            className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 border-2 border-brand-dark shadow-chunky-sm transition active:translate-y-0.5 ${
+                                isPlaying ? 'bg-brand-coral text-white' : 'bg-brand-yellow text-brand-dark hover:bg-yellow-400'
+                            }`}
+                            aria-label={isPlaying ? 'Pause Audio' : 'Play Audio'}
+                        >
+                            <span className="material-symbols-rounded text-lg">
+                                {isPlaying ? 'pause' : 'play_arrow'}
+                            </span>
+                        </button>
+                        <div className="truncate">
+                            <span className="text-[10px] font-black uppercase tracking-wider text-brand-coral block leading-none">Hörtext Audio</span>
+                            <span className="text-xs font-black text-brand-dark truncate block mt-0.5">{title}</span>
+                        </div>
+                    </div>
+                    <audio 
+                        ref={audioRef} 
+                        src={src} 
+                        onPlay={() => setIsPlaying(true)}
+                        onPause={() => setIsPlaying(false)}
+                        onEnded={() => setIsPlaying(false)}
+                        preload="none"
+                    />
+                    <a
+                        href={src}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-zinc-400 hover:text-brand-dark p-1 rounded-lg"
+                        title="Open direct audio file"
+                    >
+                        <span className="material-symbols-rounded text-base">open_in_new</span>
+                    </a>
+                </div>
+            );
+        };
+
+        const VideoPlayerModal = ({ src, onClose }) => {
+            const videoRef = useRef(null);
+
+            useEffect(() => {
+                const video = videoRef.current;
+                if (video) {
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch((err) => {
+                            if (err.name !== 'AbortError') {
+                                console.warn('Video play error:', err);
+                            }
+                        });
+                    }
+                }
+                return () => {
+                    if (video) {
+                        try {
+                            video.pause();
+                        } catch (e) {}
+                    }
+                };
+            }, [src]);
+
+            return (
+                <div 
+                    className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
+                    onClick={onClose}
+                >
+                    <div className="bg-brand-dark text-white rounded-3xl p-4 max-w-lg w-full border-2 border-brand-yellow shadow-2xl relative" onClick={e => e.stopPropagation()}>
+                        <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-700">
+                            <span className="text-xs font-black text-brand-yellow">Video Player &bull; Unit 1</span>
+                            <button
+                                type="button"
+                                onClick={onClose}
+                                className="w-7 h-7 rounded-full bg-zinc-800 text-white flex items-center justify-center font-black hover:bg-zinc-700"
+                            >
+                                &times;
+                            </button>
+                        </div>
+                        <video ref={videoRef} src={src} controls className="w-full rounded-2xl shadow" />
+                    </div>
+                </div>
+            );
+        };
+
+        const TranslationReveal = ({ englishText, isOpen, onToggle }) => (
+            <div className="mt-1">
+                <button
+                    type="button"
+                    onClick={onToggle}
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-zinc-500 hover:text-brand-dark bg-zinc-100 hover:bg-zinc-200 px-2 py-0.5 rounded-full transition"
+                >
+                    <span className="material-symbols-rounded text-xs text-brand-coral">translate</span>
+                    <span>{isOpen ? 'Hide Translation' : 'Translate instruction'}</span>
+                </button>
+                {isOpen && (
+                    <div className="mt-1.5 p-2 bg-brand-lavenderLight rounded-xl border border-brand-lavender text-xs text-brand-dark font-medium leading-relaxed italic animate-in fade-in duration-200">
+                        {englishText}
+                    </div>
+                )}
+            </div>
+        );
+
+        const RenderedVacationPhotos = ({ onZoomScan }) => {
+            const photos = [
+                { id: 'A', title: 'Ostsee & Küste', desc: 'Sonne, Sandstrand & Wind', icon: 'beach_access', bg: 'bg-sky-50 text-sky-950 border-sky-300', tag: 'Küste & Strand' },
+                { id: 'B', title: 'Gletscher & Berge', desc: 'Eisig kalt, hochalpin & Schnee', icon: 'ac_unit', bg: 'bg-blue-50 text-blue-950 border-blue-300', tag: 'Winter & Eis' },
+                { id: 'C', title: 'Moseltal & Weinberge', desc: 'Wandern, Weinreben & Wasser', icon: 'nature_people', bg: 'bg-emerald-50 text-emerald-950 border-emerald-300', tag: 'Wein & Natur' },
+                { id: 'D', title: 'Wien & Großstadt', desc: 'Städtereise, Zug & Kultur', icon: 'train', bg: 'bg-amber-50 text-amber-950 border-amber-300', tag: 'Städte & Kultur' },
+                { id: 'E', title: 'Autofreier Alpenort', desc: 'Panoramablick, Ruhe & frische Luft', icon: 'landscape', bg: 'bg-purple-50 text-purple-950 border-purple-300', tag: 'Ruhe & Berge' },
+            ];
+
+            return (
+                <div className="space-y-2.5">
+                    <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 flex items-center gap-1">
+                            <span className="material-symbols-rounded text-sm text-brand-coral">photo_library</span>
+                            <span>Interaktive Fotoschau (A–E)</span>
+                        </span>
+                        <button
+                            type="button"
+                            onClick={onZoomScan}
+                            className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                        >
+                            <span className="material-symbols-rounded text-xs">zoom_in</span>
+                            <span>Scan ansehen</span>
+                        </button>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        {photos.map(p => (
+                            <div 
+                                key={p.id}
+                                className={`p-3 rounded-2xl border-2 border-brand-dark shadow-chunky-sm flex flex-col justify-between ${p.bg} transition hover:-translate-y-0.5`}
+                            >
+                                <div className="flex items-center justify-between mb-1.5">
+                                    <span className="w-6 h-6 rounded-full bg-brand-dark text-white font-black text-xs flex items-center justify-center">
+                                        {p.id}
+                                    </span>
+                                    <span className="material-symbols-rounded text-base opacity-80">{p.icon}</span>
+                                </div>
+                                <div>
+                                    <span className="text-[9px] font-black uppercase tracking-wider bg-white px-1.5 py-0.5 rounded border border-black/10 block w-max mb-1">
+                                        {p.tag}
+                                    </span>
+                                    <h5 className="text-xs font-black leading-tight text-brand-dark">{p.title}</h5>
+                                    <p className="text-[10px] font-medium opacity-85 mt-0.5 leading-snug">{p.desc}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const RenderedUrlaubstypen = ({ onZoomScan }) => {
+            const types = [
+                { id: 'Typ 1', title: 'Der Kultur- & Städtereisende', person: 'Liam', desc: 'Liebt Museen, historische Altstädte, Galerien und das Großstadtleben mit Bus und Bahn.', icon: 'apartment', bg: 'bg-amber-50 border-amber-300 text-amber-950' },
+                { id: 'Typ 2', title: 'Der Sport- & Abenteuertyp', person: 'Aktivurlauber', desc: 'Möchte sich immer bewegen, Surfen, Klettern, Mountainbiken und Abenteuer erleben.', icon: 'surfing', bg: 'bg-rose-50 border-rose-300 text-rose-950' },
+                { id: 'Typ 3', title: 'Der Sonnenanbeter & Erholer', person: 'Maja', desc: 'Braucht Meeresrauschen, warme Sonne, Sandstrand und stundenlanges Faulenzen.', icon: 'beach_access', bg: 'bg-sky-50 border-sky-300 text-sky-950' },
+                { id: 'Typ 4', title: 'Der Natur- & Genussmensch', person: 'Thomas', desc: 'Schätzt Spaziergänge am Wasser, Weinberge, regionale Küche und Entschleunigung.', icon: 'wine_bar', bg: 'bg-emerald-50 border-emerald-300 text-emerald-950' }
+            ];
+
+            return (
+                <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 flex items-center gap-1">
+                            <span className="material-symbols-rounded text-sm text-brand-coral">psychology</span>
+                            <span>Interaktive Urlaubstypen</span>
+                        </span>
+                        <button
+                            type="button"
+                            onClick={onZoomScan}
+                            className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                        >
+                            <span className="material-symbols-rounded text-xs">zoom_in</span>
+                            <span>Scan ansehen</span>
+                        </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {types.map(t => (
+                            <div key={t.id} className={`p-3 rounded-2xl border-2 border-brand-dark shadow-chunky-sm ${t.bg}`}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-xs font-black bg-brand-dark text-white px-2 py-0.5 rounded-full">
+                                        {t.id}
+                                    </span>
+                                    <span className="material-symbols-rounded text-base text-brand-dark">{t.icon}</span>
+                                </div>
+                                <h5 className="text-xs font-black text-brand-dark">{t.title}</h5>
+                                <p className="text-[11px] font-semibold text-zinc-700 mt-1 leading-snug">{t.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const RenderedMessengerChat = ({ onZoomScan }) => (
+            <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 flex items-center gap-1">
+                        <span className="material-symbols-rounded text-sm text-brand-coral">chat</span>
+                        <span>Chat: Anna &amp; Paula</span>
+                    </span>
+                    <button
+                        type="button"
+                        onClick={onZoomScan}
+                        className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                    >
+                        <span className="material-symbols-rounded text-xs">zoom_in</span>
+                        <span>Scan ansehen</span>
+                    </button>
+                </div>
+
+                <div className="bg-[#ECE5DD] rounded-3xl border-2 border-brand-dark shadow-chunky-sm p-3.5 space-y-2.5 font-sans">
+                    <div className="flex items-center justify-between bg-emerald-900 text-white p-2 rounded-xl text-[11px] font-black">
+                        <div className="flex items-center gap-1.5">
+                            <span className="w-5 h-5 rounded-full bg-white text-emerald-950 flex items-center justify-center font-bold text-[10px]">👭</span>
+                            <span>Urlaubsplanung ☀️</span>
+                        </div>
+                        <span className="text-[9px] text-emerald-200">Online</span>
+                    </div>
+
+                    <div className="flex flex-col gap-2 text-xs">
+                        <div className="self-start max-w-[85%] bg-white border border-black/10 rounded-2xl rounded-tl-sm p-2.5 shadow-sm space-y-0.5">
+                            <span className="text-[10px] font-black text-brand-coral block">Anna</span>
+                            <p className="text-zinc-800 font-semibold leading-relaxed">
+                                Hi Paula! 😊 Wir haben doch vor, zusammen Urlaub zu machen! Ich habe Lust, nach Berlin zu reisen. Wir könnten Museen besuchen und Konzerte anhören! 🏛️🎶
+                            </p>
+                            <span className="text-[9px] text-zinc-400 block text-right">10:14</span>
+                        </div>
+
+                        <div className="self-end max-w-[85%] bg-[#DCF8C6] border border-black/10 rounded-2xl rounded-tr-sm p-2.5 shadow-sm space-y-0.5">
+                            <span className="text-[10px] font-black text-emerald-800 block text-right">Paula</span>
+                            <p className="text-zinc-800 font-semibold leading-relaxed">
+                                Hallo Anna! Hm, ehrlich gesagt finde ich es langweilig, im Urlaub von einem Museum zum nächsten zu hetzen. Ich brauche Erholung! Es ist wichtig für mich, mich richtig auszuruhen und zu faulenzen. 🏖️😴
+                            </p>
+                            <span className="text-[9px] text-zinc-400 block text-right">10:17</span>
+                        </div>
+
+                        <div className="self-start max-w-[85%] bg-white border border-black/10 rounded-2xl rounded-tl-sm p-2.5 shadow-sm space-y-0.5">
+                            <span className="text-[10px] font-black text-brand-coral block">Anna</span>
+                            <p className="text-zinc-800 font-semibold leading-relaxed">
+                                Verstehe ich schon, aber nur am Strand liegen macht mir keinen Spaß. Wie wäre es mit einem Kompromiss? Ein Wellnesshotel in der Stadt? Gehen wir heute ins Reisebüro? 🏨
+                            </p>
+                            <span className="text-[9px] text-zinc-400 block text-right">10:20</span>
+                        </div>
+
+                        <div className="self-end max-w-[85%] bg-[#DCF8C6] border border-black/10 rounded-2xl rounded-tr-sm p-2.5 shadow-sm space-y-0.5">
+                            <span className="text-[10px] font-black text-emerald-800 block text-right">Paula</span>
+                            <p className="text-zinc-800 font-semibold leading-relaxed">
+                                Gute Idee! Aber heute habe ich leider keine Zeit, ins Reisebüro zu gehen. Wollen wir heute Abend online recherchieren? 💻
+                            </p>
+                            <span className="text-[9px] text-zinc-400 block text-right">10:22</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const RenderedReisebueroAngebote = ({ onZoomScan }) => {
+            const offers = [
+                {
+                    title: 'Rügen – Ostseebrise',
+                    tag: 'Strand & Erholung',
+                    details: 'Ferienwohnung direkt am Meer, Meeresrauschen inklusive.',
+                    price: '700 – 840 € pro Woche',
+                    badge: 'Strandlage',
+                    bg: 'bg-sky-50 border-sky-300 text-sky-950'
+                },
+                {
+                    title: 'Berlin – City & Wellness',
+                    tag: 'Kultur & Spa',
+                    details: 'Wellnesshotel im Zentrum, inkl. Schifffahrt durch den Spreewald.',
+                    price: '710 € pro Person (1 Woche)',
+                    badge: 'Bestseller',
+                    bg: 'bg-amber-50 border-amber-300 text-amber-950'
+                },
+                {
+                    title: 'Spreewald – Naturhotel',
+                    tag: 'Wellness & Natur',
+                    details: '5 Tage im Luxus-Naturresort, Kahnfahrten & Bioküche.',
+                    price: '1.250 € pro Person (5 Tage)',
+                    badge: 'Premium',
+                    bg: 'bg-emerald-50 border-emerald-300 text-emerald-950'
+                }
+            ];
+
+            return (
+                <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 flex items-center gap-1">
+                            <span className="material-symbols-rounded text-sm text-brand-coral">local_offer</span>
+                            <span>Angebote aus dem Reisebüro</span>
+                        </span>
+                        <button
+                            type="button"
+                            onClick={onZoomScan}
+                            className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                        >
+                            <span className="material-symbols-rounded text-xs">zoom_in</span>
+                            <span>Scan ansehen</span>
+                        </button>
+                    </div>
+
+                    <div className="space-y-2">
+                        {offers.map(o => (
+                            <div key={o.title} className={`p-3 rounded-2xl border-2 border-brand-dark shadow-chunky-sm ${o.bg}`}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-[10px] font-black bg-brand-dark text-white px-2 py-0.5 rounded-full">
+                                        {o.badge}
+                                    </span>
+                                    <span className="text-xs font-black text-brand-coral">{o.price}</span>
+                                </div>
+                                <h5 className="text-xs font-black text-brand-dark">{o.title}</h5>
+                                <p className="text-[11px] font-semibold opacity-85 mt-0.5 leading-snug">{o.details}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const RenderedForumTexte = ({ onZoomScan }) => (
+            <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500 flex items-center gap-1">
+                        <span className="material-symbols-rounded text-sm text-brand-coral">forum</span>
+                        <span>ReiseForum Deutschland</span>
+                    </span>
+                    <button
+                        type="button"
+                        onClick={onZoomScan}
+                        className="text-[10px] font-bold text-brand-coral hover:underline flex items-center gap-0.5"
+                    >
+                        <span className="material-symbols-rounded text-xs">zoom_in</span>
+                        <span>Scan ansehen</span>
+                    </button>
+                </div>
+
+                <div className="space-y-2">
+                    <div className="p-3.5 bg-white rounded-2xl border-2 border-brand-dark shadow-chunky-sm space-y-1.5">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-1.5">
+                                <span className="w-6 h-6 rounded-full bg-brand-yellow font-black text-[10px] flex items-center justify-center border border-brand-dark">RL</span>
+                                <span className="text-xs font-black text-brand-dark">ReiseLustig_89</span>
+                            </div>
+                            <span className="text-[10px] font-bold text-zinc-400">Rothenburg ob der Tauber</span>
+                        </div>
+                        <p className="text-xs text-zinc-700 font-medium leading-relaxed">
+                            <strong className="text-emerald-700">[+]</strong> Rothenburg hat eine wunderschöne, romantische Altstadt mit mittelalterlicher Stadtmauer! Traumhaft zum Fotografieren.<br/>
+                            <strong className="text-red-600">[-]</strong> Allerdings sind im Sommer viel zu viele Touristen unterwegs, alles ist voll und teuer.
+                        </p>
+                    </div>
+
+                    <div className="p-3.5 bg-white rounded-2xl border-2 border-brand-dark shadow-chunky-sm space-y-1.5">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-1.5">
+                                <span className="w-6 h-6 rounded-full bg-brand-lavender font-black text-[10px] flex items-center justify-center border border-brand-dark">FB</span>
+                                <span className="text-xs font-black text-brand-dark">FrankenBlogger</span>
+                            </div>
+                            <span className="text-[10px] font-bold text-zinc-400">Würzburg</span>
+                        </div>
+                        <p className="text-xs text-zinc-700 font-medium leading-relaxed">
+                            <strong className="text-emerald-700">[+]</strong> Würzburg ist deutlich größer als Rothenburg und bietet viel mehr echte Stadtatmosphäre, Weinfeste an der Alten Mainbrücke und tolle Kultur an der Residenz!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        function App() {
+            const [activeSection, setActiveSection] = useState('guide');
+            const [lightboxImg, setLightboxImg] = useState(null);
+            const [videoModal, setVideoModal] = useState(null);
+
+            const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+            const [showLogoutModal, setShowLogoutModal] = useState(false);
+            const [toastMessage, setToastMessage] = useState('');
+
+            const [openTranslations, setOpenTranslations] = useState({});
+
+            const toggleTranslation = (id) => {
+                setOpenTranslations(prev => ({ ...prev, [id]: !prev[id] }));
+            };
+
+            const showToast = (msg) => {
+                setToastMessage(msg);
+                setTimeout(() => setToastMessage(''), 3000);
+            };
+
+            // Exercise 2 answers: 1->D, 2->E, 3->C, 4->B, 5->A
+            const [ex2Answers, setEx2Answers] = useState({ 1: '', 2: '', 3: '', 4: '', 5: '' });
+            const [ex2Checked, setEx2Checked] = useState(false);
+            const ex2Solutions = { 1: 'D', 2: 'E', 3: 'C', 4: 'B', 5: 'A' };
+
+            // Exercise 3a answers: Maja->Foto A, Liam->Foto D, Thomas->Foto C
+            const [ex3aAnswers, setEx3aAnswers] = useState({ maja: '', liam: '', thomas: '' });
+            const [ex3aChecked, setEx3aChecked] = useState(false);
+            const ex3aSolutions = { maja: 'Foto A', liam: 'Foto D', thomas: 'Foto C' };
+
+            // Exercise 3b answers: Maja->Typ 3, Liam->Typ 1, Thomas->Typ 4
+            const [ex3bAnswers, setEx3bAnswers] = useState({ maja: '', liam: '', thomas: '' });
+            const [ex3bChecked, setEx3bChecked] = useState(false);
+            const ex3bSolutions = { maja: 'Typ 3', liam: 'Typ 1', thomas: 'Typ 4' };
+
+            // Exercise 4a answers:
+            const [ex4aAnswers, setEx4aAnswers] = useState({ anna: '', paula: '' });
+            const [ex4aChecked, setEx4aChecked] = useState(false);
+            const ex4aSolutions = {
+                anna: 'einen interessanten Stadturlaub machen und viel unternehmen',
+                paula: 'faulenzen und sich erholen'
+            };
+
+            // Exercise 4b Checkbox answers: 1, 2, 4, 6 correct
+            const [ex4bCheckedState, setEx4bCheckedState] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false });
+            const [ex4bGraded, setEx4bGraded] = useState(false);
+            const ex4bSolutions = { 1: true, 2: true, 3: false, 4: true, 5: false, 6: true };
+
+            // Exercise 4c Rule Chip selection (Correct: 2)
+            const [ex4cSelected, setEx4cSelected] = useState(null);
+            const [ex4cChecked, setEx4cChecked] = useState(false);
+
+            // Exercise 6a answers: Rügen, Berlin, Spreewald
+            const [ex6aAnswers, setEx6aAnswers] = useState({ ruegen: '', berlin: '', spreewald: '' });
+            const [ex6aChecked, setEx6aChecked] = useState(false);
+            const ex6aSolutions = {
+                ruegen: 'zwischen 700 und 840 Euro pro Woche; direkt am Strand',
+                berlin: '710 Euro pro Person 1 Woche – Schifffahrt durch den Spreewald',
+                spreewald: '1250 Euro pro Person; 5 Tage'
+            };
+
+            // Exercise 6c decision answer: "Wellnesshotel in Berlin"
+            const [ex6cAnswer, setEx6cAnswer] = useState('');
+            const [ex6cChecked, setEx6cChecked] = useState(false);
+
+            // Exercise 8b answers: Rothenburg, Würzburg
+            const [ex8bAnswers, setEx8bAnswers] = useState({ rothenburg: '', wuerzburg: '' });
+            const [ex8bChecked, setEx8bChecked] = useState(false);
+            const ex8bSolutions = {
+                rothenburg: '[+] sehr schöne Altstadt; [-] zu viele Touristen',
+                wuerzburg: '[+] größer, mehr Stadtatmosphäre als Rothenburg'
+            };
+
+            // Exercise 10a pronunciation: 1->Affing, 2->Finkenstein
+            const [ex10aAnswers, setEx10aAnswers] = useState({ 1: '', 2: '' });
+            const [ex10aChecked, setEx10aChecked] = useState(false);
+            const ex10aSolutions = { 1: 'Affing', 2: 'Finkenstein' };
+
+            // Exercise 11a train announcement: "Durchsage 2"
+            const [ex11aAnswer, setEx11aAnswer] = useState('');
+            const [ex11aChecked, setEx11aChecked] = useState(false);
+
+            const SECTIONS = [
+                { id: 'guide', label: 'Overview', icon: 'school', title: 'Chapter Overview & Teacher Guide' },
+                { id: 'p8', label: 'S. 8', icon: 'flight_takeoff', title: 'Wo möchten Sie gern Urlaub machen?' },
+                { id: 'p9', label: 'S. 9', icon: 'surfing', title: 'Urlaubstypen & Hörverstehen' },
+                { id: 'p10', label: 'S. 10', icon: 'edit_calendar', title: 'Die Urlaubsplanung & Infinitiv mit zu' },
+                { id: 'p11', label: 'S. 11', icon: 'luggage', title: 'Im Reisebüro: Angebote & Buchung' },
+                { id: 'p12', label: 'S. 12', icon: 'map', title: 'Reiseziele in Deutschland' },
+                { id: 'p13', label: 'S. 13', icon: 'record_voice_over', title: 'Aussprache: n, ng, nk' },
+                { id: 'p14', label: 'S. 14', icon: 'train', title: 'Bahnhofsdurchsagen verstehen' },
+            ];
+
+            const currentSectionIndex = SECTIONS.findIndex(s => s.id === activeSection);
+
+            return (
+                <div className="w-full max-w-md md:max-w-xl mx-auto min-h-screen bg-brand-cream pb-32 relative shadow-2xl overflow-x-hidden">
+                    
+                    {/* STICKY TOP APP BAR */}
+                    <header className="sticky top-0 z-30 bg-brand-cream/95 backdrop-blur-md px-5 pt-4 pb-3 border-b-2 border-brand-dark/10 flex items-center justify-between">
+                        <div>
+                            <div className="inline-flex items-center gap-1.5 bg-brand-dark text-white px-3 py-1 rounded-full text-xs font-black tracking-wide">
+                                <span>GermanApp</span>
+                                <span className="text-brand-yellow">✦</span>
+                                <span className="text-[10px] text-zinc-300 font-bold uppercase tracking-wider">Level B1.1</span>
+                            </div>
+                            <h1 className="text-xl sm:text-2xl font-black tracking-tight text-brand-dark mt-1 flex items-center gap-1.5">
+                                <span>Kapitel 1: Gute Reise!</span>
+                            </h1>
+                        </div>
+
+                        {/* German Flag Badge Dropdown Trigger */}
+                        <div className="relative">
+                            <button
+                                type="button"
+                                onClick={() => setShowProfileDropdown(prev => !prev)}
+                                className="flex items-center gap-1.5 bg-white hover:bg-zinc-100 text-brand-dark p-1 sm:px-2.5 sm:py-1 rounded-full border-2 border-brand-dark shadow-chunky-sm active:translate-y-0.5 transition"
+                                aria-label="Toggle User Navigation"
+                            >
+                                <GermanFlagIcon className="w-8 h-8" />
+                                <span className="material-symbols-rounded text-base text-brand-dark hidden sm:inline">
+                                    {showProfileDropdown ? 'expand_less' : 'expand_more'}
+                                </span>
+                            </button>
+
+                            {/* Dropdown Menu */}
+                            {showProfileDropdown && (
+                                <>
+                                    <div 
+                                        className="fixed inset-0 z-40" 
+                                        onClick={() => setShowProfileDropdown(false)}
+                                    ></div>
+                                    <div className="absolute right-0 top-full mt-2 w-52 bg-white border-2 border-brand-dark rounded-2xl shadow-chunky p-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
+                                        <div className="px-3 py-2 border-b border-zinc-100 mb-1 flex items-center gap-2">
+                                            <GermanFlagIcon className="w-7 h-7 rounded-lg" />
+                                            <div>
+                                                <span className="text-[10px] font-black uppercase text-zinc-400 block leading-tight">Student View</span>
+                                                <span className="text-xs font-black text-brand-dark">German Learner</span>
+                                            </div>
+                                        </div>
+
+                                        <a
+                                            href="../../student-portal.html"
+                                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-black text-brand-dark hover:bg-brand-yellowLight transition"
+                                        >
+                                            <span className="material-symbols-rounded text-base text-brand-coral">dashboard</span>
+                                            <span>Student Portal</span>
+                                        </a>
+
+                                        <a
+                                            href="../../course-map-b1.html"
+                                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-black text-brand-dark hover:bg-brand-yellowLight transition"
+                                        >
+                                            <span className="material-symbols-rounded text-base text-brand-coral">map</span>
+                                            <span>B1 Course Map</span>
+                                        </a>
+
+                                        <hr className="my-1 border-zinc-100" />
+
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setShowProfileDropdown(false);
+                                                setShowLogoutModal(true);
+                                            }}
+                                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-black text-red-600 hover:bg-red-50 transition text-left"
+                                        >
+                                            <span className="material-symbols-rounded text-base">logout</span>
+                                            <span>Sign Out</span>
+                                        </button>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </header>
+
+                    {/* HERO BANNER */}
+                    <section className="px-4 pt-3">
+                        <div className="bg-brand-yellow rounded-4xl p-5 sm:p-6 border-3 border-brand-dark shadow-chunky relative overflow-hidden">
+                            <span className="absolute top-3 right-5 text-xl opacity-60">✦</span>
+                            <span className="absolute bottom-3 left-5 text-xl opacity-60">♥</span>
+
+                            <div className="flex items-center justify-between relative z-10">
+                                <div className="max-w-[65%]">
+                                    <div className="inline-flex items-center gap-1.5 bg-brand-dark text-white px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider mb-2">
+                                        <span>Coursebook &bull; Einheit 1</span>
+                                    </div>
+                                    <h2 className="text-2xl sm:text-3xl font-black text-brand-dark leading-tight tracking-tight">
+                                        Gute Reise!
+                                    </h2>
+                                    <p className="text-xs font-semibold text-brand-dark/85 mt-1.5 leading-relaxed">
+                                        Travel planning, vacation preferences, public transport announcements, and Infinitiv mit <em>zu</em>.
+                                    </p>
+                                </div>
+
+                                <div className="w-24 flex justify-center items-center">
+                                    <FritzLederhosen className="w-24 h-24" />
+                                </div>
+                            </div>
+
+                            {/* Jump to Workbook Shortcut */}
+                            <div className="mt-4 pt-3 border-t border-brand-dark/15 flex items-center justify-between gap-2">
+                                <a
+                                    href="../../course-map-b1.html"
+                                    className="flex-1 bg-white hover:bg-zinc-100 text-brand-dark py-2 px-3 rounded-full font-black text-xs border border-brand-dark shadow-chunky-sm text-center active:translate-y-0.5 transition"
+                                >
+                                    &larr; Back to Map
+                                </a>
+                                <a
+                                    href="../b1_workbook/cp1-b1workbook.html"
+                                    className="flex-1 bg-brand-coral hover:bg-orange-600 text-white py-2 px-3 rounded-full font-black text-xs border border-brand-dark shadow-chunky-sm flex items-center justify-center gap-1 active:translate-y-0.5 transition"
+                                >
+                                    <span>Open Workbook 1</span>
+                                    <span>&rarr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* SECTION: GUIDE & OBJECTIVES */}
+                    {activeSection === 'guide' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="bg-brand-lavenderLight rounded-3xl p-5 border-2 border-brand-dark shadow-chunky-sm">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className="w-8 h-8 rounded-xl bg-brand-lavender border border-brand-dark flex items-center justify-center text-brand-dark shrink-0">
+                                        <span className="material-symbols-rounded text-base">school</span>
+                                    </span>
+                                    <h3 className="text-base font-black text-brand-dark leading-tight">
+                                        Teacher's Guide &amp; Unit Objectives
+                                    </h3>
+                                </div>
+                                <p className="text-xs text-brand-dark/90 font-semibold leading-relaxed">
+                                    In this chapter, you will master travel communication in German. Focus on combining grammar structures naturally when expressing preferences, giving reasons, or describing past trips.
+                                </p>
+
+                                <div className="mt-3 pt-3 border-t border-brand-dark/10 space-y-1.5">
+                                    <span className="text-[10px] font-black uppercase tracking-wider text-brand-dark/70 block">Key Competencies:</span>
+                                    <ul className="text-xs text-zinc-700 font-semibold space-y-1 pl-1">
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Express personal travel preferences, likes, and dislikes.</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Plan trips, book hotel packages, and navigate travel agency conversations.</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Extract details from public transport and train station loudspeaker announcements.</span>
+                                        </li>
+                                        <li className="flex items-start gap-1.5">
+                                            <span className="text-brand-coral font-black">&bull;</span>
+                                            <span>Apply <strong>Infinitiv mit zu</strong> accurately with verbs, adjectives, and nouns.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {/* Grammar Spotlight Card */}
+                            <div className="bg-brand-cream rounded-3xl p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-8 h-8 rounded-xl bg-brand-yellow border border-brand-dark flex items-center justify-center text-brand-dark shrink-0">
+                                        <span className="material-symbols-rounded text-base">psychology</span>
+                                    </span>
+                                    <h3 className="text-base font-black text-brand-dark leading-tight">
+                                        Grammar Spotlight: Infinitiv mit <em>zu</em>
+                                    </h3>
+                                </div>
+
+                                <div className="bg-white p-3.5 rounded-2xl border border-black/10 text-xs text-zinc-700 font-medium space-y-2">
+                                    <div>
+                                        <strong className="text-brand-dark">1. Verben:</strong> <em>vorhaben, versuchen, vorschlagen</em>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; Ich habe vor, nach Berlin <strong>zu reisen</strong>.</p>
+                                    </div>
+                                    <div className="pt-1 border-t border-zinc-100">
+                                        <strong className="text-brand-dark">2. Adjektive (+ sein/finden):</strong> <em>schön, wichtig, langweilig</em>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; Es ist schön, am Strand <strong>zu liegen</strong>.</p>
+                                    </div>
+                                    <div className="pt-1 border-t border-zinc-100">
+                                        <strong className="text-brand-dark">3. Nomen (+ haben/machen):</strong> <em>Lust/Zeit haben, Spaß machen</em>
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; Ich habe keine Zeit, ins Reisebüro <strong>zu gehen</strong>.</p>
+                                    </div>
+                                    <div className="pt-1 border-t border-zinc-100">
+                                        <strong className="text-brand-coral">Trennbare Verben:</strong> Place <em>zu</em> between prefix and root:
+                                        <p className="text-zinc-500 italic mt-0.5">&bull; Es ist wichtig, sich aus<strong>zu</strong>ruhen.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={() => setActiveSection('p8')}
+                                className="w-full bg-brand-coral hover:bg-orange-600 text-white font-black text-xs py-3 px-4 rounded-full border-2 border-brand-dark shadow-chunky active:translate-y-0.5 transition flex items-center justify-center gap-2"
+                            >
+                                <span>Start Page 8: Wo möchten Sie Urlaub machen?</span>
+                                <span>&rarr;</span>
+                            </button>
+                        </main>
+                    )}
+
+                    {/* SECTION: PAGE 8 */}
+                    {activeSection === 'p8' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-yellow px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 8
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Urlaubsfotos &amp; Urlaubsgrüße</span>
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-3 sm:p-4 border-2 border-brand-dark shadow-chunky-sm">
+                                <RenderedVacationPhotos
+                                    onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_course_img/cp1_img1.png')}
+                                />
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-4 border-2 border-brand-dark shadow-chunky-sm space-y-2">
+                                <div className="flex items-start justify-between gap-2">
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">1a</span>
+                                        <h4 className="text-xs font-black text-brand-dark">Sehen Sie die Fotos an. Wo möchten Sie gern Urlaub machen?</h4>
+                                    </div>
+                                </div>
+                                <TranslationReveal
+                                    englishText="Look at the photos. Where would you like to go on vacation? Why? Tell us."
+                                    isOpen={!!openTranslations['1a']}
+                                    onToggle={() => toggleTranslation('1a')}
+                                />
+                                <div className="p-2.5 bg-brand-cream rounded-xl border border-black/10 text-xs font-semibold text-zinc-700 italic">
+                                    &bdquo;Ich möchte gern an der Mosel Urlaub machen, da kann ich wandern und Weinberge besuchen...&ldquo;
+                                </div>
+                            </div>
+
+                            {/* Exercise 2: Matching Urlaubsgrüße */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-start justify-between gap-2">
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-7 h-7 rounded-xl bg-brand-coral text-white border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">2</span>
+                                        <div>
+                                            <h4 className="text-xs font-black text-brand-dark leading-tight">Urlaubsgrüße zuordnen</h4>
+                                            <p className="text-[11px] text-zinc-500 font-medium">Welche Nachricht passt zu welchem Foto (A–E)?</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <TranslationReveal
+                                    englishText="Vacation greetings. Which message matches which photo? Match each message to the correct photo letter."
+                                    isOpen={!!openTranslations['2']}
+                                    onToggle={() => toggleTranslation('2')}
+                                />
+
+                                <div className="space-y-2.5 pt-2">
+                                    {[
+                                        { id: 1, text: 'Bin seit 2 Wochen unterwegs, ich liebe Städte. Der nächste Zug bringt mich nach Wien.' },
+                                        { id: 2, text: 'Dieser Blick ist Wahnsinn! Und im ganzen Ort kein Auto. So angenehm!' },
+                                        { id: 3, text: 'Wandern am Wasser, gutes Essen und nette Leute. Und die reifen Trauben: ein Genuss!' },
+                                        { id: 4, text: 'Wahnsinnig kalt, aber ein tolles Erlebnis!' },
+                                        { id: 5, text: 'Hallo von der Küste! Wir sind ständig am Strand! Sonne, Sand und Wind.' }
+                                    ].map(item => {
+                                        const userAns = ex2Answers[item.id];
+                                        const isCorrect = userAns === ex2Solutions[item.id];
+                                        return (
+                                            <div key={item.id} className="p-3 bg-brand-cream rounded-2xl border border-black/10 space-y-2">
+                                                <p className="text-xs font-bold text-brand-dark leading-relaxed">
+                                                    <span className="text-brand-coral font-black mr-1">{item.id}.</span>
+                                                    {item.text}
+                                                </p>
+                                                <div className="flex items-center justify-between gap-2">
+                                                    <span className="text-[11px] font-bold text-zinc-500">Passendes Foto:</span>
+                                                    <select
+                                                        value={userAns}
+                                                        onChange={(e) => setEx2Answers({ ...ex2Answers, [item.id]: e.target.value })}
+                                                        className={`bg-white border-2 rounded-xl px-3 py-1.5 text-xs font-black focus:outline-none transition ${
+                                                            ex2Checked
+                                                                ? isCorrect
+                                                                    ? 'border-emerald-600 bg-emerald-50 text-emerald-800'
+                                                                    : 'border-red-500 bg-red-50 text-red-700'
+                                                                : 'border-brand-dark'
+                                                        }`}
+                                                    >
+                                                        <option value="">-- Wählen --</option>
+                                                        <option value="A">Foto A</option>
+                                                        <option value="B">Foto B</option>
+                                                        <option value="C">Foto C</option>
+                                                        <option value="D">Foto D</option>
+                                                        <option value="E">Foto E</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <div className="flex gap-2 pt-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setEx2Checked(true);
+                                            const allCorrect = Object.keys(ex2Solutions).every(k => ex2Answers[k] === ex2Solutions[k]);
+                                            showToast(allCorrect ? '🎉 Hervorragend! All photos matched correctly!' : '⚠️ Check your answers and try again!');
+                                        }}
+                                        className="flex-1 bg-brand-dark hover:bg-zinc-800 text-white py-2.5 rounded-full font-black text-xs shadow-chunky-sm active:translate-y-0.5 transition"
+                                    >
+                                        Check Answers
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setEx2Answers({ 1: '', 2: '', 3: '', 4: '', 5: '' });
+                                            setEx2Checked(false);
+                                        }}
+                                        className="px-4 py-2.5 bg-zinc-100 hover:bg-zinc-200 text-brand-dark rounded-full font-black text-xs border border-black/10 transition"
+                                    >
+                                        Reset
+                                    </button>
+                                </div>
+                            </div>
+                        </main>
+                    )}
+
+                    {/* SECTION: PAGE 9 */}
+                    {activeSection === 'p9' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-lavender px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 9
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Urlaubstypen &bull; Hören &amp; Zuordnen</span>
+                            </div>
+
+                            <AudioPlayerCard
+                                title="Audio 1.1: Wo haben die Personen Urlaub gemacht?"
+                                src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-001.mp3"
+                            />
+
+                            {/* Exercise 3a Matching */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">3a</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Hören Sie das Gespräch. Wo haben die Personen Urlaub gemacht?</h4>
+                                </div>
+                                <TranslationReveal
+                                    englishText="Listen to the conversation. Where did the people go on vacation? Match them to the photos."
+                                    isOpen={!!openTranslations['3a']}
+                                    onToggle={() => toggleTranslation('3a')}
+                                />
+
+                                <div className="space-y-2 pt-1">
+                                    {[
+                                        { key: 'maja', name: 'Maja' },
+                                        { key: 'liam', name: 'Liam' },
+                                        { key: 'thomas', name: 'Thomas' }
+                                    ].map(person => {
+                                        const userAns = ex3aAnswers[person.key];
+                                        const isCorrect = userAns === ex3aSolutions[person.key];
+                                        return (
+                                            <div key={person.key} className="flex items-center justify-between p-2.5 bg-brand-cream rounded-xl border border-black/10">
+                                                <span className="text-xs font-black text-brand-dark">{person.name}:</span>
+                                                <select
+                                                    value={userAns}
+                                                    onChange={e => setEx3aAnswers({ ...ex3aAnswers, [person.key]: e.target.value })}
+                                                    className={`bg-white border-2 rounded-xl px-3 py-1 text-xs font-black focus:outline-none transition ${
+                                                        ex3aChecked
+                                                            ? isCorrect ? 'border-emerald-600 text-emerald-800 bg-emerald-50' : 'border-red-500 text-red-700 bg-red-50'
+                                                            : 'border-brand-dark'
+                                                    }`}
+                                                >
+                                                    <option value="">-- Foto wählen --</option>
+                                                    <option value="Foto A">Foto A</option>
+                                                    <option value="Foto B">Foto B</option>
+                                                    <option value="Foto C">Foto C</option>
+                                                    <option value="Foto D">Foto D</option>
+                                                    <option value="Foto E">Foto E</option>
+                                                </select>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <div className="flex gap-2 pt-1">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setEx3aChecked(true);
+                                            const ok = Object.keys(ex3aSolutions).every(k => ex3aAnswers[k] === ex3aSolutions[k]);
+                                            showToast(ok ? '🎉 All destinations correct!' : '⚠️ Try listening again!');
+                                        }}
+                                        className="flex-1 bg-brand-dark hover:bg-zinc-800 text-white py-2 rounded-full font-black text-xs shadow-chunky-sm transition"
+                                    >
+                                        Check 3a
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Exercise 3b: Urlaubstypen Zuordnung */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-lavender border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">3b</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Welcher Urlaubstyp passt zu den Personen?</h4>
+                                </div>
+
+                                <RenderedUrlaubstypen
+                                    onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_course_img/cp1_img12.png')}
+                                />
+
+                                <div className="space-y-2 pt-1">
+                                    {[
+                                        { key: 'maja', name: 'Maja' },
+                                        { key: 'liam', name: 'Liam' },
+                                        { key: 'thomas', name: 'Thomas' }
+                                    ].map(person => {
+                                        const userAns = ex3bAnswers[person.key];
+                                        const isCorrect = userAns === ex3bSolutions[person.key];
+                                        return (
+                                            <div key={person.key} className="flex items-center justify-between p-2.5 bg-brand-cream rounded-xl border border-black/10">
+                                                <span className="text-xs font-black text-brand-dark">{person.name}:</span>
+                                                <select
+                                                    value={userAns}
+                                                    onChange={e => setEx3bAnswers({ ...ex3bAnswers, [person.key]: e.target.value })}
+                                                    className={`bg-white border-2 rounded-xl px-3 py-1 text-xs font-black focus:outline-none transition ${
+                                                        ex3bChecked
+                                                            ? isCorrect ? 'border-emerald-600 text-emerald-800 bg-emerald-50' : 'border-red-500 text-red-700 bg-red-50'
+                                                            : 'border-brand-dark'
+                                                    }`}
+                                                >
+                                                    <option value="">-- Typ wählen --</option>
+                                                    <option value="Typ 1">Typ 1</option>
+                                                    <option value="Typ 2">Typ 2</option>
+                                                    <option value="Typ 3">Typ 3</option>
+                                                    <option value="Typ 4">Typ 4</option>
+                                                </select>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <div className="flex gap-2 pt-1">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setEx3bChecked(true);
+                                            const ok = Object.keys(ex3bSolutions).every(k => ex3bAnswers[k] === ex3bSolutions[k]);
+                                            showToast(ok ? '🎉 Richtig! All vacation profiles matched!' : '⚠️ Check the infographic and audio again!');
+                                        }}
+                                        className="flex-1 bg-brand-dark hover:bg-zinc-800 text-white py-2 rounded-full font-black text-xs shadow-chunky-sm transition"
+                                    >
+                                        Check 3b
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Video 1-3 Trigger */}
+                            <div className="bg-brand-coralLight rounded-3xl p-4 border-2 border-brand-dark shadow-chunky-sm flex items-center justify-between gap-3">
+                                <div>
+                                    <span className="text-[10px] font-black uppercase text-brand-coral block">Video Clip</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Video 1–3: Wo und wie machen Sie Urlaub?</h4>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setVideoModal('https://storage.googleapis.com/germanapp-media-2026/b1_coursevideo/NWn_B1_Film_001-003_K1_UT.mp4')}
+                                    className="bg-brand-coral hover:bg-orange-600 text-white font-black text-xs px-3.5 py-2 rounded-full border border-brand-dark shadow-chunky-sm shrink-0 flex items-center gap-1 active:translate-y-0.5 transition"
+                                >
+                                    <span className="material-symbols-rounded text-sm">play_circle</span>
+                                    <span>Play Video</span>
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {/* SECTION: PAGE 10 */}
+                    {activeSection === 'p10' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-coral text-white px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 10
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Die Urlaubsplanung &bull; Infinitiv mit zu</span>
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-3 sm:p-4 border-2 border-brand-dark shadow-chunky-sm">
+                                <RenderedMessengerChat
+                                    onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_course_img/cp1_img7.png')}
+                                />
+                            </div>
+
+                            {/* Exercise 4a: Chat Overview */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-coral text-white border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">4a</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Was für einen Urlaub wünschen sich Anna und Paula?</h4>
+                                </div>
+                                <TranslationReveal
+                                    englishText="Read the chat between Anna and Paula. What vacation does Anna wish for? How does Paula want to travel?"
+                                    isOpen={!!openTranslations['4a']}
+                                    onToggle={() => toggleTranslation('4a')}
+                                />
+
+                                <div className="space-y-3 pt-1">
+                                    <div>
+                                        <label className="text-[11px] font-black text-zinc-700 block mb-1">Anna:</label>
+                                        <select
+                                            value={ex4aAnswers.anna}
+                                            onChange={e => setEx4aAnswers({ ...ex4aAnswers, anna: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex4aChecked
+                                                    ? ex4aAnswers.anna === ex4aSolutions.anna ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Wählen --</option>
+                                            <option value="einen interessanten Stadturlaub machen und viel unternehmen">einen interessanten Stadturlaub machen und viel unternehmen</option>
+                                            <option value="am Strand faulenzen und den ganzen Tag schlafen">am Strand faulenzen und den ganzen Tag schlafen</option>
+                                            <option value="einen Wanderurlaub in den Bergen machen">einen Wanderurlaub in den Bergen machen</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label className="text-[11px] font-black text-zinc-700 block mb-1">Paula:</label>
+                                        <select
+                                            value={ex4aAnswers.paula}
+                                            onChange={e => setEx4aAnswers({ ...ex4aAnswers, paula: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex4aChecked
+                                                    ? ex4aAnswers.paula === ex4aSolutions.paula ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Wählen --</option>
+                                            <option value="jeden Tag Museen und Konzerte besuchen">jeden Tag Museen und Konzerte besuchen</option>
+                                            <option value="faulenzen und sich erholen">faulenzen und sich erholen</option>
+                                            <option value="einen Sport- und Surfurlaub machen">einen Sport- und Surfurlaub machen</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx4aChecked(true);
+                                        const ok = ex4aAnswers.anna === ex4aSolutions.anna && ex4aAnswers.paula === ex4aSolutions.paula;
+                                        showToast(ok ? '🎉 Richtig verstanden!' : '⚠️ Check both answers!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 4a
+                                </button>
+                            </div>
+
+                            {/* Exercise 4b: Checkbox True/False Statements */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">4b</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Welche Aussagen sind richtig? Wählen Sie alle zutreffenden aus.</h4>
+                                </div>
+
+                                <div className="space-y-2 pt-1">
+                                    {[
+                                        { id: 1, text: '1. Anna und Paula planen, zusammen Urlaub zu machen.' },
+                                        { id: 2, text: '2. Anna schlägt vor, Museen und Konzerte zu besuchen.' },
+                                        { id: 3, text: '3. Für Paula ist es wichtig, im Urlaub viel zu erleben.' },
+                                        { id: 4, text: '4. Anna findet es langweilig, sich im Urlaub richtig auszuruhen.' },
+                                        { id: 5, text: '5. Paula hat Lust, online Reiseziele zu recherchieren.' },
+                                        { id: 6, text: '6. Anna hat heute keine Zeit, ins Reisebüro zu gehen.' }
+                                    ].map(item => {
+                                        const isChecked = ex4bCheckedState[item.id];
+                                        const correct = ex4bSolutions[item.id];
+                                        return (
+                                            <label
+                                                key={item.id}
+                                                className={`flex items-start gap-2.5 p-2.5 rounded-2xl border-2 transition cursor-pointer ${
+                                                    ex4bGraded
+                                                        ? isChecked === correct
+                                                            ? 'border-emerald-600 bg-emerald-50'
+                                                            : 'border-red-500 bg-red-50'
+                                                        : isChecked
+                                                            ? 'border-brand-dark bg-brand-yellowLight'
+                                                            : 'border-black/15 bg-white'
+                                                }`}
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isChecked}
+                                                    onChange={e => setEx4bCheckedState({ ...ex4bCheckedState, [item.id]: e.target.checked })}
+                                                    className="w-4 h-4 mt-0.5 accent-brand-coral rounded"
+                                                />
+                                                <span className="text-xs font-semibold text-brand-dark leading-snug">{item.text}</span>
+                                            </label>
+                                        );
+                                    })}
+                                </div>
+
+                                <div className="flex gap-2 pt-1">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setEx4bGraded(true);
+                                            const ok = Object.keys(ex4bSolutions).every(k => ex4bCheckedState[k] === ex4bSolutions[k]);
+                                            showToast(ok ? '🎉 Perfekt! All statements accurately evaluated!' : '⚠️ Some statements are incorrect. Review the chat!');
+                                        }}
+                                        className="flex-1 bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                    >
+                                        Check 4b Statements
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Exercise 4c: Grammar Rule Selector */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-lavender border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">4c</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Wo steht der Infinitiv mit <em>zu</em>?</h4>
+                                </div>
+
+                                <div className="space-y-2 pt-1">
+                                    {[
+                                        { id: 1, text: 'Er steht am Satzanfang direkt nach dem Subjekt.' },
+                                        { id: 2, text: 'Er steht am Satzende; bei trennbaren Verben steht "zu" nach dem Präfix (z.B. aus-zu-ruhen).' },
+                                        { id: 3, text: 'Er steht immer direkt vor dem konjugierten Verb auf Position 2.' }
+                                    ].map(rule => (
+                                        <button
+                                            key={rule.id}
+                                            type="button"
+                                            onClick={() => setEx4cSelected(rule.id)}
+                                            className={`w-full text-left p-3 rounded-2xl border-2 text-xs font-bold transition flex items-start gap-2 ${
+                                                ex4cChecked
+                                                    ? rule.id === 2
+                                                        ? 'border-emerald-600 bg-emerald-50 text-emerald-900'
+                                                        : ex4cSelected === rule.id
+                                                            ? 'border-red-500 bg-red-50 text-red-700'
+                                                            : 'border-black/10 opacity-50'
+                                                    : ex4cSelected === rule.id
+                                                        ? 'border-brand-dark bg-brand-yellow text-brand-dark shadow-chunky-sm'
+                                                        : 'border-black/15 bg-white text-zinc-700'
+                                            }`}
+                                        >
+                                            <span className="material-symbols-rounded text-sm mt-0.5">
+                                                {ex4cSelected === rule.id ? 'check_circle' : 'radio_button_unchecked'}
+                                            </span>
+                                            <span className="flex-1">{rule.text}</span>
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx4cChecked(true);
+                                        showToast(ex4cSelected === 2 ? '🎉 Korrekt! "zu" steht am Satzende.' : '⚠️ Denk daran: Verb am Ende!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 4c Rule
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {/* SECTION: PAGE 11 */}
+                    {activeSection === 'p11' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-mint text-brand-mintDark px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 11
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Im Reisebüro &bull; Audio &amp; Angebote</span>
+                            </div>
+
+                            <AudioPlayerCard
+                                title="Audio 1.2: Gespräch im Reisebüro"
+                                src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-002.mp3"
+                            />
+
+                            <div className="bg-white rounded-3xl p-3 sm:p-4 border-2 border-brand-dark shadow-chunky-sm">
+                                <RenderedReisebueroAngebote
+                                    onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_course_img/cp1_img3.png')}
+                                />
+                            </div>
+
+                            {/* Exercise 6a Pricing details */}
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-mint text-brand-mintDark border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">6a</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Ergänzen Sie die Angebote aus dem Hörtext:</h4>
+                                </div>
+
+                                <div className="space-y-2.5 pt-1">
+                                    {[
+                                        { key: 'ruegen', label: 'Rügen', opts: ['zwischen 700 und 840 Euro pro Woche; direkt am Strand', '500 Euro pro Person; im Wald', '1250 Euro pro Person; 5 Tage'] },
+                                        { key: 'berlin', label: 'Berlin', opts: ['400 Euro pro Person; ohne Frühstück', '710 Euro pro Person 1 Woche – Schifffahrt durch den Spreewald', '840 Euro pro Person; 2 Wochen'] },
+                                        { key: 'spreewald', label: 'Spreewald', opts: ['1250 Euro pro Person; 5 Tage', '710 Euro pro Person; 1 Woche', '300 Euro pro Woche; Camping'] }
+                                    ].map(dest => {
+                                        const userAns = ex6aAnswers[dest.key];
+                                        const isCorrect = userAns === ex6aSolutions[dest.key];
+                                        return (
+                                            <div key={dest.key} className="space-y-1">
+                                                <label className="text-[11px] font-black text-brand-dark block">{dest.label}:</label>
+                                                <select
+                                                    value={userAns}
+                                                    onChange={e => setEx6aAnswers({ ...ex6aAnswers, [dest.key]: e.target.value })}
+                                                    className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                        ex6aChecked
+                                                            ? isCorrect ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                            : 'border-brand-dark'
+                                                    }`}
+                                                >
+                                                    <option value="">-- Preis &amp; Angebot wählen --</option>
+                                                    {dest.opts.map(o => <option key={o} value={o}>{o}</option>)}
+                                                </select>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx6aChecked(true);
+                                        const ok = Object.keys(ex6aSolutions).every(k => ex6aAnswers[k] === ex6aSolutions[k]);
+                                        showToast(ok ? '🎉 Alle Angebote korrekt ergänzt!' : '⚠️ Hören Sie noch einmal genau zu!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 6a
+                                </button>
+                            </div>
+
+                            {/* Exercise 6c Decision */}
+                            <AudioPlayerCard
+                                title="Audio 1.3: Für welchen Urlaub entscheiden sie sich?"
+                                src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-003.mp3"
+                            />
+
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-coral text-white border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">6c</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Für welchen Urlaub entscheiden sich Anna und Paula?</h4>
+                                </div>
+
+                                <select
+                                    value={ex6cAnswer}
+                                    onChange={e => setEx6cAnswer(e.target.value)}
+                                    className={`w-full bg-white border-2 rounded-xl p-2.5 text-xs font-black focus:outline-none transition ${
+                                        ex6cChecked
+                                            ? ex6cAnswer === 'Wellnesshotel in Berlin' ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                            : 'border-brand-dark'
+                                    }`}
+                                >
+                                    <option value="">-- Finale Entscheidung --</option>
+                                    <option value="Ferienwohnung auf Rügen">Ferienwohnung auf Rügen</option>
+                                    <option value="Wellnesshotel in Berlin">Wellnesshotel in Berlin</option>
+                                    <option value="Naturhotel im Spreewald">Naturhotel im Spreewald</option>
+                                </select>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx6cChecked(true);
+                                        showToast(ex6cAnswer === 'Wellnesshotel in Berlin' ? '🎉 Richtig! Das Wellnesshotel in Berlin.' : '⚠️ Hören Sie das Ende von Audio 1.3!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 6c Decision
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {/* SECTION: PAGE 12 */}
+                    {activeSection === 'p12' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-yellow px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 12
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Reiseziele in Deutschland &bull; Forum</span>
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-3 sm:p-4 border-2 border-brand-dark shadow-chunky-sm">
+                                <RenderedForumTexte
+                                    onZoomScan={() => setLightboxImg('https://storage.googleapis.com/germanapp-media-2026/b1_course_img/cp1_img4.png')}
+                                />
+                            </div>
+
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-yellow border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">8b</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Lesen Sie die Forumstexte. Ordnen Sie die Bewertungen (+ / -) zu:</h4>
+                                </div>
+
+                                <div className="space-y-3 pt-1">
+                                    <div>
+                                        <label className="text-[11px] font-black text-brand-dark block mb-1">Rothenburg ob der Tauber:</label>
+                                        <select
+                                            value={ex8bAnswers.rothenburg}
+                                            onChange={e => setEx8bAnswers({ ...ex8bAnswers, rothenburg: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex8bChecked
+                                                    ? ex8bAnswers.rothenburg === ex8bSolutions.rothenburg ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Bewertung wählen --</option>
+                                            <option value="[+] sehr schöne Altstadt; [-] zu viele Touristen">[+] sehr schöne Altstadt; [-] zu viele Touristen</option>
+                                            <option value="[+] Wasser sehr warm; [-] keine Freizeitmöglichkeiten">[+] Wasser sehr warm; [-] keine Freizeitmöglichkeiten</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label className="text-[11px] font-black text-brand-dark block mb-1">Würzburg:</label>
+                                        <select
+                                            value={ex8bAnswers.wuerzburg}
+                                            onChange={e => setEx8bAnswers({ ...ex8bAnswers, wuerzburg: e.target.value })}
+                                            className={`w-full bg-white border-2 rounded-xl p-2 text-xs font-black focus:outline-none transition ${
+                                                ex8bChecked
+                                                    ? ex8bAnswers.wuerzburg === ex8bSolutions.wuerzburg ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Bewertung wählen --</option>
+                                            <option value="[+] größer, mehr Stadtatmosphäre als Rothenburg">[+] größer, mehr Stadtatmosphäre als Rothenburg</option>
+                                            <option value="[-] sehr klein und langweilig">[-] sehr klein und langweilig</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx8bChecked(true);
+                                        const ok = ex8bAnswers.rothenburg === ex8bSolutions.rothenburg && ex8bAnswers.wuerzburg === ex8bSolutions.wuerzburg;
+                                        showToast(ok ? '🎉 Bewertungen perfekt zugeordnet!' : '⚠️ Prüfen Sie die Foreneinträge!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 8b Forum
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {/* SECTION: PAGE 13 */}
+                    {activeSection === 'p13' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-lavender px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 13
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Aussprache: n, ng, nk</span>
+                            </div>
+
+                            <AudioPlayerCard
+                                title="Audio 1.5: Aussprache und Laute (n, ng, nk)"
+                                src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-005.mp3"
+                            />
+
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-lavender border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">10a</span>
+                                    <h4 className="text-xs font-black text-brand-dark">Wie heißen die Orte? Hören Sie und wählen Sie aus:</h4>
+                                </div>
+
+                                <div className="space-y-3 pt-1">
+                                    <div className="flex items-center justify-between p-2.5 bg-brand-cream rounded-xl border border-black/10">
+                                        <span className="text-xs font-black text-brand-dark">1. Ort:</span>
+                                        <select
+                                            value={ex10aAnswers[1]}
+                                            onChange={e => setEx10aAnswers({ ...ex10aAnswers, 1: e.target.value })}
+                                            className={`bg-white border-2 rounded-xl px-3 py-1 text-xs font-black focus:outline-none transition ${
+                                                ex10aChecked
+                                                    ? ex10aAnswers[1] === ex10aSolutions[1] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Ort 1 --</option>
+                                            <option value="Affin">Affin</option>
+                                            <option value="Affing">Affing</option>
+                                            <option value="Affink">Affink</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="flex items-center justify-between p-2.5 bg-brand-cream rounded-xl border border-black/10">
+                                        <span className="text-xs font-black text-brand-dark">2. Ort:</span>
+                                        <select
+                                            value={ex10aAnswers[2]}
+                                            onChange={e => setEx10aAnswers({ ...ex10aAnswers, 2: e.target.value })}
+                                            className={`bg-white border-2 rounded-xl px-3 py-1 text-xs font-black focus:outline-none transition ${
+                                                ex10aChecked
+                                                    ? ex10aAnswers[2] === ex10aSolutions[2] ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                                    : 'border-brand-dark'
+                                            }`}
+                                        >
+                                            <option value="">-- Ort 2 --</option>
+                                            <option value="Finenstein">Finenstein</option>
+                                            <option value="Fingenstein">Fingenstein</option>
+                                            <option value="Finkenstein">Finkenstein</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx10aChecked(true);
+                                        const ok = ex10aAnswers[1] === ex10aSolutions[1] && ex10aAnswers[2] === ex10aSolutions[2];
+                                        showToast(ok ? '🎉 Perfektes Gehör! Affing & Finkenstein.' : '⚠️ Achten Sie auf den Laut am Wortende!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 10a Phonetik
+                                </button>
+                            </div>
+                        </main>
+                    )}
+
+                    {/* SECTION: PAGE 14 */}
+                    {activeSection === 'p14' && (
+                        <main className="px-4 mt-4 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black bg-brand-coral text-white px-2.5 py-1 rounded-full border border-brand-dark">
+                                    Seite 14
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-500">Unterwegs &bull; Durchsagen verstehen</span>
+                            </div>
+
+                            <AudioPlayerCard
+                                title="Audio 1.7: Bahnhofsdurchsagen ICE 241"
+                                src="https://storage.googleapis.com/germanapp-media-2026/b1_courseaudio/NWn_B1_KB_Audio_1-007.mp3"
+                            />
+
+                            <div className="bg-white rounded-3xl p-4 sm:p-5 border-2 border-brand-dark shadow-chunky-sm space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-7 h-7 rounded-xl bg-brand-coral text-white border border-brand-dark font-black text-xs flex items-center justify-center shrink-0">11a</span>
+                                    <div>
+                                        <h4 className="text-xs font-black text-brand-dark leading-tight">Sie möchten mit dem ICE 241 nach Stuttgart fahren.</h4>
+                                        <p className="text-[11px] text-zinc-500 font-medium">Welche Durchsage ist für Sie wichtig?</p>
+                                    </div>
+                                </div>
+
+                                <select
+                                    value={ex11aAnswer}
+                                    onChange={e => setEx11aAnswer(e.target.value)}
+                                    className={`w-full bg-white border-2 rounded-xl p-2.5 text-xs font-black focus:outline-none transition ${
+                                        ex11aChecked
+                                            ? ex11aAnswer === 'Durchsage 2' ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-red-500 bg-red-50 text-red-700'
+                                            : 'border-brand-dark'
+                                    }`}
+                                >
+                                    <option value="">-- Wichtige Durchsage auswählen --</option>
+                                    <option value="Durchsage 1">Durchsage 1</option>
+                                    <option value="Durchsage 2">Durchsage 2 (Gleiswechsel / ICE 241)</option>
+                                    <option value="Durchsage 3">Durchsage 3</option>
+                                </select>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEx11aChecked(true);
+                                        showToast(ex11aAnswer === 'Durchsage 2' ? '🎉 Sehr gut! Durchsage 2 betrifft Ihren Zug!' : '⚠️ Hören Sie noch einmal die Zugnummern!');
+                                    }}
+                                    className="w-full bg-brand-dark text-white py-2 rounded-full font-black text-xs shadow-chunky-sm"
+                                >
+                                    Check 11a Durchsage
+                                </button>
+                            </div>
+
+                            {/* Chapter Completion Card */}
+                            <div className="bg-brand-mint text-brand-mintDark rounded-3xl p-5 border-2 border-brand-dark shadow-chunky space-y-2 text-center">
+                                <span className="material-symbols-rounded text-3xl">verified</span>
+                                <h3 className="text-lg font-black leading-tight text-brand-dark">Kapitel 1 Coursebook abgeschlossen!</h3>
+                                <p className="text-xs font-semibold text-zinc-700">
+                                    Now continue your practice with Chapter 1 Workbook interactive exercises.
+                                </p>
+                                <a
+                                    href="../b1_workbook/cp1-b1workbook.html"
+                                    className="inline-flex items-center gap-1.5 bg-brand-dark hover:bg-zinc-800 text-white font-black text-xs px-5 py-2.5 rounded-full border border-brand-dark shadow-chunky-sm transition mt-2"
+                                >
+                                    <span>Launch Workbook 1</span>
+                                    <span>&rarr;</span>
+                                </a>
+                            </div>
+                        </main>
+                    )}
+
+                    {/* FIXED BOTTOM NAVIGATION DOCK */}
+                    <nav className="fixed bottom-3 left-0 right-0 z-40 max-w-md md:max-w-xl mx-auto px-4 pointer-events-none">
+                        <div className="bg-brand-dark/95 text-white backdrop-blur-lg p-2 rounded-full border-2 border-brand-dark shadow-2xl flex items-center justify-between pointer-events-auto">
+                            <a
+                                href="../../course-map-b1.html"
+                                className="flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold text-zinc-400 hover:text-white transition"
+                            >
+                                <span className="material-symbols-rounded text-base">arrow_back</span>
+                                <span>Course Map</span>
+                            </a>
+
+                            {/* Previous Section Button */}
+                            <button
+                                onClick={() => {
+                                    if (currentSectionIndex > 0) {
+                                        setActiveSection(SECTIONS[currentSectionIndex - 1].id);
+                                        window.scrollTo({ top: 120, behavior: 'smooth' });
+                                    }
+                                }}
+                                disabled={currentSectionIndex === 0}
+                                className={`flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold transition ${
+                                    currentSectionIndex === 0 ? 'opacity-30 cursor-not-allowed' : 'text-zinc-400 hover:text-white'
+                                }`}
+                            >
+                                <span className="material-symbols-rounded text-base">navigate_before</span>
+                                <span>Prev Page</span>
+                            </button>
+
+                            {/* Section indicator pill */}
+                            <div className="px-2 py-1 bg-brand-yellow text-brand-dark rounded-full text-[10px] font-black border border-brand-dark">
+                                {SECTIONS[currentSectionIndex].label}
+                            </div>
+
+                            {/* Next Section Button */}
+                            <button
+                                onClick={() => {
+                                    if (currentSectionIndex < SECTIONS.length - 1) {
+                                        setActiveSection(SECTIONS[currentSectionIndex + 1].id);
+                                        window.scrollTo({ top: 120, behavior: 'smooth' });
+                                    }
+                                }}
+                                disabled={currentSectionIndex === SECTIONS.length - 1}
+                                className={`flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold transition ${
+                                    currentSectionIndex === SECTIONS.length - 1 ? 'opacity-30 cursor-not-allowed' : 'text-zinc-400 hover:text-white'
+                                }`}
+                            >
+                                <span className="material-symbols-rounded text-base">navigate_next</span>
+                                <span>Next Page</span>
+                            </button>
+
+                            <a
+                                href="../b1_workbook/cp1-b1workbook.html"
+                                className="flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 text-[10px] font-extrabold text-brand-coral hover:text-white transition"
+                            >
+                                <span className="material-symbols-rounded text-base">edit</span>
+                                <span>Workbook</span>
+                            </a>
+                        </div>
+                    </nav>
+
+                    {/* LIGHTBOX MODAL */}
+                    {lightboxImg && (
+                        <div 
+                            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
+                            onClick={() => setLightboxImg(null)}
+                        >
+                            <div className="bg-white rounded-3xl p-3 max-w-lg w-full border-2 border-brand-dark shadow-2xl relative" onClick={e => e.stopPropagation()}>
+                                <button
+                                    type="button"
+                                    onClick={() => setLightboxImg(null)}
+                                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-brand-cream border border-brand-dark text-brand-dark flex items-center justify-center font-black"
+                                >
+                                    &times;
+                                </button>
+                                <img src={lightboxImg} alt="Textbook zoom view" className="w-full h-auto rounded-2xl" />
+                            </div>
+                        </div>
+                    )}
+
+                    {/* VIDEO MODAL */}
+                    {videoModal && (
+                        <VideoPlayerModal 
+                            src={videoModal} 
+                            onClose={() => setVideoModal(null)} 
+                        />
+                    )}
+
+                    {/* SIGN OUT CONFIRMATION MODAL */}
+                    {showLogoutModal && (
+                        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+                            <div className="bg-white w-full max-w-sm rounded-t-4xl sm:rounded-4xl border-2 border-brand-dark shadow-2xl p-6 text-center animate-in zoom-in-95 duration-200">
+                                <div className="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3 border border-red-200">
+                                    <span className="material-symbols-rounded text-2xl font-bold">logout</span>
+                                </div>
+                                <h4 className="text-lg font-black text-brand-dark">Sign Out of GermanApp?</h4>
+                                <p className="text-xs text-zinc-600 font-semibold mt-1">
+                                    Your chapter progress is preserved. You can resume anytime.
+                                </p>
+
+                                <div className="mt-5 flex gap-2">
+                                    <button 
+                                        onClick={() => setShowLogoutModal(false)}
+                                        className="flex-1 bg-zinc-100 hover:bg-zinc-200 text-brand-dark py-2.5 rounded-full font-extrabold text-xs transition"
+                                    >
+                                        Stay
+                                    </button>
+                                    <button 
+                                        onClick={async () => {
+                                            try {
+                                                await fetch('/api/logout', { method: 'POST' });
+                                            } catch (e) {}
+                                            window.location.href = '../../index.html';
+                                        }}
+                                        className="flex-1 bg-brand-coral hover:bg-red-600 text-white py-2.5 rounded-full font-extrabold text-xs shadow-md transition"
+                                    >
+                                        Log Out
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* TOAST NOTIFICATION */}
+                    {toastMessage && (
+                        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-brand-dark text-white text-xs font-black px-4 py-2.5 rounded-full shadow-2xl flex items-center gap-2 border border-brand-yellow animate-bounce">
+                            <span className="w-2 h-2 rounded-full bg-brand-yellow"></span>
+                            <span>{toastMessage}</span>
+                        </div>
+                    )}
+
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
