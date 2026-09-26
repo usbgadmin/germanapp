@@ -2,7 +2,6 @@
 
     const STORAGE_KEY_DESKTOP_VIEW = 'germanapp_desktop_view';
 
-    // Sound Synthesis helper using Web Audio API
     const playFeedbackSound = (type = 'success') => {
         try {
             const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -46,7 +45,6 @@
                 osc.stop(now + 0.12);
             }
         } catch (e) {
-            // AudioContext fallback
         }
     };
 
@@ -728,7 +726,6 @@
         );
     };
 
-    // Main Shell Component
     function App({ chapterTitle, sections, renderSectionContent }) {
         const [activeSection, setActiveSection] = useState('guide');
         const [englishMode, setEnglishMode] = useState(() => {
