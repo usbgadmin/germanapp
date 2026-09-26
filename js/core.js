@@ -888,9 +888,8 @@
         <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${isDesktopView ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-zinc-100 text-zinc-500 border-zinc-200'}`}>
         {isDesktopView ? 'Active' : 'Toggle'}
         </span>
+            
         </button>
-
-        // Inside the showProfileDropdown menu in core.js:
         <button
         type="button"
         onClick={() => {
